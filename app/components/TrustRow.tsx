@@ -1,4 +1,4 @@
-import {Icon} from '~/components/Icon';
+import {IconCheck, IconBag} from '~/components/Icon';
 
 export function TrustRow({
   className,
@@ -25,14 +25,13 @@ export function TrustRow({
         <span>{reviewsText}</span>
       </span>
       <span className="flex items-center gap-2">
-        <Icon name="check" />
+        <IconCheck />
         <span>{returnsText}</span>
       </span>
       <span className="flex items-center gap-2">
-        <Icon name="truck" />
+        <IconBag />
         <span>{shippingText}</span>
       </span>
     </div>
   );
 }
-
