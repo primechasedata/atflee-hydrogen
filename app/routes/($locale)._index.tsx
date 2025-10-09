@@ -67,7 +67,11 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 }
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
-  return getSeoMeta(...matches.map((match) => (match.data as any).seo));
+  const seoEntries = matches.flatMap((match) => {
+    const data: any = match.data;
+    return data && data.seo ? [data.seo] : [];
+  });
+  return getSeoMeta(...seoEntries);
 };
 
 export default function Homepage() {
