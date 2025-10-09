@@ -8,6 +8,8 @@ import {Await, useLoaderData} from '@remix-run/react';
 import {getSeoMeta} from '@shopify/hydrogen';
 
 import {Hero} from '~/components/Hero';
+import {TrustRow} from '~/components/TrustRow';
+import {Benefits} from '~/components/Benefits';
 import {FeaturedCollections} from '~/components/FeaturedCollections';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
@@ -179,9 +181,7 @@ export default function Homepage() {
                 Watch 30-sec demo
               </a>
             </div>
-            <p className="mt-4 text-sm text-neutral-500">
-              ★★★★★ 1,248 reviews • Free 30-day returns • Ships in 24 hours
-            </p>
+            <TrustRow className="mt-4 text-sm text-neutral-600" />
           </div>
           <div className="relative">
             {/* Swap with real doorway image */}
@@ -201,6 +201,9 @@ export default function Homepage() {
           </div>
         </div>
       </section>
+
+      {/* Benefits */}
+      <Benefits />
 
       {primaryHero && (
         <Hero {...primaryHero} height="full" top loading="eager" />
