@@ -5,7 +5,7 @@ import {
 } from '@shopify/remix-oxygen';
 import {Suspense} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
-import {getSeoMeta} from '@shopify/hydrogen';
+import {getSeoMeta, Money} from '@shopify/hydrogen';
 
 import {Hero} from '~/components/Hero';
 import {TrustRow} from '~/components/TrustRow';
@@ -46,16 +46,25 @@ export async function loader(args: LoaderFunctionArgs) {
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
 async function loadCriticalData({context, request}: LoaderFunctionArgs) {
-  const [{shop, hero}] = await Promise.all([
+  const featuredHandle = context.env.PUBLIC_FEATURED_PRODUCT_HANDLE || 'tb7-widest-grip-doorway-pull-up-bar';
+
+  const [{shop, hero}, featuredProduct] = await Promise.all([
     context.storefront.query(HOMEPAGE_SEO_QUERY, {
       variables: {handle: 'freestyle'},
     }),
+    context.storefront
+      .query(FEATURED_PRODUCT_MIN_QUERY, {
+        variables: {handle: featuredHandle},
+      })
+      .then((r) => r?.product)
+      .catch(() => null),
     // Add other queries here, so that they are loaded in parallel
   ]);
 
   return {
     shop,
     primaryHero: hero,
+    featuredHeroProduct: featuredProduct,
     seo: seoPayload.home({url: request.url}),
   };
 }
@@ -150,6 +159,7 @@ export default function Homepage() {
     tertiaryHero,
     featuredCollections,
     featuredProducts,
+    featuredHeroProduct,
   } = useLoaderData<typeof loader>();
 
   // TODO: skeletons vs placeholders
@@ -169,10 +179,17 @@ export default function Homepage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <a
-                href="/products"
+                href={featuredHeroProduct?.handle ? `/products/${featuredHeroProduct.handle}` : '/products'}
                 className="inline-flex items-center rounded-full px-6 py-3 text-white bg-neutral-900 hover:bg-neutral-800"
               >
-                Shop Trahere Bar $79
+                Shop Trahere Bar{' '}
+                {featuredHeroProduct?.selectedOrFirstAvailableVariant?.price && (
+                  <Money
+                    data={
+                      featuredHeroProduct.selectedOrFirstAvailableVariant.price
+                    }
+                  />
+                )}
               </a>
               <a
                 href="#demo"
@@ -282,6 +299,19 @@ export default function Homepage() {
     </>
   );
 }
+
+const FEATURED_PRODUCT_MIN_QUERY = `#graphql
+  query FeaturedProduct($handle: String!) {
+    product(handle: $handle) {
+      handle
+      title
+      selectedOrFirstAvailableVariant {
+        id
+        price { amount currencyCode }
+      }
+    }
+  }
+` as const;
 
 const COLLECTION_CONTENT_FRAGMENT = `#graphql
   fragment CollectionContent on Collection {
