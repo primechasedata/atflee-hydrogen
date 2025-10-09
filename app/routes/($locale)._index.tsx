@@ -14,7 +14,7 @@ import {Button} from '~/components/Button';
 import {AddToCartButton} from '~/components/AddToCartButton';
 import {StatChips} from '~/components/StatChips';
 import {LifestyleTiles} from '~/components/LifestyleTiles';
-import {IconCheck, IconShield, IconTruck, IconSparkle, IconLock} from '~/components/Icon';
+import {IconCheck, IconShield, IconTruck, IconSparkle, IconLock, IconSun, IconPlane, IconMoon, IconRuler, IconDumbbell, IconExpand, IconBolt} from '~/components/Icon';
 import {Newsletter} from '~/components/Newsletter';
 import {Heading, Text} from '~/components/Text';
 import {OriginStory} from '~/components/OriginStory';
@@ -306,17 +306,17 @@ function BuildHabitsSection() {
     {
       title: 'Morning Activation',
       description: 'Start your day with 5 pull-ups. No excuses, no gym commute.',
-      icon: '🌅'
+      Icon: IconSun
     },
     {
       title: 'Travel Ready',
       description: 'Hotel door frames, AirBnB, anywhere. Fits in your luggage.',
-      icon: '✈️'
+      Icon: IconPlane
     },
     {
       title: 'Late Night Sessions',
       description: 'When inspiration hits at 11pm, your gym is already there.',
-      icon: '🌙'
+      Icon: IconMoon
     }
   ];
 
@@ -335,7 +335,11 @@ function BuildHabitsSection() {
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {features.map((feature) => (
             <div key={feature.title} className="glass rounded-2xl p-8 text-center hover-lift">
-              <div className="text-6xl mb-4">{feature.icon}</div>
+              <div className="flex items-center justify-center mb-6">
+                <div className="w-16 h-16 rounded-full bg-[rgb(var(--color-accent))]/20 flex items-center justify-center border border-[rgb(var(--color-accent))]/30">
+                  <feature.Icon className="w-8 h-8 text-[rgb(var(--color-accent))]" />
+                </div>
+              </div>
               <h3 className="text-xl font-bold text-primary mb-3">{feature.title}</h3>
               <p className="text-primary/70">{feature.description}</p>
             </div>
@@ -413,10 +417,10 @@ function ComparisonSection() {
 
 function FeatureDetails() {
   const specs = [
-    {label: 'Doorway Width', value: '31.9–36.6"', icon: '📏'},
-    {label: 'Weight Capacity', value: '260 lb', subtext: 'Tested to 573 lb', icon: '💪'},
-    {label: 'Grip Width', value: '24 inches', icon: '↔️'},
-    {label: 'Installation', value: '10 seconds', subtext: 'Tool-free', icon: '⚡'},
+    {label: 'Doorway Width', value: '31.9–36.6"', Icon: IconRuler},
+    {label: 'Weight Capacity', value: '260 lb', subtext: 'Tested to 573 lb', Icon: IconDumbbell},
+    {label: 'Grip Width', value: '24 inches', Icon: IconExpand},
+    {label: 'Installation', value: '10 seconds', subtext: 'Tool-free', Icon: IconBolt},
   ];
 
   return (
@@ -432,7 +436,11 @@ function FeatureDetails() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
           {specs.map((spec) => (
             <div key={spec.label} className="glass rounded-2xl p-6 text-center border border-white/10">
-              <div className="text-4xl mb-3">{spec.icon}</div>
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-12 h-12 rounded-full bg-[rgb(var(--color-accent))]/20 flex items-center justify-center border border-[rgb(var(--color-accent))]/30">
+                  <spec.Icon className="w-6 h-6 text-[rgb(var(--color-accent))]" />
+                </div>
+              </div>
               <dt className="text-sm font-medium text-primary/60 mb-2">{spec.label}</dt>
               <dd className="text-2xl font-bold text-primary">{spec.value}</dd>
               {spec.subtext && (

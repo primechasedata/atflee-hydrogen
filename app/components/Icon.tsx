@@ -312,3 +312,72 @@ export function IconLock(props: IconProps) {
     </Icon>
   );
 }
+
+export function IconSun(props: IconProps) {
+  return (
+    <Icon {...props} fill="transparent" stroke={props.stroke || 'currentColor'}>
+      <title>Sun</title>
+      <circle cx="10" cy="10" r="3" strokeWidth={1.25} />
+      <path d="M10 2v2M10 16v2M18 10h-2M4 10H2M15.657 4.343l-1.414 1.414M5.757 14.243l-1.414 1.414M15.657 15.657l-1.414-1.414M5.757 5.757L4.343 4.343" strokeWidth={1.25} strokeLinecap="round" />
+    </Icon>
+  );
+}
+
+export function IconPlane(props: IconProps) {
+  return (
+    <Icon {...props} fill="transparent" stroke={props.stroke || 'currentColor'}>
+      <title>Plane</title>
+      <path d="M2 10l6-6 8 4-6 6-2-2-2 4-2-2 2-4-2-2Z" strokeWidth={1.25} strokeLinejoin="round" />
+      <path d="M16 4l2 2" strokeWidth={1.25} strokeLinecap="round" />
+    </Icon>
+  );
+}
+
+export function IconMoon(props: IconProps) {
+  return (
+    <Icon {...props} fill="transparent" stroke={props.stroke || 'currentColor'}>
+      <title>Moon</title>
+      <path d="M17 10.5A7 7 0 1 1 9.5 3a6 6 0 0 0 7.5 7.5Z" strokeWidth={1.25} strokeLinejoin="round" />
+    </Icon>
+  );
+}
+
+export function IconRuler(props: IconProps) {
+  return (
+    <Icon {...props} fill="transparent" stroke={props.stroke || 'currentColor'}>
+      <title>Ruler</title>
+      <rect x="3" y="5" width="14" height="10" rx="1" strokeWidth={1.25} />
+      <path d="M6 8v4M9 8v4M12 8v4M15 8v4" strokeWidth={1.25} strokeLinecap="round" />
+    </Icon>
+  );
+}
+
+export function IconDumbbell(props: IconProps) {
+  return (
+    <Icon {...props} fill="transparent" stroke={props.stroke || 'currentColor'}>
+      <title>Dumbbell</title>
+      <path d="M6.5 10h7M3 8v4M17 8v4M5 7v6M15 7v6" strokeWidth={1.25} strokeLinecap="round" />
+      <rect x="3" y="7" width="2" height="6" rx="0.5" strokeWidth={1.25} />
+      <rect x="15" y="7" width="2" height="6" rx="0.5" strokeWidth={1.25} />
+    </Icon>
+  );
+}
+
+export function IconExpand(props: IconProps) {
+  return (
+    <Icon {...props} fill="transparent" stroke={props.stroke || 'currentColor'}>
+      <title>Expand</title>
+      <path d="M4 10h12M10 4v12" strokeWidth={1.25} strokeLinecap="round" />
+      <path d="M14 6l2-2M14 14l2 2M6 6L4 4M6 14l-2 2" strokeWidth={1.25} strokeLinecap="round" />
+    </Icon>
+  );
+}
+
+export function IconBolt(props: IconProps) {
+  return (
+    <Icon {...props} fill="transparent" stroke={props.stroke || 'currentColor'}>
+      <title>Bolt</title>
+      <path d="M11 2L5 10h6l-1 8 6-8h-6l1-8Z" strokeWidth={1.25} strokeLinejoin="round" />
+    </Icon>
+  );
+}
