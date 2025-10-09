@@ -12,6 +12,7 @@ import {routeHeaders} from '~/data/cache';
 import {Link} from '~/components/Link';
 import {Button} from '~/components/Button';
 import {IconCheck} from '~/components/Icon';
+import {Newsletter} from '~/components/Newsletter';
 
 export const headers = routeHeaders;
 
@@ -445,28 +446,10 @@ function NewsletterSection() {
   return (
     <section className="py-16 bg-white">
       <div className="mx-auto max-w-2xl px-6 lg:px-8">
-        <div className="rounded-2xl bg-blue-600 px-8 py-12 text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white">
-            Get fitness tips & exclusive deals
-          </h2>
-          <p className="mt-4 text-lg text-blue-100">
-            Join our community and never miss a workout tip or special offer.
-          </p>
-          <form className="mt-8 flex gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 rounded-md border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white"
-              required
-            />
-            <button
-              type="submit"
-              className="rounded-md bg-white px-6 py-3 text-base font-semibold text-blue-600 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-colors"
-            >
-              Subscribe
-            </button>
-          </form>
-        </div>
+        <Newsletter
+          title="Get fitness tips & exclusive deals"
+          description="Join our community and never miss a workout tip or special offer."
+        />
       </div>
     </section>
   );

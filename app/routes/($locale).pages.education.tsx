@@ -3,6 +3,7 @@ import {useLoaderData} from '@remix-run/react';
 import {getSeoMeta} from '@shopify/hydrogen';
 import type {MetaArgs} from '@shopify/remix-oxygen';
 import {Link} from '~/components/Link';
+import {Newsletter} from '~/components/Newsletter';
 
 export async function loader({context}: LoaderFunctionArgs) {
   return json({
@@ -198,28 +199,10 @@ export default function EducationHub() {
       {/* Lead Capture / Newsletter */}
       <section className="py-16 bg-white">
         <div className="mx-auto max-w-2xl px-6 lg:px-8">
-          <div className="rounded-2xl bg-blue-600 px-8 py-12 text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-white">
-              Get weekly training tips
-            </h2>
-            <p className="mt-4 text-lg text-blue-100">
-              Join 10,000+ athletes getting our best content delivered weekly.
-            </p>
-            <form className="mt-8 flex gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 rounded-md border-0 px-4 py-3 text-gray-900 shadow-sm placeholder:text-gray-400 focus:ring-2 focus:ring-white"
-                required
-              />
-              <button
-                type="submit"
-                className="rounded-md bg-white px-6 py-3 text-base font-semibold text-blue-600 shadow-sm hover:bg-gray-100 transition-colors"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
+          <Newsletter
+            title="Get weekly training tips"
+            description="Join 10,000+ athletes getting our best content delivered weekly."
+          />
         </div>
       </section>
     </div>

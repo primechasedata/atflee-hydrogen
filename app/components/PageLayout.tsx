@@ -445,10 +445,12 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
             <p className="text-gray-400 text-sm mb-4">
               Get fitness tips & exclusive deals
             </p>
-            <form className="space-y-2">
+            <Form method="post" action="/api/newsletter" className="space-y-2">
               <input
                 type="email"
+                name="email"
                 placeholder="Your email"
+                required
                 className="w-full rounded-md bg-gray-800 border border-gray-700 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:ring-2 focus:ring-blue-600 focus:border-transparent"
               />
               <button
@@ -457,7 +459,7 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
               >
                 Subscribe
               </button>
-            </form>
+            </Form>
           </div>
         </div>
 

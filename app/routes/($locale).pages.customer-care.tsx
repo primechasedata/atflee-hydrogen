@@ -1,11 +1,11 @@
 import {json, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {useLoaderData, Form} from '@remix-run/react';
+import {useLoaderData, Form, useActionData, useNavigation} from '@remix-run/react';
 import {getSeoMeta} from '@shopify/hydrogen';
 import type {MetaArgs} from '@shopify/remix-oxygen';
 import {Disclosure} from '@headlessui/react';
 import {IconClose} from '~/components/Icon';
 import clsx from 'clsx';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 export async function loader({context}: LoaderFunctionArgs) {
   return json({
@@ -308,69 +308,95 @@ function FAQSection() {
 }
 
 function ContactForm() {
+  const actionData = useActionData<{success?: boolean; error?: string; message?: string}>();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === 'submitting';
+
   return (
-    <form className="space-y-4">
-      <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-1">
-          Name
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          required
-          className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600"
-        />
-      </div>
+    <>
+      <Form method="post" action="/api/contact" className="space-y-4">
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-1">
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            disabled={isSubmitting}
+            className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600 disabled:opacity-50"
+          />
+        </div>
 
-      <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-1">
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          required
-          className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600"
-        />
-      </div>
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-1">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            disabled={isSubmitting}
+            className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600 disabled:opacity-50"
+          />
+        </div>
 
-      <div>
-        <label htmlFor="order" className="block text-sm font-medium text-gray-900 mb-1">
-          Order Number (optional)
-        </label>
-        <input
-          type="text"
-          id="order"
-          name="order"
-          className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600"
-        />
-      </div>
+        <div>
+          <label htmlFor="order" className="block text-sm font-medium text-gray-900 mb-1">
+            Order Number (optional)
+          </label>
+          <input
+            type="text"
+            id="order"
+            name="order"
+            disabled={isSubmitting}
+            className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600 disabled:opacity-50"
+          />
+        </div>
 
-      <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-900 mb-1">
-          Message
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          rows={6}
-          required
-          className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600"
-        />
-      </div>
+        <div>
+          <label htmlFor="message" className="block text-sm font-medium text-gray-900 mb-1">
+            Message
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows={6}
+            required
+            disabled={isSubmitting}
+            className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600 disabled:opacity-50"
+          />
+        </div>
 
-      <button
-        type="submit"
-        className="w-full rounded-md bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors"
-      >
-        Send Message
-      </button>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full rounded-md bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isSubmitting ? 'Sending...' : 'Send Message'}
+        </button>
 
-      <p className="text-sm text-gray-500 text-center">
-        This form is protected by hCaptcha. We typically respond within 24 hours.
-      </p>
-    </form>
+        <p className="text-sm text-gray-500 text-center">
+          This form is protected by hCaptcha. We typically respond within 24 hours.
+        </p>
+      </Form>
+
+      {/* Success/Error Messages */}
+      {actionData?.success && (
+        <div className="mt-4 rounded-md bg-green-50 p-4">
+          <p className="text-sm font-medium text-green-800">
+            {actionData.message || 'Message sent successfully!'}
+          </p>
+        </div>
+      )}
+
+      {actionData?.error && (
+        <div className="mt-4 rounded-md bg-red-50 p-4">
+          <p className="text-sm font-medium text-red-800">{actionData.error}</p>
+        </div>
+      )}
+    </>
   );
 }
