@@ -2,19 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Tokens */
+/* Tokens - Trahere Design System */
 :root {
-  --color-primary: 20 20 20; /* Text, buttons, etc. */
-  --color-contrast: 250 250 249; /* Backgrounds, borders, etc. */
-  --color-accent: 191 72 0; /* Labels like "On sale" */
+  /* Core Colors */
+  --color-dark-base: 23 23 23; /* #171717 - Dark neutral base for header/footer */
+  --color-primary: 23 23 23; /* Dark text */
+  --color-contrast: 255 255 255; /* Off-white backgrounds */
+  --color-accent: 37 99 235; /* Deep blue for CTAs - #2563eb */
+  --color-accent-hover: 29 78 216; /* Darker blue on hover - #1d4ed8 */
+  --color-success: 22 163 74; /* Green for success states */
+  --color-warning: 234 179 8; /* Yellow for warnings */
+
+  /* Typography */
   --font-size-fine: 0.75rem; /* text-xs */
   --font-size-copy: 1rem; /* text-base */
   --font-size-lead: 1.125rem; /* text-lg */
   --font-size-heading: 2rem; /* text-2xl */
   --font-size-display: 3rem; /* text-4xl */
+
+  /* Shopify */
   --color-shop-pay: #5a31f4;
-  --shop-pay-button--width: 100%; /* Sets the width for the shop-pay-button web component */
-  --height-nav: 3rem;
+  --shop-pay-button--width: 100%;
+
+  /* Layout */
+  --height-nav: 3.5rem;
   --screen-height: 100vh;
   --screen-height-dynamic: 100vh;
 
@@ -22,23 +33,15 @@
     --height-nav: 4rem;
   }
   @media (min-width: 48em) {
-    --height-nav: 6rem;
-    --font-size-heading: 2.25rem; /* text-4xl */
-    --font-size-display: 3.75rem; /* text-6xl */
+    --height-nav: 5rem;
+    --font-size-heading: 2.25rem;
+    --font-size-display: 3.75rem;
   }
   @supports (height: 100svh) {
     --screen-height: 100svh;
   }
   @supports (height: 100dvh) {
     --screen-height-dynamic: 100dvh;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-primary: 250 250 250;
-    --color-contrast: 32 33 36;
-    --color-accent: 235 86 40;
   }
 }
 

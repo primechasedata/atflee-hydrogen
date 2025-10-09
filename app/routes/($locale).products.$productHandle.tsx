@@ -34,6 +34,11 @@ import {Skeleton} from '~/components/Skeleton';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {ProductGallery} from '~/components/ProductGallery';
 import {TrustRow} from '~/components/TrustRow';
+import {Testimonials} from '~/components/Testimonials';
+import {FAQ} from '~/components/FAQ';
+import {InstallationGuide} from '~/components/InstallationGuide';
+import {VideoSection} from '~/components/VideoSection';
+import {ComparisonChart} from '~/components/ComparisonChart';
 import {IconCaret, IconCheck, IconClose} from '~/components/Icon';
 import {getExcerpt} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
@@ -194,6 +199,22 @@ export default function Product() {
           </div>
         </div>
       </Section>
+
+      {/* Video Demo */}
+      <VideoSection variant="inline" />
+
+      {/* Product-Specific Testimonials */}
+      <Testimonials title="What customers are saying" />
+
+      {/* Installation Guide */}
+      <InstallationGuide variant="compact" />
+
+      {/* Comparison Chart */}
+      <ComparisonChart />
+
+      {/* FAQ */}
+      <FAQ variant="compact" />
+
       <Suspense fallback={<Skeleton className="h-32" />}>
         <Await
           errorElement="There was a problem loading related products"

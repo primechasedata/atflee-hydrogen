@@ -12,6 +12,7 @@ import {CartLoading} from '~/components/CartLoading';
 import {Input} from '~/components/Input';
 import {Drawer, useDrawer} from '~/components/Drawer';
 import {CountrySelector} from '~/components/CountrySelector';
+import {EmailCapture} from '~/components/EmailCapture';
 import {
   IconMenu,
   IconCaret,
@@ -50,7 +51,7 @@ export function PageLayout({children, layout}: LayoutProps) {
         {headerMenu && layout?.shop.name && (
           <Header title={layout.shop.name} menu={headerMenu} />
         )}
-        <main role="main" id="mainContent" className="flex-grow">
+        <main role="main" id="mainContent" className="flex-grow pt-[var(--height-nav)]">
           {children}
         </main>
       </div>
@@ -146,17 +147,23 @@ function MenuMobileNav({
   menu: EnhancedMenu;
   onClose: () => void;
 }) {
+  // Blueprint navigation items
+  const navItems = [
+    {title: 'Home', to: '/'},
+    {title: 'Shop', to: '/collections/all'},
+    {title: 'Education', to: '/pages/education'},
+    {title: 'Customer Care', to: '/pages/customer-care'},
+  ];
+
   return (
     <nav className="grid gap-4 p-6 sm:gap-6 sm:px-12 sm:py-8">
-      {/* Top level menu items */}
-      {(menu?.items || []).map((item) => (
-        <span key={item.id} className="block">
+      {navItems.map((item) => (
+        <span key={item.to} className="block">
           <Link
             to={item.to}
-            target={item.target}
             onClick={onClose}
             className={({isActive}) =>
-              isActive ? 'pb-1 border-b -mb-px' : 'pb-1'
+              isActive ? 'pb-1 border-b-2 border-blue-600 font-semibold text-lg' : 'pb-1 text-lg hover:text-blue-600 transition-colors'
             }
           >
             <Text as="span" size="copy">
@@ -180,53 +187,26 @@ function MobileHeader({
   openCart: () => void;
   openMenu: () => void;
 }) {
-  // useHeaderStyleFix(containerStyle, setContainerStyle, isHome);
-
-  const params = useParams();
+  const {y} = useWindowScroll();
 
   return (
     <header
       role="banner"
       className={`${
-        isHome
-          ? 'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader'
-          : 'bg-contrast/80 text-primary'
-      } flex lg:hidden items-center h-nav sticky backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-4 px-4 md:px-8`}
+        y > 50 ? 'bg-[#171717] shadow-lg' : 'bg-[#171717]'
+      } flex lg:hidden items-center h-nav sticky z-50 top-0 justify-between w-full leading-none gap-4 px-4 md:px-8 text-white transition-all duration-300`}
     >
-      <div className="flex items-center justify-start w-full gap-4">
+      <div className="flex items-center justify-start gap-4">
         <button
           onClick={openMenu}
-          className="relative flex items-center justify-center w-8 h-8"
+          className="relative flex items-center justify-center w-8 h-8 hover:text-blue-400 transition-colors"
         >
           <IconMenu />
         </button>
-        <Form
-          method="get"
-          action={params.locale ? `/${params.locale}/search` : '/search'}
-          className="items-center gap-2 sm:flex"
-        >
-          <button
-            type="submit"
-            className="relative flex items-center justify-center w-8 h-8"
-          >
-            <IconSearch />
-          </button>
-          <Input
-            className={
-              isHome
-                ? 'focus:border-contrast/20 dark:focus:border-primary/20'
-                : 'focus:border-primary/20'
-            }
-            type="search"
-            variant="minisearch"
-            placeholder="Search"
-            name="q"
-          />
-        </Form>
       </div>
 
       <Link
-        className="flex items-center self-stretch leading-[3rem] md:leading-[4rem] justify-center flex-grow w-full h-full"
+        className="flex items-center self-stretch leading-[3rem] md:leading-[4rem] justify-center"
         to="/"
       >
         <Heading
@@ -237,8 +217,8 @@ function MobileHeader({
         </Heading>
       </Link>
 
-      <div className="flex items-center justify-end w-full gap-4">
-        <AccountLink className="relative flex items-center justify-center w-8 h-8" />
+      <div className="flex items-center justify-end gap-4">
+        <AccountLink className="relative flex items-center justify-center w-8 h-8 hover:text-blue-400 transition-colors" />
         <CartCount isHome={isHome} openCart={openCart} />
       </div>
     </header>
@@ -258,31 +238,36 @@ function DesktopHeader({
 }) {
   const params = useParams();
   const {y} = useWindowScroll();
+
+  // Blueprint navigation items
+  const navItems = [
+    {title: 'Home', to: '/'},
+    {title: 'Shop', to: '/collections/all'},
+    {title: 'Education', to: '/pages/education'},
+    {title: 'Customer Care', to: '/pages/customer-care'},
+  ];
+
   return (
     <header
       role="banner"
       className={`${
-        isHome
-          ? 'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader'
-          : 'bg-contrast/80 text-primary'
-      } ${
-        !isHome && y > 50 && ' shadow-lightHeader'
-      } hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8`}
+        y > 50 ? 'bg-[#171717] shadow-lg' : 'bg-[#171717]'
+      } hidden h-nav lg:flex items-center fixed transition-all duration-300 z-50 top-0 justify-between w-full leading-none gap-8 px-12 py-4 text-white`}
     >
-      <div className="flex gap-12">
-        <Link className="font-bold" to="/" prefetch="intent">
+      <div className="flex gap-12 items-center">
+        <Link className="font-bold text-xl" to="/" prefetch="intent">
           {title}
         </Link>
-        <nav className="flex gap-8">
-          {/* Top level menu items */}
-          {(menu?.items || []).map((item) => (
+        <nav className="flex gap-6">
+          {navItems.map((item) => (
             <Link
-              key={item.id}
+              key={item.to}
               to={item.to}
-              target={item.target}
               prefetch="intent"
               className={({isActive}) =>
-                isActive ? 'pb-1 border-b -mb-px' : 'pb-1'
+                isActive
+                  ? 'pb-1 border-b-2 border-blue-600 font-semibold'
+                  : 'pb-1 hover:text-blue-400 transition-colors'
               }
             >
               {item.title}
@@ -290,31 +275,8 @@ function DesktopHeader({
           ))}
         </nav>
       </div>
-      <div className="flex items-center gap-1">
-        <Form
-          method="get"
-          action={params.locale ? `/${params.locale}/search` : '/search'}
-          className="flex items-center gap-2"
-        >
-          <Input
-            className={
-              isHome
-                ? 'focus:border-contrast/20 dark:focus:border-primary/20'
-                : 'focus:border-primary/20'
-            }
-            type="search"
-            variant="minisearch"
-            placeholder="Search"
-            name="q"
-          />
-          <button
-            type="submit"
-            className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5"
-          >
-            <IconSearch />
-          </button>
-        </Form>
-        <AccountLink className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5" />
+      <div className="flex items-center gap-4">
+        <AccountLink className="relative flex items-center justify-center w-8 h-8 focus:ring-blue-600/50 hover:text-blue-400 transition-colors" />
         <CartCount isHome={isHome} openCart={openCart} />
       </div>
     </header>
@@ -377,30 +339,26 @@ function Badge({
       <>
         <IconBag />
         <div
-          className={`${
-            dark
-              ? 'text-primary bg-contrast dark:text-contrast dark:bg-primary'
-              : 'text-contrast bg-primary'
-          } absolute bottom-1 right-1 text-[0.625rem] font-medium subpixel-antialiased h-3 min-w-[0.75rem] flex items-center justify-center leading-none text-center rounded-full w-auto px-[0.125rem] pb-px`}
+          className="absolute bottom-1 right-1 text-[0.625rem] font-medium subpixel-antialiased h-3 min-w-[0.75rem] flex items-center justify-center leading-none text-center rounded-full w-auto px-[0.125rem] pb-px bg-blue-600 text-white"
         >
           <span>{count || 0}</span>
         </div>
       </>
     ),
-    [count, dark],
+    [count],
   );
 
   return isHydrated ? (
     <button
       onClick={openCart}
-      className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5"
+      className="relative flex items-center justify-center w-8 h-8 focus:ring-blue-600/50 hover:text-blue-400 transition-colors"
     >
       {BadgeCounter}
     </button>
   ) : (
     <Link
       to="/cart"
-      className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5"
+      className="relative flex items-center justify-center w-8 h-8 focus:ring-blue-600/50 hover:text-blue-400 transition-colors"
     >
       {BadgeCounter}
     </Link>
@@ -409,27 +367,116 @@ function Badge({
 
 function Footer({menu}: {menu?: EnhancedMenu}) {
   const isHome = useIsHomePath();
-  const itemsCount = menu
-    ? menu?.items?.length + 1 > 4
-      ? 4
-      : menu?.items?.length + 1
-    : [];
 
   return (
     <Section
       divider={isHome ? 'none' : 'top'}
       as="footer"
       role="contentinfo"
-      className={`grid min-h-[25rem] items-start grid-flow-row w-full gap-6 py-8 px-6 md:px-8 lg:px-12 md:gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-${itemsCount}
-        bg-primary dark:bg-contrast dark:text-primary text-contrast overflow-hidden`}
+      className="bg-[#171717] text-white"
     >
-      <FooterMenu menu={menu} />
-      <CountrySelector />
-      <div
-        className={`self-end pt-8 opacity-50 md:col-span-2 lg:col-span-${itemsCount}`}
-      >
-        &copy; {new Date().getFullYear()} / Shopify, Inc. Hydrogen is an MIT
-        Licensed Open Source project.
+      <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Quick Links */}
+          <div>
+            <Heading size="lead" as="h3" className="text-white mb-4">
+              Quick Links
+            </Heading>
+            <nav className="grid gap-2">
+              <Link to="/pages/customer-care" className="text-gray-400 hover:text-white transition-colors text-sm">
+                FAQs
+              </Link>
+              <Link to="/pages/customer-care#contact" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Contact
+              </Link>
+              <Link to="/search" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Search
+              </Link>
+            </nav>
+          </div>
+
+          {/* Information */}
+          <div>
+            <Heading size="lead" as="h3" className="text-white mb-4">
+              Information
+            </Heading>
+            <nav className="grid gap-2">
+              <Link to="/policies/shipping-policy" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Shipping Policy
+              </Link>
+              <Link to="/policies/terms-of-service" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Terms of Service
+              </Link>
+              <Link to="/policies/privacy-policy" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Privacy Policy
+              </Link>
+              <Link to="/policies/refund-policy" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Refund Policy
+              </Link>
+            </nav>
+          </div>
+
+          {/* Resources */}
+          <div>
+            <Heading size="lead" as="h3" className="text-white mb-4">
+              Resources
+            </Heading>
+            <nav className="grid gap-2">
+              <Link to="/pages/education" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Education Hub
+              </Link>
+              <Link to="/pages/education/workouts" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Workouts
+              </Link>
+              <Link to="/pages/education/habit-builder" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Habit Builder
+              </Link>
+              <Link to="/pages/education/product-reviews" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Reviews
+              </Link>
+            </nav>
+          </div>
+
+          {/* Newsletter */}
+          <div>
+            <Heading size="lead" as="h3" className="text-white mb-4">
+              Stay Connected
+            </Heading>
+            <p className="text-gray-400 text-sm mb-4">
+              Get fitness tips & exclusive deals
+            </p>
+            <form className="space-y-2">
+              <input
+                type="email"
+                placeholder="Your email"
+                className="w-full rounded-md bg-gray-800 border border-gray-700 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+              />
+              <button
+                type="submit"
+                className="w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* Payment Icons and Copyright */}
+        <div className="mt-12 pt-8 border-t border-gray-800">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="text-sm text-gray-400">
+              &copy; {new Date().getFullYear()} Trahere. All rights reserved.
+            </div>
+            <div className="flex items-center gap-4 text-sm text-gray-400">
+              <span>Payment methods:</span>
+              <div className="flex gap-2">
+                <span className="text-xs bg-gray-800 px-2 py-1 rounded">PayPal</span>
+                <span className="text-xs bg-gray-800 px-2 py-1 rounded">Venmo</span>
+                <span className="text-xs bg-gray-800 px-2 py-1 rounded">Card</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </Section>
   );
