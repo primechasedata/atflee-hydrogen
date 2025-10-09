@@ -14,7 +14,7 @@ import {Button} from '~/components/Button';
 import {AddToCartButton} from '~/components/AddToCartButton';
 import {StatChips} from '~/components/StatChips';
 import {LifestyleTiles} from '~/components/LifestyleTiles';
-import {IconCheck} from '~/components/Icon';
+import {IconCheck, IconShield, IconTruck, IconSparkle, IconLock} from '~/components/Icon';
 import {Newsletter} from '~/components/Newsletter';
 import {Heading, Text} from '~/components/Text';
 import {OriginStory} from '~/components/OriginStory';
@@ -534,32 +534,26 @@ function SocialProofSection() {
 }
 
 function TrustElementsSection() {
+  const items = [
+    {icon: <IconSparkle className="w-6 h-6 text-[rgb(var(--color-accent))]" />, title: 'Expert Support', description: 'Answers in < 24 hours'},
+    {icon: <IconTruck className="w-6 h-6 text-[rgb(var(--color-accent))]" />, title: 'Free Shipping', description: 'On orders over $200'},
+    {icon: <IconShield className="w-6 h-6 text-[rgb(var(--color-accent))]" />, title: '30-Day Trial', description: 'Risk-free returns'},
+    {icon: <IconLock className="w-6 h-6 text-[rgb(var(--color-accent))]" />, title: 'Secure Checkout', description: 'SSL encrypted'},
+  ];
   return (
-    <section className="py-12">
+    <section className="py-8">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="glass-soft rounded-xl p-6 md:p-8 ring-1 ring-white/10">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-            {[
-              {icon: '🎯', title: 'Expert Support', description: 'Answers in < 24 hours'},
-              {icon: '📦', title: 'Free Shipping', description: 'On orders over $200'},
-              {icon: '✅', title: '30-Day Trial', description: 'Risk-free returns'},
-              {icon: '🔒', title: 'Secure Checkout', description: 'SSL encrypted'}
-            ].map((item) => (
-              <div key={item.title} className="text-center">
-                <div className="text-4xl mb-3">{item.icon}</div>
-                <h3 className="font-semibold text-primary">{item.title}</h3>
-                <p className="mt-1 text-sm text-primary/70">{item.description}</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center">
+          {items.map((it) => (
+            <div key={it.title} className="flex items-center gap-3">
+              {it.icon}
+              <div>
+                <div className="text-sm font-semibold text-primary leading-tight">{it.title}</div>
+                <div className="text-xs text-primary/70 leading-tight">{it.description}</div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-
-        {count < list.length && (
-          <div className="mt-8 text-center">
-            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
-          </div>
-        )}
-
       </div>
     </section>
   );

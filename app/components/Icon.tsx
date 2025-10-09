@@ -270,3 +270,45 @@ export function IconFilters(props: IconProps) {
     </Icon>
   );
 }
+
+// Duotone-styled simple icons using accent as secondary via currentColor
+export function IconShield(props: IconProps) {
+  return (
+    <Icon {...props} fill="transparent" stroke={props.stroke || 'currentColor'}>
+      <title>Shield</title>
+      <path d="M10 2.5L4 4.5v5c0 4 4 6.5 6 7.5 2-1 6-3.5 6-7.5v-5L10 2.5Z" strokeWidth={1.25} />
+      <path d="M10 6v8" strokeWidth={1.25} />
+    </Icon>
+  );
+}
+
+export function IconTruck(props: IconProps) {
+  return (
+    <Icon {...props} fill="transparent" stroke={props.stroke || 'currentColor'}>
+      <title>Truck</title>
+      <rect x="2" y="7" width="9" height="6" rx="1" strokeWidth={1.25} />
+      <path d="M11 8h3l2 2v3h-5" strokeWidth={1.25} />
+      <circle cx="6" cy="14" r="1" />
+      <circle cx="15" cy="14" r="1" />
+    </Icon>
+  );
+}
+
+export function IconSparkle(props: IconProps) {
+  return (
+    <Icon {...props} fill="transparent" stroke={props.stroke || 'currentColor'}>
+      <title>Sparkle</title>
+      <path d="M10 4l1.5 3.5L15 9l-3.5 1.5L10 14 8.5 10.5 5 9l3.5-1.5L10 4Z" strokeWidth={1.25} />
+    </Icon>
+  );
+}
+
+export function IconLock(props: IconProps) {
+  return (
+    <Icon {...props} fill="transparent" stroke={props.stroke || 'currentColor'}>
+      <title>Lock</title>
+      <rect x="4" y="9" width="12" height="8" rx="2" strokeWidth={1.25} />
+      <path d="M7 9V7a3 3 0 0 1 6 0v2" strokeWidth={1.25} />
+    </Icon>
+  );
+}
