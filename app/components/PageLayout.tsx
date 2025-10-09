@@ -193,7 +193,7 @@ function MobileHeader({
     <header
       role="banner"
       className={`${
-        y > 50 ? 'bg-[#171717] shadow-lg' : 'bg-[#171717]'
+        y > 80 ? 'glass-strong bg-[#0B121C]/70 border-b border-white/10' : 'bg-[#0B121C]'
       } flex lg:hidden items-center h-nav sticky z-50 top-0 justify-between w-full leading-none gap-4 px-4 md:px-8 text-white transition-all duration-300`}
     >
       <div className="flex items-center justify-start gap-4">
@@ -251,7 +251,7 @@ function DesktopHeader({
     <header
       role="banner"
       className={`${
-        y > 50 ? 'bg-[#171717] shadow-lg' : 'bg-[#171717]'
+        y > 80 ? 'glass-strong bg-[#0B121C]/70 border-b border-white/10' : 'bg-[#0B121C]'
       } hidden h-nav lg:flex items-center fixed transition-all duration-300 z-50 top-0 justify-between w-full leading-none gap-8 px-12 py-4 text-white`}
     >
       <div className="flex gap-12 items-center">

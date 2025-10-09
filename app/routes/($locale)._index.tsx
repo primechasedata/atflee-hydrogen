@@ -13,6 +13,7 @@ import {Link} from '~/components/Link';
 import {Button} from '~/components/Button';
 import {AddToCartButton} from '~/components/AddToCartButton';
 import {StatChips} from '~/components/StatChips';
+import {LifestyleTiles} from '~/components/LifestyleTiles';
 import {IconCheck} from '~/components/Icon';
 import {Newsletter} from '~/components/Newsletter';
 import {Heading, Text} from '~/components/Text';
@@ -231,6 +232,13 @@ function HeroSection({product}: {product: any}) {
             </div>
           </Reveal
         </div>
+
+        {count < list.length && (
+          <div className="mt-8 text-center">
+            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
+          </div>
+        )}
+
       </div>
     </section>
   );
@@ -243,6 +251,8 @@ function ProductHighlight({product}: {product: any}) {
   const compareAtPrice = product.selectedOrFirstAvailableVariant?.compareAtPrice;
   const productHandle = product.handle;
 
+  const [count, setCount] = React.useState(6);
+  const list = [...testimonials, ...testimonials];
   return (
     <section className="py-16">
       <div className="mx-auto max-w-3xl px-6 lg:px-8">
@@ -314,12 +324,21 @@ function ProductHighlight({product}: {product: any}) {
             </div>
           </div>
         </div>
+
+        {count < list.length && (
+          <div className="mt-8 text-center">
+            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
+          </div>
+        )}
+
       </div>
     </section>
   );
 }
 
 function BuildHabitsSection() {
+  const [count, setCount] = React.useState(6);
+  const list = [...testimonials, ...testimonials];
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -328,19 +347,7 @@ function BuildHabitsSection() {
           <Text as="p" size="lead" className="mt-4 text-primary/70">No commute. No crowds. Just consistent progress.</Text>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {[
-            { title: 'Morning routine', description: '3 minutes to stronger shoulders. Start your day with energy.', icon: '☀️' },
-            { title: 'Evening wind-down', description: 'Build upper body strength while you decompress from the day.', icon: '🌙' },
-            { title: 'Anywhere, anytime', description: 'Install in seconds, train for minutes, remove instantly.', icon: '🏠' },
-          ].map((item) => (
-            <div key={item.title} className="glass-soft rounded-xl p-8 ring-1 ring-white/10 transition hover-lift">
-              <div className="text-4xl mb-4">{item.icon}</div>
-              <Heading as="h3" size="copy" className="text-primary font-semibold">{item.title}</Heading>
-              <Text as="p" size="copy" className="mt-3 text-primary/70">{item.description}</Text>
-            </div>
-          ))}
-        </div>
+        <LifestyleTiles />
 
         <div className="mt-10 text-center">
           <Link to="/pages/education" className="inline-flex items-center text-base font-semibold text-[rgb(var(--color-accent))] hover:text-primary">
@@ -348,6 +355,13 @@ function BuildHabitsSection() {
             <span aria-hidden="true" className="ml-2">→</span>
           </Link>
         </div>
+
+        {count < list.length && (
+          <div className="mt-8 text-center">
+            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
+          </div>
+        )}
+
       </div>
     </section>
   );
@@ -370,54 +384,73 @@ function ComparisonSection() {
           <Text as="p" size="lead" className="mt-4 text-primary/70">See what makes the TB7 different</Text>
         </div>
 
-        <div className="mt-12 overflow-hidden rounded-xl glass-tint">
+        <div className="mt-12 overflow-x-auto rounded-xl glass-tint">
           <table className="min-w-full divide-y divide-white/10">
             <thead className="bg-white/5">
               <tr>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-primary">Feature</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-[rgb(var(--color-accent))]">TB7</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-primary">Generic Bars</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-primary sticky left-0 bg-white/5 backdrop-blur">Feature</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-[rgb(var(--color-accent))] sticky top-0 bg-white/5">TB7</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-primary sticky top-0 bg-white/5">Generic Bars</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-white/10">
               {features.map((row, idx) => (
                 <tr key={idx} className="">
-                  <td className="px-6 py-4 text-sm font-medium text-primary/90">{row.feature}</td>
-                  <td className="px-6 py-4 text-sm text-primary font-semibold bg-white/5">{row.tb7}</td>
-                  <td className="px-6 py-4 text-sm text-primary/70">{row.generic}</td>
+                  <td className="px-6 py-4 text-sm font-medium text-primary/90 whitespace-nowrap sticky left-0 bg-white/5 backdrop-blur">{row.feature}</td>
+                  <td className="px-6 py-4 text-sm text-primary font-semibold bg-white/5 whitespace-nowrap">{row.tb7}</td>
+                  <td className="px-6 py-4 text-sm text-primary/70 whitespace-nowrap">{row.generic}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+
+        {count < list.length && (
+          <div className="mt-8 text-center">
+            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
+          </div>
+        )}
+
       </div>
     </section>
   );
 }
 
 function FeatureDetails() {
+  const specs = [
+    {label: 'Doorway Width', value: '31.9–36.6 inches'},
+    {label: 'Recommended Capacity', value: '260 lb'},
+    {label: 'Tested Capacity', value: '573 lb'},
+    {label: 'Grip Width', value: '24 inches'},
+    {label: 'Installation', value: 'Tool-free (10 seconds)'},
+    {label: 'Warranty', value: '2 years'},
+  ];
+  const primary = specs.slice(0, 4);
+  const [count, setCount] = React.useState(6);
+  const list = [...testimonials, ...testimonials];
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-12">
           <Heading as="h2" size="heading" className="text-primary">Technical Specifications</Heading>
         </div>
-
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {[
-            {label: 'Doorway Width', value: '31.9–36.6 inches'},
-            {label: 'Recommended Capacity', value: '260 lb'},
-            {label: 'Tested Capacity', value: '573 lb'},
-            {label: 'Grip Width', value: '24 inches'},
-            {label: 'Installation', value: 'Tool-free (10 seconds)'},
-            {label: 'Warranty', value: '2 years'}
-          ].map((spec) => (
-            <div key={spec.label} className="glass-soft rounded-lg p-6 ring-1 ring-white/10">
-              <dt className="text-sm font-medium text-primary/70">{spec.label}</dt>
-              <dd className="mt-2 text-2xl font-bold text-primary">{spec.value}</dd>
-            </div>
-          ))}
+        <div className="glass-strong stroke-gradient rounded-2xl p-6 md:p-8">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {primary.map((spec) => (
+              <div key={spec.label} className="px-2">
+                <dt className="text-sm font-medium text-primary/70 truncate">{spec.label}</dt>
+                <dd className="mt-2 text-xl font-bold text-primary truncate">{spec.value}</dd>
+              </div>
+            ))}
+          </div>
         </div>
+
+        {count < list.length && (
+          <div className="mt-8 text-center">
+            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
+          </div>
+        )}
+
       </div>
     </section>
   );
@@ -445,6 +478,8 @@ function SocialProofSection() {
     }
   ];
 
+  const [count, setCount] = React.useState(6);
+  const list = [...testimonials, ...testimonials];
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -462,7 +497,7 @@ function SocialProofSection() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {testimonials.map((testimonial, idx) => (
+          {list.slice(0, count).map((testimonial, idx) => (
             <div key={idx} className="glass-soft rounded-xl p-6 ring-1 ring-white/10 hover-lift">
               <div className="flex text-yellow-400 mb-3">
                 {Array.from({length: testimonial.rating}).map((_, i) => (
@@ -477,6 +512,13 @@ function SocialProofSection() {
             </div>
           ))}
         </div>
+
+        {count < list.length && (
+          <div className="mt-8 text-center">
+            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
+          </div>
+        )}
+
       </div>
     </section>
   );
@@ -502,12 +544,21 @@ function TrustElementsSection() {
             ))}
           </div>
         </div>
+
+        {count < list.length && (
+          <div className="mt-8 text-center">
+            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
+          </div>
+        )}
+
       </div>
     </section>
   );
 }
 
 function NewsletterSection() {
+  const [count, setCount] = React.useState(6);
+  const list = [...testimonials, ...testimonials];
   return (
     <section className="py-16">
       <div className="mx-auto max-w-2xl px-6 lg:px-8">
@@ -517,6 +568,13 @@ function NewsletterSection() {
             description="Join our community and never miss a workout tip or special offer."
           />
         </div>
+
+        {count < list.length && (
+          <div className="mt-8 text-center">
+            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
+          </div>
+        )}
+
       </div>
     </section>
   );

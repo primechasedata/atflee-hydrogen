@@ -1,5 +1,7 @@
 import {Heading, Text} from '~/components/Text';
 
+import {useState} from 'react';
+
 export function ProductTimeline() {
   const milestones = [
     {
@@ -46,6 +48,7 @@ export function ProductTimeline() {
     },
   ];
 
+  const [active, setActive] = useState<number | null>(null);
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -60,7 +63,14 @@ export function ProductTimeline() {
 
           <div className="space-y-12">
             {milestones.map((milestone, idx) => (
-              <div key={idx} className={`relative flex items-center gap-8 ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
+              <div
+                key={idx}
+                className={`relative flex items-center gap-8 ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+                onMouseEnter={() => setActive(idx)}
+                onMouseLeave={() => setActive((cur) => (cur === idx ? null : cur))}
+                onFocus={() => setActive(idx)}
+                onBlur={() => setActive((cur) => (cur === idx ? null : cur))}
+              >
                 {/* Content */}
                 <div className={`flex-1 ${idx % 2 === 0 ? 'md:text-right' : 'md:text-left'}`}>
                   <div className="glass-soft rounded-xl p-6 ring-1 ring-white/10">
@@ -84,6 +94,13 @@ export function ProductTimeline() {
 
                 {/* Spacer for alternating layout */}
                 <div className="hidden md:block flex-1"></div>
+
+                {/* Tooltip */}
+                {active === idx && (
+                  <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 translate-y-full glass-strong rounded-lg p-4 ring-1 ring-white/10 max-w-xs">
+                    <p className="text-sm text-primary/80">{milestone.description}</p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
