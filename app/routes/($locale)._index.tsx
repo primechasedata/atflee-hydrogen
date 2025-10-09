@@ -453,6 +453,8 @@ function SocialProofSection() {
       text: 'Worth every penny. Feels rock-solid and the padding protects my door frame perfectly.'
     }
   ];
+  const [count, setCount] = useState(6);
+  const list = testimonials;
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -498,6 +500,8 @@ function TrustElementsSection() {
     {icon: <IconShield className="w-6 h-6 text-[rgb(var(--color-accent))]" />, title: '30-Day Trial', description: 'Risk-free returns'},
     {icon: <IconLock className="w-6 h-6 text-[rgb(var(--color-accent))]" />, title: 'Secure Checkout', description: 'SSL encrypted'},
   ];
+  const [count, setCount] = useState(6);
+  const list = testimonials;
   return (
     <section className="py-8">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
