@@ -1,8 +1,7 @@
 import {Form, useActionData, useNavigation} from '@remix-run/react';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 
-type NewsletterActionData = {
-  success?: boolean;
+type NewsletterResponse = { success?: boolean; error?: string; message?: string } | undefined;
   error?: string;
   message?: string;
 };
@@ -16,27 +15,28 @@ export function Newsletter({
   description?: string;
   className?: string;
 }) {
-  const actionData = useActionData<NewsletterActionData>();
-  const navigation = useNavigation();
+  const fetcher = useFetcher<NewsletterResponse>();
   const [email, setEmail] = useState('');
+  const liveRef = useRef<HTMLDivElement | null>(null);
 
-  const isSubmitting = navigation.state === 'submitting';
+  const isSubmitting = fetcher.state === 'submitting';
 
   // Reset email field on successful submission
   useEffect(() => {
-    if (actionData?.success) {
-      setEmail('');
+    if (fetcher.data?.success) setEmail('');
+    if (liveRef.current && (fetcher.data?.success || fetcher.data?.error)) {
+      liveRef.current.focus();
     }
-  }, [actionData?.success]);
+  }, [fetcher.data]);
 
   return (
     <div className={`rounded-2xl bg-blue-600 px-8 py-12 text-center ${className}`}>
-      <h2 className="text-3xl font-bold tracking-tight text-white">{title}</h2>
-      <p className="mt-4 text-lg text-blue-100">{description}</p>
+      <h2 className="text-3xl font-bold tracking-tight  text-primary">{title}</h2>
+      <p className="mt-4 text-lg text-primary/70">{description}</p>
 
-      <Form
+      <fetcher.Form
         method="post"
-        action="/api/newsletter"
+        action="/api/newsletter" aria-labelledby="newsletter-heading"
         className="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
       >
         <input
@@ -45,33 +45,36 @@ export function Newsletter({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
-          className="flex-1 rounded-md border-0 px-4 py-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-white"
+          className="flex-1 rounded-md bg-white/5 border border-white/10 px-4 py-3 text-primary placeholder:text-primary/50 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent"
           required
           disabled={isSubmitting}
         />
         <button
           type="submit"
-          className="rounded-md bg-white px-6 py-3 text-base font-semibold text-blue-600 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-accent disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={isSubmitting}
         >
           {isSubmitting ? 'Subscribing...' : 'Subscribe'}
         </button>
-      </Form>
+      </fetcher.Form>
 
       {/* Success/Error Messages */}
-      {actionData?.success && (
-        <div className="mt-4 rounded-md bg-green-50 p-4 max-w-md mx-auto">
-          <p className="text-sm font-medium text-green-800">
-            {actionData.message || 'Successfully subscribed!'}
-          </p>
-        </div>
-      )}
+      
 
-      {actionData?.error && (
-        <div className="mt-4 rounded-md bg-red-50 p-4 max-w-md mx-auto">
-          <p className="text-sm font-medium text-red-800">{actionData.error}</p>
-        </div>
-      )}
+      
+    <div ref={liveRef} tabIndex={-1} aria-live="polite" className="mt-4 max-w-md mx-auto">
+        {fetcher.data?.success && (
+          <div className="rounded-md bg-green-500/10 ring-1 ring-green-400/20 p-4">
+            <p className="text-sm text-green-200">{fetcher.data.message || 'Thank you for subscribing! Check your inbox.'}</p>
+          </div>
+        )}
+        {fetcher.data?.error && (
+          <div className="rounded-md bg-red-500/10 ring-1 ring-red-400/20 p-4">
+            <p className="text-sm text-red-200">{fetcher.data.error}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+

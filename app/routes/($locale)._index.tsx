@@ -11,6 +11,8 @@ import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
 import {Link} from '~/components/Link';
 import {Button} from '~/components/Button';
+import {AddToCartButton} from '~/components/AddToCartButton';
+import {StatChips} from '~/components/StatChips';
 import {IconCheck} from '~/components/Icon';
 import {Newsletter} from '~/components/Newsletter';
 import {Heading, Text} from '~/components/Text';
@@ -107,6 +109,8 @@ export default function Homepage() {
 
       {/* 12. Final CTA - Newsletter */}
       <NewsletterSection />
+      {/* Sticky buy bar */}
+      <StickyBuyBar product={featuredProduct} />
     </div>
   );
 }
@@ -172,6 +176,7 @@ function HeroSection({product}: {product: any}) {
             <div className="glass rounded-2xl p-6 md:p-8">
               <Heading as="h1" size="display" className="text-primary">Transform your doorframe into a personal gym</Heading>
               <Text as="p" size="lead" className="mt-4 text-primary/70">Wide 24" grip • Tool-free install • Fits most doorways • Protective padding • 260 lb capacity (tested to 573 lb)</Text>
+              <StatChips />
               <div className="mt-8 flex items-center gap-4">
                 <Link to={`/products/${productHandle}`} className="btn-accent hover-scale">
                   Shop TB7
@@ -198,8 +203,33 @@ function HeroSection({product}: {product: any}) {
                   <span className="text-primary/50">Product Image</span>
                 </div>
               )}
+              {/* Price card overlay */}
+              <div className="absolute bottom-4 left-4 right-auto glass-strong stroke-gradient rounded-xl px-4 py-3">
+                <div className="flex items-center gap-3">
+                  <div className="text-yellow-300">★★★★★</div>
+                  {product?.selectedOrFirstAvailableVariant?.price && (
+                    <div className="text-xl font-bold text-primary flex items-baseline gap-2">
+                      <Money data={product.selectedOrFirstAvailableVariant.price} />
+                      <span className="text-xs text-primary/70">Free shipping</span>
+                    </div>
+                  )}
+                </div>
+                {product?.selectedOrFirstAvailableVariant?.id && (
+                  <div className="mt-2">
+                    <AddToCartButton
+                      width="full"
+                      variant="primary"
+                      className="btn-accent w-full hover-scale"
+                      lines={[{merchandiseId: product.selectedOrFirstAvailableVariant.id, quantity: 1}]}
+                      aria-label="Add TB7 to cart"
+                    >
+                      Add to Cart
+                    </AddToCartButton>
+                  </div>
+                )}
+              </div>
             </div>
-          </Reveal>
+          </Reveal
         </div>
       </div>
     </section>
@@ -519,3 +549,30 @@ const FEATURED_PRODUCT_QUERY = `#graphql
     }
   }
 ` as const;
+
+
+function StickyBuyBar({product}: {product: any}) {
+  const {selectedOrFirstAvailableVariant} = product || {};
+  if (!selectedOrFirstAvailableVariant) return null;
+  return (
+    <div className="fixed bottom-0 left-0 right-0 z-40 backdrop-blur supports-[backdrop-filter]:glass-strong bg-[#0B121C]/70 md:rounded-t-xl border-t border-white/10 p-3 hidden sm:block">
+      <div className="mx-auto max-w-5xl flex items-center justify-between gap-4">
+        <div className="flex items-baseline gap-3 text-primary">
+          <span className="text-sm">TB7</span>
+          <span className="text-xl font-bold">
+            {product?.selectedOrFirstAvailableVariant?.price && (<Money data={selectedOrFirstAvailableVariant.price} />)}
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          <AddToCartButton
+            variant="primary"
+            className="btn-accent hover-scale"
+            lines={[{merchandiseId: selectedOrFirstAvailableVariant.id, quantity: 1}]}
+          >
+            Add to Cart
+          </AddToCartButton>
+        </div>
+      </div>
+    </div>
+  );
+}
