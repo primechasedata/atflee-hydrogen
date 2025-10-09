@@ -3,7 +3,7 @@ import {
   type MetaArgs,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
-import {Suspense} from 'react';
+import {Suspense, useEffect, useRef} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {getSeoMeta, Money} from '@shopify/hydrogen';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
@@ -13,6 +13,7 @@ import {Link} from '~/components/Link';
 import {Button} from '~/components/Button';
 import {IconCheck} from '~/components/Icon';
 import {Newsletter} from '~/components/Newsletter';
+import {Heading, Text} from '~/components/Text';
 import {OriginStory} from '~/components/OriginStory';
 import {ProductTimeline} from '~/components/ProductTimeline';
 import {ExpertEndorsement} from '~/components/ExpertEndorsement';
@@ -112,23 +113,67 @@ export default function Homepage() {
 
 function HeroSection({product}: {product: any}) {
   const productHandle = product?.handle || 'tb7-widest-grip-doorway-pull-up-bar';
+  const parallaxRef = useRef<HTMLDivElement | null>(null);
+  const tiltRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = parallaxRef.current;
+    if (!el) return;
+    let raf = 0 as number;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const y = window.scrollY * 0.05;
+        el.style.transform = `translateY(${y.toFixed(2)}px)`;
+      });
+    };
+    window.addEventListener('scroll', onScroll, {passive: true});
+    onScroll();
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  useEffect(() => {
+    const el = tiltRef.current;
+    if (!el) return;
+    const onMove = (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = (e.clientX - cx) / rect.width;
+      const dy = (e.clientY - cy) / rect.height;
+      const rx = dy * -6;
+      const ry = dx * 6;
+      el.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+    };
+    const onLeave = () => {
+      el.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+    };
+    el.addEventListener('mousemove', onMove);
+    el.addEventListener('mouseleave', onLeave);
+    return () => {
+      el.removeEventListener('mousemove', onMove);
+      el.removeEventListener('mouseleave', onLeave);
+    };
+  }, []);
 
   return (
     <section className="relative bg-hero py-20 md:py-28 overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true"></div>
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div ref={parallaxRef} className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-[rgb(var(--color-accent))]/20 blur-3xl float-slow"></div>
+        <div className="absolute -bottom-20 right-0 h-72 w-72 rounded-full bg-white/5 blur-3xl float-slower"></div>
+      </div>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Left Column - Glass Text Card */}
           <Reveal className="max-w-2xl">
             <div className="glass rounded-2xl p-6 md:p-8">
-              <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl lg:text-6xl">
-                Transform your doorframe into a personal gym
-              </h1>
-              <p className="mt-6 text-lg leading-8 text-primary/70">
-                Wide 24" grip • Tool-free install • Fits most doorways • Protective padding • 260 lb capacity (tested to 573 lb)
-              </p>
+              <Heading as="h1" size="display" className="text-primary">Transform your doorframe into a personal gym</Heading>
+              <Text as="p" size="lead" className="mt-4 text-primary/70">Wide 24" grip • Tool-free install • Fits most doorways • Protective padding • 260 lb capacity (tested to 573 lb)</Text>
               <div className="mt-8 flex items-center gap-4">
-                <Link to={`/products/${productHandle}`} className="btn-accent">
+                <Link to={`/products/${productHandle}`} className="btn-accent hover-scale">
                   Shop TB7
                 </Link>
                 <a href="#comparison" className="text-base font-semibold leading-7 text-primary hover:text-[rgb(var(--color-accent))] transition-colors">
@@ -140,7 +185,7 @@ function HeroSection({product}: {product: any}) {
 
           {/* Right Column - Visual */}
           <Reveal className="relative">
-            <div className="aspect-[4/3] overflow-hidden rounded-2xl glass-soft ring-1 ring-white/10">
+            <div ref={tiltRef} className="aspect-[4/3] overflow-hidden rounded-2xl glass-soft ring-1 ring-white/10 will-tilt">
               {product?.featuredImage?.url ? (
                 <img
                   src={product.featuredImage.url}
@@ -222,7 +267,7 @@ function ProductHighlight({product}: {product: any}) {
           <div className="mt-8 space-y-4">
             <Link
               to={`/products/${productHandle}`}
-              className="block w-full text-center btn-accent"
+              className="block w-full text-center btn-accent hover-scale"
             >
               Buy Now
             </Link>
@@ -249,8 +294,8 @@ function BuildHabitsSection() {
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">Build habits anywhere</h2>
-          <p className="mt-4 text-lg text-primary/70">No commute. No crowds. Just consistent progress.</p>
+          <Heading as="h2" size="heading" className="text-primary">Build habits anywhere</Heading>
+          <Text as="p" size="lead" className="mt-4 text-primary/70">No commute. No crowds. Just consistent progress.</Text>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -259,10 +304,10 @@ function BuildHabitsSection() {
             { title: 'Evening wind-down', description: 'Build upper body strength while you decompress from the day.', icon: '🌙' },
             { title: 'Anywhere, anytime', description: 'Install in seconds, train for minutes, remove instantly.', icon: '🏠' },
           ].map((item) => (
-            <div key={item.title} className="glass-soft rounded-xl p-8 ring-1 ring-white/10 transition transform hover:-translate-y-0.5">
+            <div key={item.title} className="glass-soft rounded-xl p-8 ring-1 ring-white/10 transition hover-lift">
               <div className="text-4xl mb-4">{item.icon}</div>
-              <h3 className="text-xl font-semibold text-primary">{item.title}</h3>
-              <p className="mt-3 text-primary/70">{item.description}</p>
+              <Heading as="h3" size="copy" className="text-primary font-semibold">{item.title}</Heading>
+              <Text as="p" size="copy" className="mt-3 text-primary/70">{item.description}</Text>
             </div>
           ))}
         </div>
@@ -291,8 +336,8 @@ function ComparisonSection() {
     <section id="comparison" className="py-16">
       <div className="mx-auto max-w-5xl px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">TB7 vs Generic Pull-Up Bars</h2>
-          <p className="mt-4 text-lg text-primary/70">See what makes the TB7 different</p>
+          <Heading as="h2" size="heading" className="text-primary">TB7 vs Generic Pull-Up Bars</Heading>
+          <Text as="p" size="lead" className="mt-4 text-primary/70">See what makes the TB7 different</Text>
         </div>
 
         <div className="mt-12 overflow-hidden rounded-xl glass-tint">
@@ -325,7 +370,7 @@ function FeatureDetails() {
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">Technical Specifications</h2>
+          <Heading as="h2" size="heading" className="text-primary">Technical Specifications</Heading>
         </div>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -374,7 +419,7 @@ function SocialProofSection() {
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">What customers are saying</h2>
+          <Heading as="h2" size="heading" className="text-primary">What customers are saying</Heading>
           <div className="mt-4 flex items-center justify-center gap-2">
             <div className="flex text-yellow-400 text-xl">
               {'★★★★★'.split('').map((star, i) => (
@@ -388,7 +433,7 @@ function SocialProofSection() {
 
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
           {testimonials.map((testimonial, idx) => (
-            <div key={idx} className="glass-soft rounded-xl p-6 ring-1 ring-white/10">
+            <div key={idx} className="glass-soft rounded-xl p-6 ring-1 ring-white/10 hover-lift">
               <div className="flex text-yellow-400 mb-3">
                 {Array.from({length: testimonial.rating}).map((_, i) => (
                   <span key={i}>★</span>

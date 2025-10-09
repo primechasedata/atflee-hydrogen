@@ -1,10 +1,12 @@
+import {Heading, Text} from '~/components/Text';
+
 export function OriginStory() {
   return (
     <section className="py-16">
       <div className="mx-auto max-w-4xl px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">Why we built the TB7</h2>
-          <p className="mt-4 text-lg text-primary/70">Born from frustration with generic equipment that didn't work.</p>
+          <Heading as="h2" size="heading" className="text-primary">Why we built the TB7</Heading>
+          <Text as="p" size="lead" className="mt-4 text-primary/70">Born from frustration with generic equipment that didn't work.</Text>
         </div>
 
         <div className="prose prose-lg max-w-none">

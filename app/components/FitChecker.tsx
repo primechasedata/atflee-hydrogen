@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {IconCheck, IconClose} from '~/components/Icon';
 import {Reveal} from '~/components/Reveal';
+import {Heading, Text} from '~/components/Text';
 
 export function FitChecker() {
   const [doorwayWidth, setDoorwayWidth] = useState('');
@@ -29,12 +30,8 @@ export function FitChecker() {
     <section className="py-20">
       <div className="mx-auto max-w-3xl px-6 lg:px-8">
         <Reveal className="text-center mb-8">
-          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
-            Will it fit your doorway?
-          </h2>
-          <p className="mt-4 text-lg text-primary/70">
-            Check compatibility in seconds. The TB7 fits doorways between {MIN_WIDTH}–{MAX_WIDTH} inches wide.
-          </p>
+          <Heading as="h2" size="heading" className="text-primary">Will it fit your doorway?</Heading>
+          <Text as="p" size="lead" className="mt-4 text-primary/70">Check compatibility in seconds. The TB7 fits doorways between {MIN_WIDTH}–{MAX_WIDTH} inches wide.</Text>
         </Reveal>
 
         <Reveal>
