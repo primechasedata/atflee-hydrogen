@@ -192,18 +192,27 @@ function HeroSection({product}: {product: any}) {
           {/* Right Column - Visual */}
           <Reveal className="relative">
             <div ref={tiltRef} className="aspect-[4/3] overflow-hidden rounded-2xl glass-soft ring-1 ring-white/10 will-tilt">
-              {product?.featuredImage?.url ? (
-                <img
-                  src={product.featuredImage.url}
-                  alt="TB7 Pull-Up Bar installed in doorway"
-                  className="h-full w-full object-cover"
-                  loading="eager"
-                />
-              ) : (
-                <div className="flex h-full items-center justify-center">
-                  <span className="text-primary/50">Product Image</span>
-                </div>
-              )}
+              {(() => {
+                const vids = product?.media?.nodes?.filter((m: any) => m.__typename === 'Video') || [];
+                const src = vids[0]?.sources?.find((s: any) => /webm|mp4/.test(s.mimeType));
+                if (src?.url) {
+                  return (
+                    <video className="h-full w-full object-cover" autoPlay muted loop playsInline preload="metadata" poster={product?.featuredImage?.url || ''}>
+                      <source src={src.url} type={src.mimeType} />
+                    </video>
+                  );
+                }
+                if (product?.featuredImage?.url) {
+                  return (
+                    <img src={product.featuredImage.url} alt="TB7 Pull-Up Bar installed in doorway" className="h-full w-full object-cover" loading="eager" />
+                  );
+                }
+                return (
+                  <div className="flex h-full items-center justify-center">
+                    <span className="text-primary/50">Product Media</span>
+                  </div>
+                );
+              })()}
               {/* Price card overlay */}
               <div className="absolute bottom-4 left-4 right-auto glass-strong stroke-gradient rounded-xl px-4 py-3">
                 <div className="flex items-center gap-3">
@@ -581,6 +590,7 @@ function NewsletterSection() {
 }
 
 const FEATURED_PRODUCT_QUERY = `#graphql
+  ${MEDIA_FRAGMENT}
   query FeaturedProduct($handle: String!) {
     product(handle: $handle) {
       id
@@ -592,6 +602,9 @@ const FEATURED_PRODUCT_QUERY = `#graphql
         altText
         width
         height
+      }
+      media(first: 6) {
+        nodes { ...Media }
       }
       selectedOrFirstAvailableVariant {
         id
@@ -611,9 +624,16 @@ const FEATURED_PRODUCT_QUERY = `#graphql
 
 function StickyBuyBar({product}: {product: any}) {
   const {selectedOrFirstAvailableVariant} = product || {};
-  if (!selectedOrFirstAvailableVariant) return null;
+  const [show, setShow] = React.useState(false);
+  React.useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > 80);
+    onScroll();
+    window.addEventListener('scroll', onScroll, {passive: true});
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  if (!selectedOrFirstAvailableVariant || !show) return null;
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 backdrop-blur supports-[backdrop-filter]:glass-strong bg-[#0B121C]/70 md:rounded-t-xl border-t border-white/10 p-3 hidden sm:block">
+    <div className="fixed bottom-0 left-0 right-0 z-40 backdrop-blur supports-[backdrop-filter]:glass-strong bg-[#0B121C]/70 md:rounded-t-xl border-t border-white/10 p-3 block">
       <div className="mx-auto max-w-5xl flex items-center justify-between gap-4">
         <div className="flex items-baseline gap-3 text-primary">
           <span className="text-sm">TB7</span>
