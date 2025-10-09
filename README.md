@@ -24,11 +24,26 @@ Hydrogen is Shopify’s stack for headless commerce. Hydrogen is designed to dov
 
 - Node.js version 18.0.0 or higher
 
+1) Copy env and set your values
+
 ```bash
-npm create @shopify/hydrogen@latest -- --template demo-store
+cp .env.example .env
+# Set:
+# PUBLIC_STORE_DOMAIN=your-store.myshopify.com
+# PUBLIC_STOREFRONT_API_TOKEN=your_public_storefront_api_token
+# SESSION_SECRET=replace-with-a-strong-random-string
 ```
 
-Remember to update `.env` with your shop's domain and Storefront API token!
+2) Install and run locally
+
+```bash
+npm i
+npm run dev
+```
+
+Notes
+- The homepage includes an ATFLEE-specific hero. Replace the placeholder images by adding `public/hero-doorway.jpg` and `public/hero-grip.jpg`.
+- The primary CTA currently links to `/products`. We can wire it to your product handle and dynamic price once we have Storefront API access configured.
 
 ## Building for production
 
