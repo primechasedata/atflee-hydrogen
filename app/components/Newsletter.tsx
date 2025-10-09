@@ -1,10 +1,7 @@
-import {Form, useActionData, useNavigation} from '@remix-run/react';
-import {useState, useEffect, useRef} from 'react';
+import {useFetcher} from '@remix-run/react';
+import {useEffect, useRef, useState} from 'react';
 
 type NewsletterResponse = { success?: boolean; error?: string; message?: string } | undefined;
-  error?: string;
-  message?: string;
-};
 
 export function Newsletter({
   title = 'Get fitness tips & exclusive deals',
@@ -30,8 +27,8 @@ export function Newsletter({
   }, [fetcher.data]);
 
   return (
-    <div className={`rounded-2xl bg-blue-600 px-8 py-12 text-center ${className}`}>
-      <h2 className="text-3xl font-bold tracking-tight  text-primary">{title}</h2>
+    <div className={`stroke-gradient glass-strong px-8 py-12 text-center ${className}`}>
+      <h2 className="text-3xl font-bold tracking-tight text-primary">{title}</h2>
       <p className="mt-4 text-lg text-primary/70">{description}</p>
 
       <fetcher.Form
@@ -59,10 +56,7 @@ export function Newsletter({
       </fetcher.Form>
 
       {/* Success/Error Messages */}
-      
-
-      
-    <div ref={liveRef} tabIndex={-1} aria-live="polite" className="mt-4 max-w-md mx-auto">
+      <div ref={liveRef} tabIndex={-1} aria-live="polite" className="mt-4 max-w-md mx-auto">
         {fetcher.data?.success && (
           <div className="rounded-md bg-green-500/10 ring-1 ring-green-400/20 p-4">
             <p className="text-sm text-green-200">{fetcher.data.message || 'Thank you for subscribing! Check your inbox.'}</p>
@@ -77,4 +71,3 @@ export function Newsletter({
     </div>
   );
 }
-
