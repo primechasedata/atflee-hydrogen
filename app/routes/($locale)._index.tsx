@@ -3,7 +3,7 @@ import {
   type MetaArgs,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
-import {Suspense, useEffect, useRef} from 'react';
+import {Suspense, useEffect, useRef, useState} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {getSeoMeta, Money} from '@shopify/hydrogen';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
@@ -239,16 +239,10 @@ function HeroSection({product}: {product: any}) {
                 )}
               </div>
             </div>
-          </Reveal
+          </Reveal>
         </div>
 
-        {count < list.length && (
-          <div className="mt-8 text-center">
-            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
-          </div>
-        )}
-
-      </div>
+        </div>
     </section>
   );
 }
@@ -259,9 +253,6 @@ function ProductHighlight({product}: {product: any}) {
   const price = product.selectedOrFirstAvailableVariant?.price;
   const compareAtPrice = product.selectedOrFirstAvailableVariant?.compareAtPrice;
   const productHandle = product.handle;
-
-  const [count, setCount] = React.useState(6);
-  const list = [...testimonials, ...testimonials];
   return (
     <section className="py-16">
       <div className="mx-auto max-w-3xl px-6 lg:px-8">
@@ -334,20 +325,12 @@ function ProductHighlight({product}: {product: any}) {
           </div>
         </div>
 
-        {count < list.length && (
-          <div className="mt-8 text-center">
-            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
-          </div>
-        )}
-
       </div>
     </section>
   );
 }
 
 function BuildHabitsSection() {
-  const [count, setCount] = React.useState(6);
-  const list = [...testimonials, ...testimonials];
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -364,12 +347,6 @@ function BuildHabitsSection() {
             <span aria-hidden="true" className="ml-2">→</span>
           </Link>
         </div>
-
-        {count < list.length && (
-          <div className="mt-8 text-center">
-            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
-          </div>
-        )}
 
       </div>
     </section>
@@ -414,12 +391,6 @@ function ComparisonSection() {
           </table>
         </div>
 
-        {count < list.length && (
-          <div className="mt-8 text-center">
-            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
-          </div>
-        )}
-
       </div>
     </section>
   );
@@ -435,8 +406,6 @@ function FeatureDetails() {
     {label: 'Warranty', value: '2 years'},
   ];
   const primary = specs.slice(0, 4);
-  const [count, setCount] = React.useState(6);
-  const list = [...testimonials, ...testimonials];
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -453,12 +422,6 @@ function FeatureDetails() {
             ))}
           </div>
         </div>
-
-        {count < list.length && (
-          <div className="mt-8 text-center">
-            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
-          </div>
-        )}
 
       </div>
     </section>
@@ -486,9 +449,6 @@ function SocialProofSection() {
       text: 'Worth every penny. Feels rock-solid and the padding protects my door frame perfectly.'
     }
   ];
-
-  const [count, setCount] = React.useState(6);
-  const list = [...testimonials, ...testimonials];
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -522,12 +482,6 @@ function SocialProofSection() {
           ))}
         </div>
 
-        {count < list.length && (
-          <div className="mt-8 text-center">
-            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
-          </div>
-        )}
-
       </div>
     </section>
   );
@@ -560,8 +514,6 @@ function TrustElementsSection() {
 }
 
 function NewsletterSection() {
-  const [count, setCount] = React.useState(6);
-  const list = [...testimonials, ...testimonials];
   return (
     <section className="py-16">
       <div className="mx-auto max-w-2xl px-6 lg:px-8">
@@ -571,12 +523,6 @@ function NewsletterSection() {
             description="Join our community and never miss a workout tip or special offer."
           />
         </div>
-
-        {count < list.length && (
-          <div className="mt-8 text-center">
-            <button onClick={() => setCount(count + 6)} className="btn-accent hover-scale">Load more</button>
-          </div>
-        )}
 
       </div>
     </section>
@@ -618,8 +564,8 @@ const FEATURED_PRODUCT_QUERY = `#graphql
 
 function StickyBuyBar({product}: {product: any}) {
   const {selectedOrFirstAvailableVariant} = product || {};
-  const [show, setShow] = React.useState(false);
-  React.useEffect(() => {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
     const onScroll = () => setShow(window.scrollY > 80);
     onScroll();
     window.addEventListener('scroll', onScroll, {passive: true});
