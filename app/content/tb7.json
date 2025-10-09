@@ -1,0 +1,27 @@
+{
+  "product": {
+    "id": "tb7",
+    "title": "TB7 Doorway Pull-Up Bar",
+    "price": 99,
+    "rating": { "value": 4.8, "count": 2347 },
+    "stats": ["24 in grip", "573 lb tested", "10 sec install"],
+    "fit": { "fitMin": 31.9, "fitMax": 36.6, "tightMin": 30.0, "tightMax": 31.8 }
+  },
+  "compare": [
+    {"feature":"Grip width","tb7":"24 in","generic":"18-20 in"},
+    {"feature":"Install","tb7":"Tool-free 10 sec","generic":"Screws"},
+    {"feature":"Capacity","tb7":"260 lb, 573 lb tested","generic":"150-200 lb"}
+  ],
+  "lifestyle": [
+    {"title":"Morning routine","icon":"sun","image":"/img/morning.webp"},
+    {"title":"Evening wind-down","icon":"moon","image":"/img/evening.webp"},
+    {"title":"Anywhere, anytime","icon":"bolt","image":"/img/anywhere.webp"}
+  ],
+  "specs": [
+    {"label":"Doorway width","value":"31.9-36.6 in"},
+    {"label":"Weight capacity","value":"260 lb (573 lb tested)"},
+    {"label":"Grip width","value":"24 in"},
+    {"label":"Install","value":"Tool-free (10 sec)"},
+    {"label":"Warranty","value":"2 years"}
+  ]
+}

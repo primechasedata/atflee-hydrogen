@@ -255,3 +255,24 @@ shop-pay-button {
     }
   }
 }
+
+/* 2025 premium tokens and overrides */
+:root {
+  --bg-0: #060A12; --bg-1: #0B121C; --glass: rgba(255,255,255,0.06); --glass-strong: rgba(255,255,255,0.10);
+  --stroke: rgba(255,255,255,0.14); --stroke-subtle: rgba(255,255,255,0.08);
+  --text-1: #F5F7FA; --text-2: #B8C0CC; --accent: #5DA2FF; --accent-2: #7CF0FF; --success: #6BE675; --warning: #FFC857;
+  --radius-sm: 10px; --radius-md: 16px; --radius-lg: 22px; --blur-sm: 8px; --blur-md: 14px; --blur-lg: 22px;
+  --shadow-1: 0 1px 0 rgba(255,255,255,0.08) inset, 0 8px 24px rgba(0,0,0,0.35);
+  --shadow-2: 0 1px 0 rgba(255,255,255,0.10) inset, 0 14px 36px rgba(0,0,0,0.45);
+  --ease-out: cubic-bezier(0.16,1,0.3,1); --dur-fast: 150ms; --dur: 280ms; --dur-slow: 500ms;
+}
+
+.glass { background: var(--glass); backdrop-filter: blur(var(--blur-md)) saturate(115%); -webkit-backdrop-filter: blur(var(--blur-md)) saturate(115%); border: 1px solid var(--stroke); box-shadow: var(--shadow-1); border-radius: var(--radius-lg); }
+.glass-strong { background: var(--glass-strong); backdrop-filter: blur(var(--blur-lg)) saturate(125%); -webkit-backdrop-filter: blur(var(--blur-lg)) saturate(125%); border: 1px solid rgba(125,200,255,0.28); box-shadow: var(--shadow-2); border-radius: var(--radius-lg); }
+.stroke-gradient { border: 1px solid transparent; background: linear-gradient(var(--bg-1), var(--bg-1)) padding-box, linear-gradient(135deg, rgba(124,240,255,0.45), rgba(93,162,255,0.45)) border-box; border-radius: var(--radius-lg); }
+.no-transparency { background: rgba(15,23,36,0.96); }
+.btn-accent { border-radius: 14px; padding: 12px 18px; color: #031425; background: linear-gradient(180deg, var(--accent-2) 0%, var(--accent) 100%); box-shadow: 0 10px 24px rgba(93,162,255,0.35); transition: transform var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out); }
+.btn-accent:hover { transform: translateY(-1px); filter: brightness(1.04); }
+.btn-accent:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.bg-hero { background-image: radial-gradient(600px 300px at 50% 120px, rgba(93,162,255,0.18), transparent 60%), linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%); }
+@media (prefers-reduced-transparency: reduce) { .glass, .glass-strong, .glass-soft, .glass-tint { background: rgba(15,23,36,0.96); -webkit-backdrop-filter: none; backdrop-filter: none; } }

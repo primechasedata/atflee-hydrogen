@@ -1,14 +1,16 @@
 import {useState} from 'react';
 import {IconCheck, IconClose} from '~/components/Icon';
 import {Reveal} from '~/components/Reveal';
+import content from '~/content/tb7.json';
 import {Heading, Text} from '~/components/Text';
 
 export function FitChecker() {
   const [doorwayWidth, setDoorwayWidth] = useState('');
   const [result, setResult] = useState<'fit' | 'no-fit' | null>(null);
 
-  const MIN_WIDTH = 31.9;
-  const MAX_WIDTH = 36.6;
+  const cfg = (content as any)?.product?.fit || {fitMin: 31.9, fitMax: 36.6, tightMin: 30.0, tightMax: 31.8};
+  const MIN_WIDTH = 26;
+  const MAX_WIDTH = 36;
 
   const checkFit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,11 +33,11 @@ export function FitChecker() {
       <div className="mx-auto max-w-3xl px-6 lg:px-8">
         <Reveal className="text-center mb-8">
           <Heading as="h2" size="heading" className="text-primary">Will it fit your doorway?</Heading>
-          <Text as="p" size="lead" className="mt-4 text-primary/70">Check compatibility in seconds. The TB7 fits doorways between {MIN_WIDTH}–{MAX_WIDTH} inches wide.</Text>
+          <Text as="p" size="lead" className="mt-4 text-primary/70">Check compatibility in seconds. The TB7 fits doorways between {cfg.fitMin}–{cfg.fitMax} inches wide.</Text>
         </Reveal>
 
         <Reveal>
-          <form onSubmit={checkFit} className="glass rounded-2xl p-6 md:p-8 text-primary/90 space-y-6">
+          <form onSubmit={checkFit} className="glass-strong stroke-gradient rounded-2xl p-6 md:p-8 text-primary/90 space-y-6" aria-live="polite">
             <div className="grid gap-4">
               <label htmlFor="doorway-width" className="block text-sm font-medium">Enter your doorway width (inches)</label>
               <div className="flex gap-3 items-center">
@@ -45,8 +47,8 @@ export function FitChecker() {
                   value={doorwayWidth}
                   onChange={(e) => setDoorwayWidth(e.target.value)}
                   step="0.1"
-                  min="20"
-                  max="50"
+                  min={MIN_WIDTH}
+                  max={MAX_WIDTH}
                   placeholder="e.g., 34.5"
                   className="flex-1 rounded-md bg-white/5 border border-white/10 px-4 py-3 text-primary placeholder:text-primary/50 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent"
                   required
@@ -56,8 +58,8 @@ export function FitChecker() {
               <div className="flex items-center gap-4">
                 <input
                   type="range"
-                  min={20}
-                  max={50}
+                  min={MIN_WIDTH}
+                  max={MAX_WIDTH}
                   step={0.1}
                   value={doorwayWidth || (MIN_WIDTH as any)}
                   onChange={(e) => setDoorwayWidth(e.target.value)}
