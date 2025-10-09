@@ -171,15 +171,16 @@ function HeroSection({product}: {product: any}) {
                 <AddToCartButton
                   width="auto"
                   variant="primary"
-                  className="btn-accent text-lg px-10 py-4 hover-scale"
+                  className="btn-accent text-lg px-12 py-4"
                   lines={[{merchandiseId: product.selectedOrFirstAvailableVariant.id, quantity: 1}]}
                   aria-label="Get TB7 - Add to cart"
                 >
                   Get Yours Today — {product?.selectedOrFirstAvailableVariant?.price && <Money data={product.selectedOrFirstAvailableVariant.price} />}
                 </AddToCartButton>
               )}
-              <Link to={`/products/${productHandle}`} className="text-lg font-semibold text-primary/80 hover:text-[rgb(var(--color-accent))] transition-colors">
-                Learn more <span aria-hidden="true">→</span>
+              <Link to={`/products/${productHandle}`} className="text-lg font-semibold text-primary/80 hover:text-[rgb(var(--color-accent))] transition-colors inline-flex items-center gap-2 group">
+                Learn more
+                <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
               </Link>
             </div>
           </Reveal>
@@ -700,7 +701,7 @@ function StickyBuyBar({product}: {product: any}) {
         <div className="flex items-center gap-3">
           <AddToCartButton
             variant="primary"
-            className="btn-accent hover-scale"
+            className="btn-accent px-8"
             lines={[{merchandiseId: selectedOrFirstAvailableVariant.id, quantity: 1}]}
           >
             Add to Cart

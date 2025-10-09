@@ -48,7 +48,7 @@ export function Newsletter({
         />
         <button
           type="submit"
-          className="btn-accent disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-accent px-8 disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={isSubmitting}
         >
           {isSubmitting ? 'Subscribing...' : 'Subscribe'}
