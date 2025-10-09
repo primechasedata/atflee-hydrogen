@@ -171,7 +171,7 @@ function HeroSection({product}: {product: any}) {
                 <AddToCartButton
                   width="auto"
                   variant="primary"
-                  className="btn-accent text-lg px-12 py-4"
+                  className="!py-3.5 !px-10 btn-accent text-lg"
                   lines={[{merchandiseId: product.selectedOrFirstAvailableVariant.id, quantity: 1}]}
                   aria-label="Get TB7 - Add to cart"
                 >
