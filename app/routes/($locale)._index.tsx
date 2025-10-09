@@ -155,6 +155,53 @@ export default function Homepage() {
 
   return (
     <>
+      {/* ATFLEE Hero: clear value, tight proof, focused CTAs */}
+      <section className="mx-auto max-w-7xl px-6 pt-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h1 className="text-5xl lg:text-6xl font-extrabold tracking-tight">
+              Build a daily pull-up habit at home
+            </h1>
+            <p className="mt-5 text-xl text-neutral-600">
+              Installs in seconds. No screws. No shoulder pinch.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <a
+                href="/products"
+                className="inline-flex items-center rounded-full px-6 py-3 text-white bg-neutral-900 hover:bg-neutral-800"
+              >
+                Shop Trahere Bar $79
+              </a>
+              <a
+                href="#demo"
+                className="inline-flex items-center rounded-full px-6 py-3 border border-neutral-300 text-neutral-900 hover:bg-neutral-50"
+              >
+                Watch 30-sec demo
+              </a>
+            </div>
+            <p className="mt-4 text-sm text-neutral-500">
+              ★★★★★ 1,248 reviews • Free 30-day returns • Ships in 24 hours
+            </p>
+          </div>
+          <div className="relative">
+            {/* Swap with real doorway image */}
+            <img
+              src="/hero-doorway.jpg"
+              alt="Trahere pull-up bar installed in a doorway"
+              className="w-full rounded-2xl shadow-lg"
+              loading="eager"
+            />
+            {/* Optional floating inset of grip detail */}
+            <img
+              src="/hero-grip.jpg"
+              alt="Shoulder-safe grip detail"
+              className="hidden lg:block absolute bottom-4 right-4 w-40 rounded-xl shadow-md ring-1 ring-black/5"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
       {primaryHero && (
         <Hero {...primaryHero} height="full" top loading="eager" />
       )}
