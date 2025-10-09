@@ -19,36 +19,25 @@ export function ExpertEndorsement() {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-white">
+    <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Trusted by fitness professionals
-          </h2>
-          <p className="mt-4 text-lg text-gray-600">
-            Endorsed by physical therapists and strength coaches
-          </p>
+          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">Trusted by fitness professionals</h2>
+          <p className="mt-4 text-lg text-primary/70">Endorsed by physical therapists and strength coaches</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {experts.map((expert, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
-            >
+            <div key={idx} className="glass-soft rounded-2xl p-8 ring-1 ring-white/10 transition-shadow">
               <div className="flex items-start gap-4 mb-6">
                 <div className="text-5xl">{expert.photo}</div>
                 <div>
-                  <h3 className="text-lg font-bold text-gray-900">
-                    {expert.name}
-                  </h3>
-                  <p className="text-sm font-medium text-blue-600">
-                    {expert.title}
-                  </p>
-                  <p className="text-xs text-gray-500">{expert.credential}</p>
+                  <h3 className="text-lg font-bold text-primary">{expert.name}</h3>
+                  <p className="text-sm font-medium text-[rgb(var(--color-accent))]">{expert.title}</p>
+                  <p className="text-xs text-primary/60">{expert.credential}</p>
                 </div>
               </div>
-              <blockquote className="text-gray-700 leading-relaxed italic border-l-4 border-blue-600 pl-4">
+              <blockquote className="text-primary/85 leading-relaxed italic border-l-4 border-[rgb(var(--color-accent))] pl-4">
                 "{expert.quote}"
               </blockquote>
             </div>
@@ -56,9 +45,8 @@ export function ExpertEndorsement() {
         </div>
 
         <div className="mt-12 text-center">
-          <p className="text-sm text-gray-600">
-            The TB7 is designed with biomechanics and safety in mind, meeting
-            the standards that professionals expect.
+          <p className="text-sm text-primary/70">
+            The TB7 is designed with biomechanics and safety in mind, meeting the standards that professionals expect.
           </p>
         </div>
       </div>

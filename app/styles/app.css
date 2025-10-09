@@ -5,13 +5,24 @@
 /* Tokens - Trahere Design System */
 :root {
   /* Core Colors */
-  --color-dark-base: 23 23 23; /* #171717 - Dark neutral base for header/footer */
-  --color-primary: 23 23 23; /* Dark text */
-  --color-contrast: 255 255 255; /* Off-white backgrounds */
-  --color-accent: 37 99 235; /* Deep blue for CTAs - #2563eb */
-  --color-accent-hover: 29 78 216; /* Darker blue on hover - #1d4ed8 */
+  --color-dark-base: 12 16 24; /* Deep charcoal/navy blend */
+  --color-primary: 235 238 243; /* Near-white text on dark */
+  --color-contrast: 15 19 28; /* Dark page background */
+
+  /* Accent — muted sapphire */
+  --color-accent: 76 110 168; /* #4C6EA8 */
+  --color-accent-hover: 64 95 146; /* #405F92 */
+
+  /* Support */
   --color-success: 22 163 74; /* Green for success states */
   --color-warning: 234 179 8; /* Yellow for warnings */
+  --color-surface: 255 255 255; /* used for glass tint math */
+
+  /* Background gradients */
+  --gradient-hero: radial-gradient(1200px 600px at 80% -10%, rgba(76,110,168,0.35) 0%, rgba(76,110,168,0.1) 35%, transparent 70%),
+                    radial-gradient(800px 500px at -10% 20%, rgba(0,0,0,0.35) 0%, transparent 60%),
+                    linear-gradient(180deg, rgb(10 12 18) 0%, rgb(var(--color-contrast)) 100%);
+  --gradient-section: linear-gradient(180deg, rgb(13 16 24) 0%, rgb(18 22 32) 100%);
 
   /* Typography */
   --font-size-fine: 0.75rem; /* text-xs */
@@ -67,6 +78,8 @@ shop-pay-button {
 
   body {
     @apply border-primary/10 bg-contrast text-primary/90 antialiased;
+    background-image: var(--gradient-section);
+    background-attachment: fixed;
   }
 
   html {
@@ -107,6 +120,38 @@ shop-pay-button {
 }
 
 @layer components {
+  /* Glassmorphism panels */
+  .glass {
+    background: rgba(var(--color-surface), 0.06);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 10px 30px rgba(0,0,0,0.35);
+  }
+  .glass-soft {
+    background: rgba(var(--color-surface), 0.04);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 10px 24px rgba(0,0,0,0.3);
+  }
+  .glass-tint {
+    background: linear-gradient(
+        180deg,
+        rgba(76,110,168,0.12),
+        rgba(76,110,168,0.06)
+      );
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 0 0 1px rgba(76,110,168,0.25), 0 12px 24px rgba(0,0,0,0.35);
+  }
+
+  /* Accent button */
+  .btn-accent {
+    @apply inline-flex items-center justify-center rounded-md px-6 py-3 font-semibold text-white transition-colors;
+    background: linear-gradient(180deg, rgba(var(--color-accent), 1), rgba(var(--color-accent-hover), 1));
+  }
+  .btn-accent:hover { filter: brightness(1.02); }
+  .btn-accent:focus-visible { outline: 2px solid rgb(var(--color-accent)); outline-offset: 2px; }
+
   .article {
     h2,
     h3,
@@ -140,6 +185,19 @@ shop-pay-button {
 }
 
 @layer utilities {
+  /* Reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.inview { opacity: 1; transform: translateY(0); }
+
+  /* Hero gradient background helper */
+  .bg-hero {
+    background-image: var(--gradient-hero);
+  }
+
+  /* Divider line subtle on dark */
+  .divider-top { box-shadow: inset 0 1px 0 rgba(255,255,255,0.06); }
+  .divider-bottom { box-shadow: inset 0 -1px 0 rgba(255,255,255,0.06); }
+
   .fadeIn {
     opacity: 0;
     animation: fadeInAnimation ease 500ms forwards;

@@ -17,6 +17,7 @@ import {OriginStory} from '~/components/OriginStory';
 import {ProductTimeline} from '~/components/ProductTimeline';
 import {ExpertEndorsement} from '~/components/ExpertEndorsement';
 import {FitChecker} from '~/components/FitChecker';
+import {Reveal} from '~/components/Reveal';
 
 export const headers = routeHeaders;
 
@@ -113,49 +114,47 @@ function HeroSection({product}: {product: any}) {
   const productHandle = product?.handle || 'tb7-widest-grip-doorway-pull-up-bar';
 
   return (
-    <section className="relative bg-neutral-50 py-16 md:py-24">
+    <section className="relative bg-hero py-20 md:py-28 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true"></div>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-          {/* Left Column - Text */}
-          <div className="max-w-2xl">
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
-              Transform your doorframe into a personal gym
-            </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              Wide 24" grip • Tool-free installation in 10 seconds • Fits most doorways • Protective padding • 260 lb capacity (tested to 573 lb)
-            </p>
-            <div className="mt-10 flex items-center gap-x-6">
-              <Link
-                to={`/products/${productHandle}`}
-                className="rounded-md bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-colors"
-              >
-                Shop TB7
-              </Link>
-              <a
-                href="#comparison"
-                className="text-base font-semibold leading-7 text-gray-900 hover:text-blue-600 transition-colors"
-              >
-                Learn more <span aria-hidden="true">→</span>
-              </a>
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          {/* Left Column - Glass Text Card */}
+          <Reveal className="max-w-2xl">
+            <div className="glass rounded-2xl p-6 md:p-8">
+              <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl lg:text-6xl">
+                Transform your doorframe into a personal gym
+              </h1>
+              <p className="mt-6 text-lg leading-8 text-primary/70">
+                Wide 24" grip • Tool-free install • Fits most doorways • Protective padding • 260 lb capacity (tested to 573 lb)
+              </p>
+              <div className="mt-8 flex items-center gap-4">
+                <Link to={`/products/${productHandle}`} className="btn-accent">
+                  Shop TB7
+                </Link>
+                <a href="#comparison" className="text-base font-semibold leading-7 text-primary hover:text-[rgb(var(--color-accent))] transition-colors">
+                  Learn more <span aria-hidden="true">→</span>
+                </a>
+              </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* Right Column - Visual */}
-          <div className="relative">
-            <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100">
+          <Reveal className="relative">
+            <div className="aspect-[4/3] overflow-hidden rounded-2xl glass-soft ring-1 ring-white/10">
               {product?.featuredImage?.url ? (
                 <img
                   src={product.featuredImage.url}
                   alt="TB7 Pull-Up Bar installed in doorway"
                   className="h-full w-full object-cover"
+                  loading="eager"
                 />
               ) : (
-                <div className="flex h-full items-center justify-center bg-gray-200">
-                  <span className="text-gray-400">Product Image</span>
+                <div className="flex h-full items-center justify-center">
+                  <span className="text-primary/50">Product Image</span>
                 </div>
               )}
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
@@ -170,34 +169,34 @@ function ProductHighlight({product}: {product: any}) {
   const productHandle = product.handle;
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16">
       <div className="mx-auto max-w-3xl px-6 lg:px-8">
-        <div className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+        <div className="glass rounded-2xl p-8">
           <div className="flex items-start justify-between">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">{product.title}</h2>
+              <h2 className="text-2xl font-bold text-primary">{product.title}</h2>
               <div className="mt-2 flex items-center gap-2">
                 <div className="flex text-yellow-400">
                   {'★★★★★'.split('').map((star, i) => (
                     <span key={i}>{star}</span>
                   ))}
                 </div>
-                <span className="text-sm text-gray-600">4.8/5 (2,347 reviews)</span>
+                <span className="text-sm text-primary/70">4.8/5 (2,347 reviews)</span>
               </div>
             </div>
             <div className="text-right">
               {compareAtPrice && (
-                <p className="text-sm text-gray-500 line-through">
+                <p className="text-sm text-primary/60 line-through">
                   <Money data={compareAtPrice} />
                 </p>
               )}
               {price && (
-                <p className="text-3xl font-bold text-gray-900">
+                <p className="text-3xl font-bold text-primary">
                   <Money data={price} />
                 </p>
               )}
               {compareAtPrice && price && (
-                <span className="inline-block mt-1 rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-800">
+                <span className="inline-block mt-1 rounded-full bg-[rgb(var(--color-accent))]/10 px-3 py-1 text-sm font-semibold text-[rgb(var(--color-accent))]">
                   Save {Math.round(((parseFloat(compareAtPrice.amount) - parseFloat(price.amount)) / parseFloat(compareAtPrice.amount)) * 100)}%
                 </span>
               )}
@@ -214,8 +213,8 @@ function ProductHighlight({product}: {product: any}) {
               'Adjustable width for perfect fit'
             ].map((benefit) => (
               <li key={benefit} className="flex items-start gap-3">
-                <IconCheck className="h-5 w-5 flex-shrink-0 text-green-600 mt-0.5" />
-                <span className="text-gray-700">{benefit}</span>
+                <IconCheck className="h-5 w-5 flex-shrink-0 text-green-400 mt-0.5" />
+                <span className="text-primary/80">{benefit}</span>
               </li>
             ))}
           </ul>
@@ -223,11 +222,11 @@ function ProductHighlight({product}: {product: any}) {
           <div className="mt-8 space-y-4">
             <Link
               to={`/products/${productHandle}`}
-              className="block w-full rounded-md bg-blue-600 px-6 py-3 text-center text-base font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors"
+              className="block w-full text-center btn-accent"
             >
               Buy Now
             </Link>
-            <div className="flex items-center justify-center gap-6 text-sm text-gray-600">
+            <div className="flex items-center justify-center gap-6 text-sm text-primary/70">
               <span className="flex items-center gap-1">
                 <IconCheck className="h-4 w-4" /> Free shipping over $200
               </span>
@@ -247,48 +246,29 @@ function ProductHighlight({product}: {product: any}) {
 
 function BuildHabitsSection() {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Build habits anywhere
-          </h2>
-          <p className="mt-4 text-lg text-gray-600">
-            No commute. No crowds. Just consistent progress.
-          </p>
+          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">Build habits anywhere</h2>
+          <p className="mt-4 text-lg text-primary/70">No commute. No crowds. Just consistent progress.</p>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
           {[
-            {
-              title: 'Morning routine',
-              description: '3 minutes to stronger shoulders. Start your day with energy.',
-              icon: '☀️'
-            },
-            {
-              title: 'Evening wind-down',
-              description: 'Build upper body strength while you decompress from the day.',
-              icon: '🌙'
-            },
-            {
-              title: 'Anywhere, anytime',
-              description: 'Install in seconds, train for minutes, remove instantly.',
-              icon: '🏠'
-            }
+            { title: 'Morning routine', description: '3 minutes to stronger shoulders. Start your day with energy.', icon: '☀️' },
+            { title: 'Evening wind-down', description: 'Build upper body strength while you decompress from the day.', icon: '🌙' },
+            { title: 'Anywhere, anytime', description: 'Install in seconds, train for minutes, remove instantly.', icon: '🏠' },
           ].map((item) => (
-            <div key={item.title} className="rounded-xl bg-white p-8 shadow-sm border border-gray-200">
+            <div key={item.title} className="glass-soft rounded-xl p-8 ring-1 ring-white/10 transition transform hover:-translate-y-0.5">
               <div className="text-4xl mb-4">{item.icon}</div>
-              <h3 className="text-xl font-semibold text-gray-900">{item.title}</h3>
-              <p className="mt-3 text-gray-600">{item.description}</p>
+              <h3 className="text-xl font-semibold text-primary">{item.title}</h3>
+              <p className="mt-3 text-primary/70">{item.description}</p>
             </div>
           ))}
         </div>
 
         <div className="mt-10 text-center">
-          <Link
-            to="/pages/education"
-            className="inline-flex items-center text-base font-semibold text-blue-600 hover:text-blue-700"
-          >
+          <Link to="/pages/education" className="inline-flex items-center text-base font-semibold text-[rgb(var(--color-accent))] hover:text-primary">
             Explore workout plans
             <span aria-hidden="true" className="ml-2">→</span>
           </Link>
@@ -308,32 +288,28 @@ function ComparisonSection() {
   ];
 
   return (
-    <section id="comparison" className="py-16 bg-white">
+    <section id="comparison" className="py-16">
       <div className="mx-auto max-w-5xl px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            TB7 vs Generic Pull-Up Bars
-          </h2>
-          <p className="mt-4 text-lg text-gray-600">
-            See what makes the TB7 different
-          </p>
+          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">TB7 vs Generic Pull-Up Bars</h2>
+          <p className="mt-4 text-lg text-primary/70">See what makes the TB7 different</p>
         </div>
 
-        <div className="mt-12 overflow-hidden rounded-xl border border-gray-200">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+        <div className="mt-12 overflow-hidden rounded-xl glass-tint">
+          <table className="min-w-full divide-y divide-white/10">
+            <thead className="bg-white/5">
               <tr>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Feature</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-blue-600 bg-blue-50">TB7</th>
-                <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">Generic Bars</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-primary">Feature</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-[rgb(var(--color-accent))]">TB7</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold text-primary">Generic Bars</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
+            <tbody className="divide-y divide-white/10">
               {features.map((row, idx) => (
-                <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                  <td className="px-6 py-4 text-sm font-medium text-gray-900">{row.feature}</td>
-                  <td className="px-6 py-4 text-sm text-gray-900 bg-blue-50/50 font-semibold">{row.tb7}</td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{row.generic}</td>
+                <tr key={idx} className="">
+                  <td className="px-6 py-4 text-sm font-medium text-primary/90">{row.feature}</td>
+                  <td className="px-6 py-4 text-sm text-primary font-semibold bg-white/5">{row.tb7}</td>
+                  <td className="px-6 py-4 text-sm text-primary/70">{row.generic}</td>
                 </tr>
               ))}
             </tbody>
@@ -346,12 +322,10 @@ function ComparisonSection() {
 
 function FeatureDetails() {
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Technical Specifications
-          </h2>
+          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">Technical Specifications</h2>
         </div>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -363,9 +337,9 @@ function FeatureDetails() {
             {label: 'Installation', value: 'Tool-free (10 seconds)'},
             {label: 'Warranty', value: '2 years'}
           ].map((spec) => (
-            <div key={spec.label} className="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
-              <dt className="text-sm font-medium text-gray-600">{spec.label}</dt>
-              <dd className="mt-2 text-2xl font-bold text-gray-900">{spec.value}</dd>
+            <div key={spec.label} className="glass-soft rounded-lg p-6 ring-1 ring-white/10">
+              <dt className="text-sm font-medium text-primary/70">{spec.label}</dt>
+              <dd className="mt-2 text-2xl font-bold text-primary">{spec.value}</dd>
             </div>
           ))}
         </div>
@@ -397,35 +371,33 @@ function SocialProofSection() {
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            What customers are saying
-          </h2>
+          <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">What customers are saying</h2>
           <div className="mt-4 flex items-center justify-center gap-2">
             <div className="flex text-yellow-400 text-xl">
               {'★★★★★'.split('').map((star, i) => (
                 <span key={i}>{star}</span>
               ))}
             </div>
-            <span className="text-lg font-semibold text-gray-900">4.8/5</span>
-            <span className="text-gray-600">(2,347 reviews)</span>
+            <span className="text-lg font-semibold text-primary">4.8/5</span>
+            <span className="text-primary/70">(2,347 reviews)</span>
           </div>
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
           {testimonials.map((testimonial, idx) => (
-            <div key={idx} className="rounded-xl bg-gray-50 p-6 border border-gray-200">
+            <div key={idx} className="glass-soft rounded-xl p-6 ring-1 ring-white/10">
               <div className="flex text-yellow-400 mb-3">
                 {Array.from({length: testimonial.rating}).map((_, i) => (
                   <span key={i}>★</span>
                 ))}
               </div>
-              <p className="text-gray-700 italic">"{testimonial.text}"</p>
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                <p className="text-sm text-gray-600">{testimonial.location}</p>
+              <p className="text-primary/85 italic">"{testimonial.text}"</p>
+              <div className="mt-4 pt-4 border-t border-white/10">
+                <p className="font-semibold text-primary">{testimonial.name}</p>
+                <p className="text-sm text-primary/70">{testimonial.location}</p>
               </div>
             </div>
           ))}
@@ -437,21 +409,23 @@ function SocialProofSection() {
 
 function TrustElementsSection() {
   return (
-    <section className="py-12 bg-gray-50">
+    <section className="py-12">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-          {[
-            {icon: '🎯', title: 'Expert Support', description: 'Answers in < 24 hours'},
-            {icon: '📦', title: 'Free Shipping', description: 'On orders over $200'},
-            {icon: '✅', title: '30-Day Trial', description: 'Risk-free returns'},
-            {icon: '🔒', title: 'Secure Checkout', description: 'SSL encrypted'}
-          ].map((item) => (
-            <div key={item.title} className="text-center">
-              <div className="text-4xl mb-3">{item.icon}</div>
-              <h3 className="font-semibold text-gray-900">{item.title}</h3>
-              <p className="mt-1 text-sm text-gray-600">{item.description}</p>
-            </div>
-          ))}
+        <div className="glass-soft rounded-xl p-6 md:p-8 ring-1 ring-white/10">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+            {[
+              {icon: '🎯', title: 'Expert Support', description: 'Answers in < 24 hours'},
+              {icon: '📦', title: 'Free Shipping', description: 'On orders over $200'},
+              {icon: '✅', title: '30-Day Trial', description: 'Risk-free returns'},
+              {icon: '🔒', title: 'Secure Checkout', description: 'SSL encrypted'}
+            ].map((item) => (
+              <div key={item.title} className="text-center">
+                <div className="text-4xl mb-3">{item.icon}</div>
+                <h3 className="font-semibold text-primary">{item.title}</h3>
+                <p className="mt-1 text-sm text-primary/70">{item.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -460,12 +434,14 @@ function TrustElementsSection() {
 
 function NewsletterSection() {
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16">
       <div className="mx-auto max-w-2xl px-6 lg:px-8">
-        <Newsletter
-          title="Get fitness tips & exclusive deals"
-          description="Join our community and never miss a workout tip or special offer."
-        />
+        <div className="glass rounded-2xl p-6 md:p-8">
+          <Newsletter
+            title="Get fitness tips & exclusive deals"
+            description="Join our community and never miss a workout tip or special offer."
+          />
+        </div>
       </div>
     </section>
   );
