@@ -13,6 +13,10 @@ import {Link} from '~/components/Link';
 import {Button} from '~/components/Button';
 import {IconCheck} from '~/components/Icon';
 import {Newsletter} from '~/components/Newsletter';
+import {OriginStory} from '~/components/OriginStory';
+import {ProductTimeline} from '~/components/ProductTimeline';
+import {ExpertEndorsement} from '~/components/ExpertEndorsement';
+import {FitChecker} from '~/components/FitChecker';
 
 export const headers = routeHeaders;
 
@@ -66,28 +70,40 @@ export default function Homepage() {
 
   return (
     <div className="homepage">
-      {/* Hero Section */}
+      {/* 1. Hook - Hero Section */}
       <HeroSection product={featuredProduct} />
 
-      {/* Product Highlight */}
+      {/* 2. Problem & Solution - Product Highlight */}
       <ProductHighlight product={featuredProduct} />
 
-      {/* Build Habits Section */}
-      <BuildHabitsSection />
+      {/* 3. Origin Story - Why we built this */}
+      <OriginStory />
 
-      {/* Comparison Section */}
+      {/* 4. Comparison - Problem vs Solution */}
       <ComparisonSection />
 
-      {/* Feature Details */}
+      {/* 5. Interactive Fit Checker */}
+      <FitChecker />
+
+      {/* 6. Key Benefits - Use Cases */}
+      <BuildHabitsSection />
+
+      {/* 7. Development Timeline */}
+      <ProductTimeline />
+
+      {/* 8. Technical Specifications */}
       <FeatureDetails />
 
-      {/* Social Proof / Testimonials */}
+      {/* 9. Expert Endorsements */}
+      <ExpertEndorsement />
+
+      {/* 10. Social Proof - Customer Testimonials */}
       <SocialProofSection />
 
-      {/* Support and Trust Elements */}
+      {/* 11. Trust Elements */}
       <TrustElementsSection />
 
-      {/* Newsletter Signup */}
+      {/* 12. Final CTA - Newsletter */}
       <NewsletterSection />
     </div>
   );

@@ -39,6 +39,10 @@ import {FAQ} from '~/components/FAQ';
 import {InstallationGuide} from '~/components/InstallationGuide';
 import {VideoSection} from '~/components/VideoSection';
 import {ComparisonChart} from '~/components/ComparisonChart';
+import {StickyBuyBar} from '~/components/StickyBuyBar';
+import {FitChecker} from '~/components/FitChecker';
+import {OriginStory} from '~/components/OriginStory';
+import {ExpertEndorsement} from '~/components/ExpertEndorsement';
 import {IconCaret, IconCheck, IconClose} from '~/components/Icon';
 import {getExcerpt} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
@@ -151,6 +155,12 @@ export default function Product() {
 
   return (
     <>
+      {/* Sticky Buy Bar for Mobile */}
+      <StickyBuyBar
+        selectedVariant={selectedVariant}
+        productTitle={title}
+      />
+
       <Section className="px-0 md:px-8 lg:px-12">
         <div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">
           <ProductGallery
@@ -158,7 +168,7 @@ export default function Product() {
             className="w-full lg:col-span-2"
           />
           <div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll">
-            <section className="flex flex-col w-full max-w-xl gap-8 p-6 md:mx-auto md:max-w-sm md:px-0">
+            <section id="product-form" className="flex flex-col w-full max-w-xl gap-8 p-6 md:mx-auto md:max-w-sm md:px-0">
               <div className="grid gap-2">
                 <Heading as="h1" className="whitespace-normal">
                   {title}
@@ -200,11 +210,20 @@ export default function Product() {
         </div>
       </Section>
 
+      {/* Interactive Fit Checker */}
+      <FitChecker />
+
       {/* Video Demo */}
       <VideoSection variant="inline" />
 
+      {/* Origin Story */}
+      <OriginStory />
+
       {/* Product-Specific Testimonials */}
       <Testimonials title="What customers are saying" />
+
+      {/* Expert Endorsements */}
+      <ExpertEndorsement />
 
       {/* Installation Guide */}
       <InstallationGuide variant="compact" />
