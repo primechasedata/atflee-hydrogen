@@ -453,6 +453,8 @@ function SocialProofSection() {
       text: 'Worth every penny. Feels rock-solid and the padding protects my door frame perfectly.'
     }
   ];
+  const [count, setCount] = useState(6);
+  const list = testimonials;
   return (
     <section className="py-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
