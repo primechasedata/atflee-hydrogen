@@ -187,7 +187,7 @@ function HeroSection({product}: {product: any}) {
           {/* Product image/video - centered below CTA */}
           <Reveal className="mt-16">
             <div className="relative max-w-4xl mx-auto">
-              <div className="aspect-[16/10] overflow-hidden rounded-2xl glass-strong border border-[rgb(var(--color-accent))]/30 shadow-2xl">
+              <div className="aspect-[16/10] overflow-hidden rounded-2xl glass-strong border border-[rgb(var(--color-accent))]/30 shadow-2xl hover-scale shimmer-on-hover">
                 {(() => {
                   const vids = product?.media?.nodes?.filter((m: any) => m.__typename === 'Video') || [];
                   const src = vids[0]?.sources?.find((s: any) => /webm|mp4/.test(s.mimeType));
@@ -211,7 +211,7 @@ function HeroSection({product}: {product: any}) {
                 })()}
               </div>
               {/* Social proof badge */}
-              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 glass-strong rounded-full px-6 py-3 border border-[rgb(var(--color-accent))]/40">
+              <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 glass-strong rounded-full px-6 py-3 border border-[rgb(var(--color-accent))]/40 pulse-glow">
                 <div className="flex items-center gap-3">
                   <div className="text-yellow-400 text-lg">★★★★★</div>
                   <span className="text-sm font-semibold text-primary">4.8/5 from 2,347 athletes</span>
@@ -334,9 +334,9 @@ function BuildHabitsSection() {
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {features.map((feature) => (
-            <div key={feature.title} className="glass rounded-2xl p-8 text-center hover-lift">
+            <div key={feature.title} className="glass rounded-2xl p-8 text-center hover-lift card-glare">
               <div className="flex items-center justify-center mb-6">
-                <div className="w-16 h-16 rounded-full bg-[rgb(var(--color-accent))]/20 flex items-center justify-center border border-[rgb(var(--color-accent))]/30">
+                <div className="w-16 h-16 rounded-full bg-[rgb(var(--color-accent))]/20 flex items-center justify-center border border-[rgb(var(--color-accent))]/30 pulse-glow">
                   <feature.Icon className="w-8 h-8 text-[rgb(var(--color-accent))]" />
                 </div>
               </div>
@@ -435,7 +435,7 @@ function FeatureDetails() {
         {/* Specs Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
           {specs.map((spec) => (
-            <div key={spec.label} className="glass rounded-2xl p-6 text-center border border-white/10">
+            <div key={spec.label} className="glass rounded-2xl p-6 text-center border border-white/10 hover-lift card-glare">
               <div className="flex items-center justify-center mb-4">
                 <div className="w-12 h-12 rounded-full bg-[rgb(var(--color-accent))]/20 flex items-center justify-center border border-[rgb(var(--color-accent))]/30">
                   <spec.Icon className="w-6 h-6 text-[rgb(var(--color-accent))]" />
@@ -452,11 +452,11 @@ function FeatureDetails() {
 
         {/* Guarantee Section */}
         <div className="max-w-4xl mx-auto mt-16">
-          <div className="glass-strong rounded-2xl p-8 md:p-10 border border-[rgb(var(--color-accent))]/40 text-center relative overflow-hidden">
+          <div className="glass-strong rounded-2xl p-8 md:p-10 border border-[rgb(var(--color-accent))]/40 text-center relative overflow-hidden hover-lift shimmer-on-hover">
             <div className="absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent))]/10 to-transparent pointer-events-none"></div>
 
             <div className="relative z-10">
-              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[rgb(var(--color-accent))]/20 border-2 border-[rgb(var(--color-accent))]/40 mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[rgb(var(--color-accent))]/20 border-2 border-[rgb(var(--color-accent))]/40 mb-4 pulse-glow">
                 <IconShield className="w-8 h-8 text-[rgb(var(--color-accent))]" />
               </div>
               <h3 className="text-2xl md:text-3xl font-bold text-primary mb-4">
@@ -534,7 +534,7 @@ function SocialProofSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {testimonials.map((testimonial, idx) => (
-            <div key={idx} className="glass rounded-2xl p-6 border border-white/10 hover-lift">
+            <div key={idx} className="glass rounded-2xl p-6 border border-white/10 hover-lift shimmer-on-hover">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex text-yellow-400 text-lg">
                   {Array.from({length: testimonial.rating}).map((_, i) => (
@@ -552,7 +552,7 @@ function SocialProofSection() {
               </p>
 
               {testimonial.result && (
-                <div className="mb-4 bg-[rgb(var(--color-accent))]/10 rounded-lg px-3 py-2 text-sm font-semibold text-[rgb(var(--color-accent))]">
+                <div className="mb-4 bg-[rgb(var(--color-accent))]/10 rounded-lg px-3 py-2 text-sm font-semibold text-[rgb(var(--color-accent))] shimmer-on-hover">
                   {testimonial.result}
                 </div>
               )}

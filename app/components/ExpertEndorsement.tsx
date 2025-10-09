@@ -38,7 +38,7 @@ export function ExpertEndorsement() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
           {experts.map((expert, idx) => (
-            <div key={idx} className="glass rounded-2xl p-8 border border-white/10 hover-lift">
+            <div key={idx} className="glass rounded-2xl p-8 border border-white/10 hover-lift card-glare">
               <div className="flex items-start gap-4 mb-6">
                 <div className="w-16 h-16 rounded-full bg-[rgb(var(--color-accent))]/20 flex items-center justify-center text-primary font-bold text-lg border-2 border-[rgb(var(--color-accent))]/40 flex-shrink-0">
                   {expert.initials}
