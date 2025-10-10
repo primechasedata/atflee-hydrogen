@@ -203,7 +203,7 @@ export default function EducationHub() {
             </div>
           ) : (
             <div className="text-center py-16">
-              <Text className="text-2xl text-primary/60 mb-4">
+              <Text className="text-2xl text-primary/60 mb-8">
                 No articles found
               </Text>
               <button
