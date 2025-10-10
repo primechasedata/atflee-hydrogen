@@ -102,11 +102,11 @@ export function FAQ({
   return (
     <section className="mx-auto max-w-4xl px-6 py-16 lg:py-24">
       <div className="text-center mb-12">
-        <h2 className="text-3xl lg:text-4xl font-extrabold tracking-tight">
+        <h2 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-primary">
           {title}
         </h2>
         {subtitle && (
-          <p className="mt-4 text-lg text-neutral-600">{subtitle}</p>
+          <p className="mt-4 text-lg text-primary/70">{subtitle}</p>
         )}
       </div>
 
@@ -114,20 +114,20 @@ export function FAQ({
         {faqs.map((faq) => (
           <Disclosure key={faq.id} as="div">
             {({open}) => (
-              <div className="rounded-xl border border-neutral-200 bg-white overflow-hidden">
-                <Disclosure.Button className="w-full text-left px-6 py-5 flex justify-between items-center hover:bg-neutral-50 transition-colors">
-                  <span className="font-semibold text-lg pr-8">
+              <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden hover:bg-white/10 transition-all">
+                <Disclosure.Button className="w-full text-left px-6 py-5 flex justify-between items-center transition-colors">
+                  <span className="font-semibold text-lg pr-8 text-primary">
                     {faq.question}
                   </span>
                   <IconClose
                     className={clsx(
-                      'flex-shrink-0 transition-transform duration-200',
+                      'flex-shrink-0 transition-transform duration-200 text-primary',
                       !open && 'rotate-[45deg]',
                     )}
                   />
                 </Disclosure.Button>
                 <Disclosure.Panel className="px-6 pb-5 pt-2">
-                  <p className="text-neutral-700 leading-relaxed">
+                  <p className="text-primary/80 leading-relaxed">
                     {faq.answer}
                   </p>
                 </Disclosure.Panel>
@@ -137,14 +137,14 @@ export function FAQ({
         ))}
       </div>
 
-      <div className="mt-12 text-center bg-neutral-50 rounded-2xl p-8">
-        <h3 className="text-xl font-bold mb-2">Still have questions?</h3>
-        <p className="text-neutral-600 mb-4">
+      <div className="mt-12 text-center glass-strong rounded-2xl p-8 border border-white/10">
+        <h3 className="text-xl font-bold mb-2 text-primary">Still have questions?</h3>
+        <p className="text-primary/70 mb-4">
           Our team responds within 2 hours during business hours.
         </p>
         <a
           href="mailto:support@trahere.com"
-          className="inline-flex items-center px-6 py-3 bg-neutral-900 text-white rounded-full hover:bg-neutral-800 transition-colors"
+          className="inline-flex items-center px-6 py-3 btn-accent rounded-full transition-colors"
         >
           Email us
         </a>
