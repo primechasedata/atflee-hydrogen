@@ -35,6 +35,7 @@ import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {ProductGallery} from '~/components/ProductGallery';
 import {FAQ} from '~/components/FAQ';
 import {VideoSection} from '~/components/VideoSection';
+import {UGCSection} from '~/components/UGCSection';
 import {IconCaret, IconCheck, IconClose} from '~/components/Icon';
 import {getExcerpt} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
@@ -297,6 +298,9 @@ export default function Product() {
 
       {/* 5. Video Demo Section */}
       <VideoSection variant="inline" />
+
+      {/* 5.5. UGC Section - Customer Videos */}
+      <UGCSection />
 
       {/* 6. FAQ Section */}
       <Section className="py-16 md:py-24 bg-black">

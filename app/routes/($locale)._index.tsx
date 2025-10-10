@@ -22,6 +22,7 @@ import {ProductTimeline} from '~/components/ProductTimeline';
 import {ExpertEndorsement} from '~/components/ExpertEndorsement';
 import {FitChecker} from '~/components/FitChecker';
 import {Reveal} from '~/components/Reveal';
+import {UGCSection} from '~/components/UGCSection';
 
 export const headers = routeHeaders;
 
@@ -90,6 +91,9 @@ export default function Homepage() {
 
       {/* 4. Interactive Fit Checker */}
       <FitChecker />
+
+      {/* 4.5. User-Generated Content - Customer Videos */}
+      <UGCSection />
 
       {/* 5. Real People Section - user testimonials with photos */}
       <SocialProofSection />
