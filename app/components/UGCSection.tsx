@@ -244,9 +244,14 @@ function UGCVideoCard({video}: {video: UGCVideo}) {
           muted
           loop
           playsInline
-          preload="metadata"
-          poster={video.posterUrl}
+          preload="auto"
           onEnded={handleVideoEnd}
+          onLoadedData={(e) => {
+            // Ensure first frame is displayed as poster
+            if (!isPlaying) {
+              e.currentTarget.currentTime = 0;
+            }
+          }}
         >
           <source src={video.videoUrl} type="video/mp4" />
         </video>
