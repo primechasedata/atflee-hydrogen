@@ -303,9 +303,9 @@ export default function Product() {
       <UGCSection />
 
       {/* 6. FAQ Section */}
-      <Section className="py-16 md:py-24 bg-black">
+      <div className="py-16 md:py-24 bg-black">
         <FAQ variant="default" />
-      </Section>
+      </div>
 
       {/* 7. Related Products / Cross-Sell */}
       <Suspense fallback={<Skeleton className="h-32" />}>

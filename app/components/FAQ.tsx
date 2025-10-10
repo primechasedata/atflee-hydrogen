@@ -100,17 +100,18 @@ export function FAQ({
   }
 
   return (
-    <section className="mx-auto max-w-4xl px-6 py-16 lg:py-24">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-primary">
-          {title}
-        </h2>
-        {subtitle && (
-          <p className="mt-4 text-lg text-primary/70">{subtitle}</p>
-        )}
-      </div>
+    <section className="w-full">
+      <div className="mx-auto max-w-4xl px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-primary">
+            {title}
+          </h2>
+          {subtitle && (
+            <p className="mt-4 text-lg text-primary/70">{subtitle}</p>
+          )}
+        </div>
 
-      <div className="space-y-4">
+        <div className="space-y-4">
         {faqs.map((faq) => (
           <Disclosure key={faq.id} as="div">
             {({open}) => (
@@ -135,19 +136,20 @@ export function FAQ({
             )}
           </Disclosure>
         ))}
-      </div>
+        </div>
 
-      <div className="mt-12 text-center glass-strong rounded-2xl p-8 border border-white/10">
-        <h3 className="text-xl font-bold mb-2 text-primary">Still have questions?</h3>
-        <p className="text-primary/70 mb-4">
-          Our team responds within 2 hours during business hours.
-        </p>
-        <a
-          href="mailto:support@trahere.com"
-          className="inline-flex items-center px-6 py-3 btn-accent rounded-full transition-colors"
-        >
-          Email us
-        </a>
+        <div className="mt-12 text-center glass-strong rounded-2xl p-8 border border-white/10">
+          <h3 className="text-xl font-bold mb-2 text-primary">Still have questions?</h3>
+          <p className="text-primary/70 mb-4">
+            Our team responds within 2 hours during business hours.
+          </p>
+          <a
+            href="mailto:support@trahere.com"
+            className="inline-flex items-center px-6 py-3 btn-accent rounded-full transition-colors"
+          >
+            Email us
+          </a>
+        </div>
       </div>
     </section>
   );
