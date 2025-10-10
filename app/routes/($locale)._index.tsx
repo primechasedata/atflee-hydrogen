@@ -190,13 +190,13 @@ function HeroSection({product}: {product: any}) {
                   lines={[{merchandiseId: product.selectedOrFirstAvailableVariant.id, quantity: 1}]}
                   aria-label="Start building - Add TB7 to cart"
                 >
-                  <span className="relative z-10 flex items-center gap-2">
-                    Start building{' '}
-                    <span className="inline-block min-w-[140px] text-left relative h-[1.2em] overflow-hidden">
+                  <span className="relative z-10 inline-flex items-center gap-1.5">
+                    <span>Start building</span>
+                    <span className="inline-block min-w-[120px] text-left relative h-[1.3em] align-middle">
                       {rotatingWords.map((word, idx) => (
                         <span
                           key={word}
-                          className={`absolute left-0 transition-all duration-500 ${
+                          className={`absolute left-0 top-0 w-full whitespace-nowrap transition-all duration-500 ${
                             idx === rotatingWordIndex
                               ? 'opacity-100 translate-y-0'
                               : idx === (rotatingWordIndex - 1 + rotatingWords.length) % rotatingWords.length
