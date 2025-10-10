@@ -1,12 +1,30 @@
 import {json, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
-import {getSeoMeta} from '@shopify/hydrogen';
+import {getSeoMeta, flattenConnection, Image} from '@shopify/hydrogen';
 import type {MetaArgs} from '@shopify/remix-oxygen';
 import {Link} from '~/components/Link';
 import {Newsletter} from '~/components/Newsletter';
+import {Heading, Text} from '~/components/Text';
+import type {ArticleFragment} from 'storefrontapi.generated';
+import {useState} from 'react';
 
 export async function loader({context}: LoaderFunctionArgs) {
+  const {storefront} = context;
+
+  // Fetch blog articles from Shopify
+  const {blog} = await storefront.query(EDUCATION_BLOGS_QUERY, {
+    variables: {
+      blogHandle: 'education',
+      pageBy: 12,
+    },
+  });
+
+  const articles = blog?.articles
+    ? flattenConnection(blog.articles)
+    : [];
+
   return json({
+    articles,
     seo: {
       title: 'Education Hub | Trahere',
       description:
@@ -20,191 +38,270 @@ export const meta = ({data}: MetaArgs<typeof loader>) => {
 };
 
 export default function EducationHub() {
+  const {articles} = useLoaderData<typeof loader>();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
   const categories = [
     {
-      id: 'news',
-      title: 'News',
-      description: 'Latest updates, product releases, and fitness industry insights.',
-      icon: '📰',
-      link: '/pages/education/news'
+      id: 'workouts',
+      title: 'Workouts',
+      description: 'Structured training programs for all levels, from beginner to advanced.',
+      icon: '💪',
+      tags: ['Workouts', 'Training', 'Programs']
     },
     {
       id: 'fitness-tests',
       title: 'Fitness Tests',
       description: 'Benchmark your progress with standardized pull-up and strength assessments.',
       icon: '📊',
-      link: '/pages/education/fitness-tests'
+      tags: ['Fitness Tests', 'Assessment', 'Testing']
     },
     {
-      id: 'workouts',
-      title: 'Workouts',
-      description: 'Structured training programs for all levels, from beginner to advanced.',
-      icon: '💪',
-      link: '/pages/education/workouts'
+      id: 'technique',
+      title: 'Technique',
+      description: 'Master proper form and biomechanics for injury-free training.',
+      icon: '🎯',
+      tags: ['Technique', 'Form', 'Biomechanics']
     },
     {
-      id: 'habit-builder',
-      title: 'Habit Builder',
-      description: 'Build sustainable training routines that fit your lifestyle and stick.',
-      icon: '📅',
-      link: '/pages/education/habit-builder'
+      id: 'nutrition',
+      title: 'Nutrition',
+      description: 'Fuel your training with evidence-based nutrition strategies.',
+      icon: '🥗',
+      tags: ['Nutrition', 'Diet', 'Recovery']
     },
     {
-      id: 'product-reviews',
-      title: 'Product Reviews',
-      description: 'In-depth analysis of training equipment, accessories and fitness gear.',
-      icon: '⭐',
-      link: '/pages/education/product-reviews'
+      id: 'recovery',
+      title: 'Recovery',
+      description: 'Optimize rest, sleep, and recovery protocols for peak performance.',
+      icon: '😴',
+      tags: ['Recovery', 'Sleep', 'Mobility']
+    },
+    {
+      id: 'equipment',
+      title: 'Equipment',
+      description: 'In-depth reviews and guides for training equipment.',
+      icon: '🔧',
+      tags: ['Equipment', 'Gear', 'Reviews']
     }
   ];
 
+  // Filter articles based on search and category
+  const filteredArticles = articles.filter((article: ArticleFragment) => {
+    const matchesSearch = searchQuery
+      ? article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        article.contentHtml?.toLowerCase().includes(searchQuery.toLowerCase())
+      : true;
+
+    const matchesCategory = selectedCategory
+      ? categories
+          .find(cat => cat.id === selectedCategory)
+          ?.tags.some(tag => article.tags?.some((t: any) => t.value === tag))
+      : true;
+
+    return matchesSearch && matchesCategory;
+  });
+
   return (
-    <div className="education-hub">
+    <div className="bg-black min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-16 md:py-24">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+      <section className="bg-gradient-to-b from-black to-gray-900 text-primary py-16 md:py-24 border-b border-white/10">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8 text-center">
+          <Heading as="h1" className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6">
             Education Hub
-          </h1>
-          <p className="mt-6 text-xl leading-8 text-gray-300">
-            Your learning center. Guides, plans and reviews—all in one place.
-          </p>
-          <p className="mt-4 text-lg text-gray-400">
-            Clear. To the point. Focused on real progress.
-          </p>
+          </Heading>
+          <Text className="text-xl md:text-2xl text-primary/80 mb-4 max-w-3xl mx-auto">
+            Evidence-based training knowledge. Clear, actionable, focused on results.
+          </Text>
+          <Text className="text-lg text-primary/60">
+            From biomechanics to nutrition—everything you need to train smarter.
+          </Text>
         </div>
       </section>
 
-      {/* Purpose and Messaging */}
-      <section className="py-12 bg-white border-b border-gray-200">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8 text-center">
-          <p className="text-lg text-gray-700 leading-relaxed">
-            The Education Hub gathers everything you need to maximize your training.
-            Whether you're testing your baseline strength, following a structured program,
-            or building daily habits that stick—we've got clear, actionable content to
-            help you progress.
-          </p>
-        </div>
-      </section>
-
-      {/* Category Tiles */}
-      <section className="py-16 bg-gray-50">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                to={category.link}
-                className="group relative rounded-2xl bg-white p-8 shadow-sm border border-gray-200 hover:shadow-md hover:border-[rgb(var(--color-accent))]/20 transition-all hover-lift"
-              >
-                <div className="text-5xl mb-4">{category.icon}</div>
-                <h3 className="text-2xl font-bold text-gray-900 group-hover:text-[rgb(var(--color-accent))] transition-colors">
-                  {category.title}
-                </h3>
-                <p className="mt-4 text-gray-600 leading-relaxed">
-                  {category.description}
-                </p>
-                <div className="mt-6 flex items-center text-[rgb(var(--color-accent))] font-semibold">
-                  Explore <span className="ml-2 group-hover:ml-3 transition-all">→</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Filters and Search Section */}
-      <section className="py-12 bg-white">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8">
+      {/* Search and Filter */}
+      <section className="py-12 bg-gray-900 border-b border-white/10">
+        <div className="mx-auto max-w-5xl px-6 lg:px-8">
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <input
               type="search"
-              placeholder="Search articles, workouts, guides..."
-              className="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent"
+              placeholder="Search articles, guides, and workouts..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-1 rounded-lg border border-white/20 bg-black/40 px-4 py-3 text-primary placeholder:text-primary/40 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent"
             />
             <button
               type="button"
-              className="w-full md:w-auto btn-accent !py-3 !px-6 text-base font-semibold shadow-sm"
+              onClick={() => setSearchQuery('')}
+              className="w-full md:w-auto btn-accent !py-3 !px-6 text-base font-semibold"
             >
-              Search
+              {searchQuery ? 'Clear' : 'Search'}
             </button>
           </div>
-          <div className="mt-6 flex flex-wrap gap-2">
-            <span className="text-sm text-gray-600">Filter by topic:</span>
-            {['Beginner', 'Intermediate', 'Advanced', 'Mobility', 'Strength', 'Endurance'].map((tag) => (
+        </div>
+      </section>
+
+      {/* Category Grid */}
+      <section className="py-16 md:py-20 bg-gradient-to-b from-gray-900 to-black">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <Heading as="h2" className="text-3xl md:text-4xl font-bold text-primary mb-12 text-center">
+            Browse by Category
+          </Heading>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map((category) => (
               <button
-                key={tag}
-                className="rounded-full bg-gray-100 px-4 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-200 transition-colors"
+                key={category.id}
+                onClick={() => setSelectedCategory(selectedCategory === category.id ? null : category.id)}
+                className={`group relative rounded-2xl p-8 border transition-all text-left ${
+                  selectedCategory === category.id
+                    ? 'bg-[rgb(var(--color-accent))]/10 border-[rgb(var(--color-accent))] shadow-lg'
+                    : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
+                }`}
               >
-                {tag}
+                <div className="text-5xl mb-4">{category.icon}</div>
+                <h3 className={`text-2xl font-bold mb-3 transition-colors ${
+                  selectedCategory === category.id
+                    ? 'text-[rgb(var(--color-accent))]'
+                    : 'text-primary group-hover:text-[rgb(var(--color-accent))]'
+                }`}>
+                  {category.title}
+                </h3>
+                <p className="text-primary/70 leading-relaxed">
+                  {category.description}
+                </p>
+                {selectedCategory === category.id && (
+                  <div className="mt-4 text-sm text-[rgb(var(--color-accent))] font-semibold">
+                    ✓ Active Filter
+                  </div>
+                )}
               </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Featured Articles */}
-      <section className="py-16 bg-gray-50">
+      {/* Articles Grid */}
+      <section className="py-16 md:py-20 bg-black border-t border-white/10">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
-            Featured Articles
-          </h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: 'The Complete Beginner&apos;s Pull-Up Guide',
-                category: 'Workouts',
-                readTime: '8 min read',
-                image: '/placeholder-article-1.jpg'
-              },
-              {
-                title: 'Building a Daily Training Habit in 30 Days',
-                category: 'Habit Builder',
-                readTime: '5 min read',
-                image: '/placeholder-article-2.jpg'
-              },
-              {
-                title: 'How to Test Your Max Pull-Ups',
-                category: 'Fitness Tests',
-                readTime: '6 min read',
-                image: '/placeholder-article-3.jpg'
-              }
-            ].map((article, idx) => (
-              <article key={idx} className="rounded-xl bg-white overflow-hidden shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
-                <div className="aspect-video bg-gray-200 flex items-center justify-center">
-                  <span className="text-gray-400">Article Image</span>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                    <span className="text-[rgb(var(--color-accent))] font-semibold">{article.category}</span>
-                    <span>•</span>
-                    <span>{article.readTime}</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {article.title}
-                  </h3>
-                  <Link
-                    to="#"
-                    className="inline-flex items-center text-[rgb(var(--color-accent))] font-semibold hover:text-[rgb(var(--color-accent-hover))]"
-                  >
-                    Read article <span className="ml-2">→</span>
-                  </Link>
-                </div>
-              </article>
-            ))}
+          <div className="flex items-center justify-between mb-12">
+            <Heading as="h2" className="text-3xl md:text-4xl font-bold text-primary">
+              {selectedCategory
+                ? `${categories.find(c => c.id === selectedCategory)?.title} Articles`
+                : 'All Articles'}
+            </Heading>
+            <Text className="text-primary/60">
+              {filteredArticles.length} {filteredArticles.length === 1 ? 'article' : 'articles'}
+            </Text>
           </div>
+
+          {filteredArticles.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredArticles.map((article: ArticleFragment) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <Text className="text-2xl text-primary/60 mb-4">
+                No articles found
+              </Text>
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedCategory(null);
+                }}
+                className="btn-accent !py-2.5 !px-6 text-sm font-semibold"
+              >
+                Clear filters
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Lead Capture / Newsletter */}
-      <section className="py-16 bg-white">
+      {/* Newsletter */}
+      <section className="py-16 md:py-20 bg-gradient-to-b from-black to-gray-900 border-t border-white/10">
         <div className="mx-auto max-w-2xl px-6 lg:px-8">
           <Newsletter
-            title="Get weekly training tips"
-            description="Join 10,000+ athletes getting our best content delivered weekly."
+            title="Get weekly training insights"
+            description="Join thousands of athletes getting evidence-based training content delivered weekly."
           />
         </div>
       </section>
     </div>
   );
 }
+
+function ArticleCard({article}: {article: ArticleFragment}) {
+  return (
+    <Link
+      to={`/journal/${article.handle}`}
+      className="group rounded-xl overflow-hidden bg-white/5 border border-white/10 hover:border-[rgb(var(--color-accent))]/50 transition-all hover:bg-white/10"
+    >
+      {article.image ? (
+        <div className="aspect-video bg-gray-900 overflow-hidden">
+          <Image
+            data={article.image}
+            alt={article.image.altText || article.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+          />
+        </div>
+      ) : (
+        <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
+          <Text className="text-primary/40 text-sm">No image</Text>
+        </div>
+      )}
+      <div className="p-6">
+        {article.author?.name && (
+          <div className="flex items-center gap-2 text-sm text-primary/60 mb-2">
+            <span className="text-[rgb(var(--color-accent))] font-semibold">{article.author.name}</span>
+          </div>
+        )}
+        <h3 className="text-xl font-bold text-primary mb-3 group-hover:text-[rgb(var(--color-accent))] transition-colors line-clamp-2">
+          {article.title}
+        </h3>
+        <div className="flex items-center text-[rgb(var(--color-accent))] font-semibold text-sm">
+          Read article
+          <svg className="w-4 h-4 ml-2 group-hover:ml-3 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+const EDUCATION_BLOGS_QUERY = `#graphql
+  query EducationBlogs(
+    $blogHandle: String!
+    $pageBy: Int!
+  ) {
+    blog(handle: $blogHandle) {
+      articles(first: $pageBy) {
+        edges {
+          node {
+            id
+            title
+            handle
+            contentHtml
+            image {
+              id
+              altText
+              url
+              width
+              height
+            }
+            author: authorV2 {
+              name
+            }
+            tags
+            publishedAt
+          }
+        }
+      }
+    }
+  }
+`;
+
