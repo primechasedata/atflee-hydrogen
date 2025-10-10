@@ -203,18 +203,20 @@ export default function EducationHub() {
             </div>
           ) : (
             <div className="text-center py-16">
-              <Text className="text-2xl text-primary/60 mb-8">
+              <Text className="text-2xl text-primary/60 mb-12">
                 No articles found
               </Text>
-              <button
-                onClick={() => {
-                  setSearchQuery('');
-                  setSelectedCategory(null);
-                }}
-                className="btn-accent !py-2.5 !px-6 text-sm font-semibold"
-              >
-                Clear filters
-              </button>
+              <div className="mt-8">
+                <button
+                  onClick={() => {
+                    setSearchQuery('');
+                    setSelectedCategory(null);
+                  }}
+                  className="btn-accent !py-2.5 !px-6 text-sm font-semibold"
+                >
+                  Clear filters
+                </button>
+              </div>
             </div>
           )}
         </div>
