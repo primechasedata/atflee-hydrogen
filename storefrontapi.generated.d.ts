@@ -209,6 +209,51 @@ export type FeaturedProductQuery = {
       featuredImage?: StorefrontAPI.Maybe<
         Pick<StorefrontAPI.Image, 'url' | 'altText' | 'width' | 'height'>
       >;
+      media: {
+        nodes: Array<
+          | ({__typename: 'ExternalVideo'} & Pick<
+              StorefrontAPI.ExternalVideo,
+              'id' | 'embedUrl' | 'host' | 'mediaContentType' | 'alt'
+            > & {
+                previewImage?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.Image, 'url'>
+                >;
+              })
+          | ({__typename: 'MediaImage'} & Pick<
+              StorefrontAPI.MediaImage,
+              'id' | 'mediaContentType' | 'alt'
+            > & {
+                image?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.Image, 'id' | 'url' | 'width' | 'height'>
+                >;
+                previewImage?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.Image, 'url'>
+                >;
+              })
+          | ({__typename: 'Model3d'} & Pick<
+              StorefrontAPI.Model3d,
+              'id' | 'mediaContentType' | 'alt'
+            > & {
+                sources: Array<
+                  Pick<StorefrontAPI.Model3dSource, 'mimeType' | 'url'>
+                >;
+                previewImage?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.Image, 'url'>
+                >;
+              })
+          | ({__typename: 'Video'} & Pick<
+              StorefrontAPI.Video,
+              'id' | 'mediaContentType' | 'alt'
+            > & {
+                sources: Array<
+                  Pick<StorefrontAPI.VideoSource, 'mimeType' | 'url'>
+                >;
+                previewImage?: StorefrontAPI.Maybe<
+                  Pick<StorefrontAPI.Image, 'url'>
+                >;
+              })
+        >;
+      };
       selectedOrFirstAvailableVariant?: StorefrontAPI.Maybe<
         Pick<StorefrontAPI.ProductVariant, 'id'> & {
           price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
@@ -1077,7 +1122,7 @@ interface GeneratedQueryTypes {
     return: GetShopPrimaryDomainQuery;
     variables: GetShopPrimaryDomainQueryVariables;
   };
-  '#graphql\n  query FeaturedProduct($handle: String!) {\n    product(handle: $handle) {\n      id\n      handle\n      title\n      description\n      featuredImage {\n        url\n        altText\n        width\n        height\n      }\n      selectedOrFirstAvailableVariant {\n        id\n        price {\n          amount\n          currencyCode\n        }\n        compareAtPrice {\n          amount\n          currencyCode\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  #graphql\n  fragment Media on Media {\n    __typename\n    mediaContentType\n    alt\n    previewImage {\n      url\n    }\n    ... on MediaImage {\n      id\n      image {\n        id\n        url\n        width\n        height\n      }\n    }\n    ... on Video {\n      id\n      sources {\n        mimeType\n        url\n      }\n    }\n    ... on Model3d {\n      id\n      sources {\n        mimeType\n        url\n      }\n    }\n    ... on ExternalVideo {\n      id\n      embedUrl\n      host\n    }\n  }\n\n  query FeaturedProduct($handle: String!) {\n    product(handle: $handle) {\n      id\n      handle\n      title\n      description\n      featuredImage {\n        url\n        altText\n        width\n        height\n      }\n      media(first: 6) {\n        nodes { ...Media }\n      }\n      selectedOrFirstAvailableVariant {\n        id\n        price {\n          amount\n          currencyCode\n        }\n        compareAtPrice {\n          amount\n          currencyCode\n        }\n      }\n    }\n  }\n': {
     return: FeaturedProductQuery;
     variables: FeaturedProductQueryVariables;
   };
