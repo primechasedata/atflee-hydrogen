@@ -1,5 +1,4 @@
-import {useRef, Suspense} from 'react';
-import {Disclosure, Listbox} from '@headlessui/react';
+import {Suspense} from 'react';
 import {
   defer,
   type MetaArgs,
@@ -16,18 +15,11 @@ import {
   getAdjacentAndFirstAvailableVariants,
   useSelectedOptionInUrlParam,
   getProductOptions,
-  type MappedProductOptions,
 } from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
-import clsx from 'clsx';
-import type {
-  Maybe,
-  ProductOptionValueSwatch,
-} from '@shopify/hydrogen/storefront-api-types';
 
 import type {ProductFragment} from 'storefrontapi.generated';
 import {Heading, Section, Text} from '~/components/Text';
-import {Link} from '~/components/Link';
 import {Button} from '~/components/Button';
 import {AddToCartButton} from '~/components/AddToCartButton';
 import {Skeleton} from '~/components/Skeleton';
@@ -36,8 +28,7 @@ import {ProductGallery} from '~/components/ProductGallery';
 import {FAQ} from '~/components/FAQ';
 import {VideoSection} from '~/components/VideoSection';
 import {UGCSection} from '~/components/UGCSection';
-import {IconCaret, IconCheck, IconClose} from '~/components/Icon';
-import {getExcerpt} from '~/lib/utils';
+import {IconCheck} from '~/components/Icon';
 import {seoPayload} from '~/lib/seo.server';
 import type {Storefront} from '~/lib/type';
 import {routeHeaders} from '~/data/cache';
@@ -164,80 +155,137 @@ export default function Product() {
 
           {/* Right: Product Summary + CTA */}
           <div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll">
-            <section id="product-form" className="flex flex-col w-full gap-6 p-6 md:mx-auto md:px-4 bg-gradient-to-b from-gray-900/50 to-black/50 rounded-lg">
+            <section id="product-form" className="flex flex-col w-full gap-4 p-6 md:p-8">
               {/* Product Title */}
-              <div className="grid gap-2">
-                <Heading as="h1" className="text-4xl md:text-5xl font-bold text-primary">
+              <div className="space-y-1">
+                <Heading as="h1" className="text-2xl md:text-3xl font-bold text-primary leading-tight">
                   {title}
                 </Heading>
                 {vendor && (
-                  <Text className="text-sm text-primary/60 font-medium tracking-wide uppercase">{vendor}</Text>
+                  <Text className="text-xs text-primary/50 font-medium tracking-wide uppercase">{vendor}</Text>
                 )}
               </div>
 
-              {/* Quick Specs Overlay */}
-              <div className="grid grid-cols-2 gap-3 bg-white/5 rounded-xl p-4 border border-white/10">
-                {[
-                  {label: '40mm Comfort Grip', icon: '🤲'},
-                  {label: 'Max Load: 500 lbs (Static) / 400 lbs (Dynamic)', icon: '💪'},
-                  {label: 'Tool-Free Install', icon: '⚡'},
-                  {label: 'Made in Korea', icon: '🇰🇷'},
-                ].map((spec, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs md:text-sm text-primary/90">
-                    <span className="text-lg">{spec.icon}</span>
-                    <span className="font-medium leading-tight">{spec.label}</span>
-                  </div>
-                ))}
+              {/* Quick Specs - Compact Icons */}
+              <div className="flex items-center gap-4 text-xs text-primary/70">
+                <div className="flex items-center gap-1.5">
+                  <span>🤲</span>
+                  <span>40mm Comfort Grip</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span>💪</span>
+                  <span>Max Load: 500 lbs (Static) / 400 lbs (Dynamic)</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 text-xs text-primary/70">
+                <div className="flex items-center gap-1.5">
+                  <span>⚡</span>
+                  <span>Tool-Free Install</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span>🇰🇷</span>
+                  <span>Made in Korea</span>
+                </div>
               </div>
 
               {/* Price Section */}
-              <div className="flex flex-col gap-2">
-                <div className="flex items-baseline gap-4">
+              <div className="py-3 border-y border-white/10">
+                <div className="flex items-baseline gap-3">
                   {selectedVariant?.price && (
                     <Money
                       data={selectedVariant.price}
-                      className="text-4xl font-bold text-[rgb(var(--color-accent))]"
+                      className="text-3xl font-bold text-[rgb(var(--color-accent))]"
                     />
                   )}
                   {isOnSale && selectedVariant?.compareAtPrice && (
                     <Money
                       data={selectedVariant.compareAtPrice}
-                      className="text-2xl text-primary/40 line-through"
+                      className="text-lg text-primary/40 line-through"
                     />
                   )}
                 </div>
-                <div className="flex items-center gap-2 text-sm text-primary/70">
-                  <IconCheck className="w-4 h-4 text-green-400" />
+                <div className="flex items-center gap-2 text-xs text-primary/70 mt-2">
+                  <IconCheck className="w-3.5 h-3.5 text-green-400" />
                   <span>Free Shipping in the U.S.</span>
                 </div>
-                <div className="text-sm text-primary/70">
+                <div className="text-xs text-primary/60 mt-1">
                   Ships within 24 hours • Arrives in 3-5 business days
                 </div>
               </div>
 
-              {/* Product Form */}
-              <ProductForm
-                productOptions={productOptions}
-                selectedVariant={selectedVariant}
-                storeDomain={storeDomain}
-              />
+              {/* Variant Selection (if any) */}
+              {productOptions.length > 0 && productOptions[0].optionValues.length > 1 && (
+                <div className="space-y-3">
+                  {productOptions.map((option, optionIndex) => (
+                    <div key={option.name} className="space-y-2">
+                      <Text className="text-sm font-semibold text-primary">
+                        {option.name}
+                      </Text>
+                      <div className="text-sm text-primary/80">
+                        {selectedVariant?.selectedOptions[optionIndex]?.value || option.optionValues[0].name}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* CTA Buttons */}
+              {selectedVariant && (
+                <div className="space-y-3 pt-2">
+                  {!selectedVariant?.availableForSale ? (
+                    <Button variant="secondary" disabled className="w-full !py-3">
+                      <Text>Sold out</Text>
+                    </Button>
+                  ) : (
+                    <>
+                      <AddToCartButton
+                        lines={[
+                          {
+                            merchandiseId: selectedVariant.id!,
+                            quantity: 1,
+                          },
+                        ]}
+                        variant="primary"
+                        className="w-full btn-accent !py-3 !text-base font-semibold"
+                        data-test="add-to-cart"
+                      >
+                        <Text as="span" className="flex items-center justify-center gap-2">
+                          <span>Add to Cart</span>
+                          <span>·</span>
+                          <Money
+                            withoutTrailingZeros
+                            data={selectedVariant?.price!}
+                            as="span"
+                            data-test="price"
+                          />
+                        </Text>
+                      </AddToCartButton>
+                      <ShopPayButton
+                        width="100%"
+                        variantIds={[selectedVariant?.id!]}
+                        storeDomain={storeDomain}
+                      />
+                    </>
+                  )}
+                </div>
+              )}
 
               {/* Trust Badges */}
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
+              <div className="grid grid-cols-3 gap-3 pt-4 border-t border-white/10">
                 <div className="text-center">
-                  <div className="text-yellow-400 text-xl mb-1">⭐⭐⭐⭐⭐</div>
-                  <div className="text-sm font-semibold text-primary">4.9 Average</div>
-                  <div className="text-xs text-primary/60">2,347 reviews</div>
+                  <div className="text-yellow-400 text-base mb-1">★★★★★</div>
+                  <div className="text-xs font-semibold text-primary">4.9 Average</div>
+                  <div className="text-[10px] text-primary/50">2,347 reviews</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl mb-1">🏆</div>
-                  <div className="text-sm font-semibold text-primary">13 Patents</div>
-                  <div className="text-xs text-primary/60">Registered in Korea</div>
+                  <div className="text-lg mb-1">🏆</div>
+                  <div className="text-xs font-semibold text-primary">13 Patents</div>
+                  <div className="text-[10px] text-primary/50">Registered in Korea</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl mb-1">🩺</div>
-                  <div className="text-sm font-semibold text-primary">PT Approved</div>
-                  <div className="text-xs text-primary/60">Used by trainers</div>
+                  <div className="text-lg mb-1">🩺</div>
+                  <div className="text-xs font-semibold text-primary">PT Approved</div>
+                  <div className="text-[10px] text-primary/50">Used by trainers</div>
                 </div>
               </div>
             </section>
@@ -354,219 +402,6 @@ export default function Product() {
         }}
       />
     </>
-  );
-}
-
-export function ProductForm({
-  productOptions,
-  selectedVariant,
-  storeDomain,
-}: {
-  productOptions: MappedProductOptions[];
-  selectedVariant: ProductFragment['selectedOrFirstAvailableVariant'];
-  storeDomain: string;
-}) {
-  const closeRef = useRef<HTMLButtonElement>(null);
-
-  const isOutOfStock = !selectedVariant?.availableForSale;
-
-  const isOnSale =
-    selectedVariant?.price?.amount &&
-    selectedVariant?.compareAtPrice?.amount &&
-    selectedVariant?.price?.amount < selectedVariant?.compareAtPrice?.amount;
-
-  return (
-    <div className="grid gap-6">
-      <div className="grid gap-4">
-        {productOptions.map((option, optionIndex) => (
-          <div
-            key={option.name}
-            className="product-options flex flex-col flex-wrap mb-4 gap-y-2 last:mb-0"
-          >
-            <Heading as="legend" size="lead" className="min-w-[4rem]">
-              {option.name}
-            </Heading>
-            <div className="flex flex-wrap items-baseline gap-4">
-              {option.optionValues.length > 7 ? (
-                <div className="relative w-full">
-                  <Listbox>
-                    {({open}) => (
-                      <>
-                        <Listbox.Button
-                          ref={closeRef}
-                          className={clsx(
-                            'flex items-center justify-between w-full py-3 px-4 border border-primary',
-                            open
-                              ? 'rounded-b md:rounded-t md:rounded-b-none'
-                              : 'rounded',
-                          )}
-                        >
-                          <span>
-                            {
-                              selectedVariant?.selectedOptions[optionIndex]
-                                .value
-                            }
-                          </span>
-                          <IconCaret direction={open ? 'up' : 'down'} />
-                        </Listbox.Button>
-                        <Listbox.Options
-                          className={clsx(
-                            'border-primary bg-contrast absolute bottom-12 z-30 grid h-48 w-full overflow-y-scroll rounded-t border px-2 py-2 transition-[max-height] duration-150 sm:bottom-auto md:rounded-b md:rounded-t-none md:border-t-0 md:border-b',
-                            open ? 'max-h-48' : 'max-h-0',
-                          )}
-                        >
-                          {option.optionValues
-                            .filter((value) => value.available)
-                            .map(
-                              ({
-                                isDifferentProduct,
-                                name,
-                                variantUriQuery,
-                                handle,
-                                selected,
-                              }) => (
-                                <Listbox.Option
-                                  key={`option-${option.name}-${name}`}
-                                  value={name}
-                                >
-                                  <Link
-                                    {...(!isDifferentProduct
-                                      ? {rel: 'nofollow'}
-                                      : {})}
-                                    to={`/products/${handle}?${variantUriQuery}`}
-                                    preventScrollReset
-                                    className={clsx(
-                                      'text-primary w-full p-2 transition rounded flex justify-start items-center text-left cursor-pointer',
-                                      selected && 'bg-primary/10',
-                                    )}
-                                    onClick={() => {
-                                      if (!closeRef?.current) return;
-                                      closeRef.current.click();
-                                    }}
-                                  >
-                                    {name}
-                                    {selected && (
-                                      <span className="ml-2">
-                                        <IconCheck />
-                                      </span>
-                                    )}
-                                  </Link>
-                                </Listbox.Option>
-                              ),
-                            )}
-                        </Listbox.Options>
-                      </>
-                    )}
-                  </Listbox>
-                </div>
-              ) : (
-                option.optionValues.map(
-                  ({
-                    isDifferentProduct,
-                    name,
-                    variantUriQuery,
-                    handle,
-                    selected,
-                    available,
-                    swatch,
-                  }) => (
-                    <Link
-                      key={option.name + name}
-                      {...(!isDifferentProduct ? {rel: 'nofollow'} : {})}
-                      to={`/products/${handle}?${variantUriQuery}`}
-                      preventScrollReset
-                      prefetch="intent"
-                      replace
-                      className={clsx(
-                        'leading-none py-1 border-b-[1.5px] cursor-pointer transition-all duration-200',
-                        selected ? 'border-primary/50' : 'border-primary/0',
-                        available ? 'opacity-100' : 'opacity-50',
-                      )}
-                    >
-                      <ProductOptionSwatch swatch={swatch} name={name} />
-                    </Link>
-                  ),
-                )
-              )}
-            </div>
-          </div>
-        ))}
-        {selectedVariant && (
-          <div className="grid items-stretch gap-4">
-            {isOutOfStock ? (
-              <Button variant="secondary" disabled>
-                <Text>Sold out</Text>
-              </Button>
-            ) : (
-              <>
-                <AddToCartButton
-                  lines={[
-                    {
-                      merchandiseId: selectedVariant.id!,
-                      quantity: 1,
-                    },
-                  ]}
-                  variant="primary"
-                  className="btn-accent !py-4 !text-lg font-bold"
-                  data-test="add-to-cart"
-                >
-                  <Text
-                    as="span"
-                    className="flex items-center justify-center gap-2"
-                  >
-                    <span>Add to Cart</span> <span>·</span>{' '}
-                    <Money
-                      withoutTrailingZeros
-                      data={selectedVariant?.price!}
-                      as="span"
-                      data-test="price"
-                    />
-                    {isOnSale && (
-                      <Money
-                        withoutTrailingZeros
-                        data={selectedVariant?.compareAtPrice!}
-                        as="span"
-                        className="opacity-50 strike"
-                      />
-                    )}
-                  </Text>
-                </AddToCartButton>
-                <ShopPayButton
-                  width="100%"
-                  variantIds={[selectedVariant?.id!]}
-                  storeDomain={storeDomain}
-                />
-              </>
-            )}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function ProductOptionSwatch({
-  swatch,
-  name,
-}: {
-  swatch?: Maybe<ProductOptionValueSwatch> | undefined;
-  name: string;
-}) {
-  const image = swatch?.image?.previewImage?.url;
-  const color = swatch?.color;
-
-  if (!image && !color) return name;
-
-  return (
-    <div
-      aria-label={name}
-      className="w-8 h-8"
-      style={{
-        backgroundColor: color || 'transparent',
-      }}
-    >
-      {!!image && <img src={image} alt={name} />}
-    </div>
   );
 }
 
