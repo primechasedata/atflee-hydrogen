@@ -34,10 +34,10 @@ export default function CustomerCare() {
           <Heading as="h1" className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6">
             Customer Care
           </Heading>
-          <Text className="text-xl md:text-2xl text-primary/80 mb-4">
+          <Text className="text-xl md:text-2xl text-primary/80 mb-4 max-w-3xl mx-auto">
             We're here to help. Support response within 24 hours.
           </Text>
-          <Text className="text-lg text-primary/60">
+          <Text className="text-lg text-primary/60 max-w-2xl mx-auto">
             Questions about your order, setup, or product? We've got you covered.
           </Text>
         </div>
@@ -106,10 +106,10 @@ export default function CustomerCare() {
             <div className="rounded-2xl bg-white/5 border border-white/10 p-8 hover:bg-white/10 hover:border-[rgb(var(--color-accent))]/50 transition-all">
               <div className="text-5xl mb-4">🛡️</div>
               <h3 className="text-xl font-bold text-primary mb-3">
-                2-Year Warranty
+                1-Year Warranty
               </h3>
               <p className="text-primary/70 text-sm mb-6 leading-relaxed">
-                Coverage for manufacturing defects and normal wear.
+                Limited warranty for manufacturing defects and normal wear.
               </p>
               <a
                 href="#warranty"
@@ -208,7 +208,7 @@ export default function CustomerCare() {
         <div className="mx-auto max-w-4xl px-6 lg:px-8">
           <div className="text-center mb-12">
             <Heading as="h2" className="text-3xl md:text-4xl font-bold text-primary mb-4">
-              2-Year Manufacturer Warranty
+              1-Year Limited Warranty
             </Heading>
             <Text className="text-xl text-primary/70">
               We stand behind our products with comprehensive coverage.
@@ -250,7 +250,7 @@ export default function CustomerCare() {
                 <h4 className="font-bold text-primary mb-2">Not Covered</h4>
                 <ul className="space-y-2 text-sm text-primary/70">
                   <li>• Damage from misuse or improper installation</li>
-                  <li>• Normal wear and tear beyond 2 years</li>
+                  <li>• Normal wear and tear beyond 1 year</li>
                   <li>• Cosmetic issues that don't affect function</li>
                   <li>• Damage from excessive weight (over 260 lbs)</li>
                 </ul>
@@ -348,7 +348,7 @@ function FAQSection() {
       questions: [
         {
           q: 'What does the warranty cover?',
-          a: 'Our 2-year warranty covers manufacturing defects and normal wear under proper use. This includes foam degradation, metal fatigue, structural issues, and adjustment mechanism failures.'
+          a: 'Our 1-year limited warranty covers manufacturing defects and normal wear under proper use. This includes foam degradation, metal fatigue, structural issues, and adjustment mechanism failures.'
         },
         {
           q: 'How do I file a warranty claim?',
@@ -356,7 +356,7 @@ function FAQSection() {
         },
         {
           q: 'What is not covered by warranty?',
-          a: 'The warranty doesn\'t cover damage from misuse, improper installation, excessive weight (over 260 lbs), or cosmetic issues that don\'t affect functionality.'
+          a: 'The warranty doesn\'t cover damage from misuse, improper installation, excessive weight (over 260 lbs), cosmetic issues that don\'t affect functionality, or normal wear and tear beyond 1 year.'
         }
       ]
     },
