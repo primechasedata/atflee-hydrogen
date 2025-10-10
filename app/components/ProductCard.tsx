@@ -46,17 +46,17 @@ export function ProductCard({
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 group">
       <Link
         onClick={onClick}
         to={`/products/${product.handle}`}
         prefetch="viewport"
       >
         <div className={clsx('grid gap-4', className)}>
-          <div className="card-image aspect-[4/5] bg-primary/5">
+          <div className="card-image aspect-[4/5] bg-primary/5 rounded-lg overflow-hidden relative hover-lift shimmer-on-hover">
             {image && (
               <Image
-                className="object-cover w-full fadeIn"
+                className="object-cover w-full fadeIn transition-transform duration-300 group-hover:scale-105"
                 sizes="(min-width: 64em) 25vw, (min-width: 48em) 30vw, 45vw"
                 aspectRatio="4/5"
                 data={image}
@@ -64,17 +64,19 @@ export function ProductCard({
                 loading={loading}
               />
             )}
-            <Text
-              as="label"
-              size="fine"
-              className="absolute top-0 right-0 m-4 text-right text-notice"
-            >
-              {cardLabel}
-            </Text>
+            {cardLabel && (
+              <Text
+                as="label"
+                size="fine"
+                className="absolute top-0 right-0 m-4 text-right bg-[rgb(var(--color-accent))]/90 text-white px-3 py-1 rounded-full text-xs font-semibold"
+              >
+                {cardLabel}
+              </Text>
+            )}
           </div>
           <div className="grid gap-1">
             <Text
-              className="w-full overflow-hidden whitespace-nowrap text-ellipsis "
+              className="w-full overflow-hidden whitespace-nowrap text-ellipsis text-primary group-hover:text-[rgb(var(--color-accent))] transition-colors"
               as="h3"
             >
               {product.title}
@@ -101,8 +103,7 @@ export function ProductCard({
               merchandiseId: firstVariant.id,
             },
           ]}
-          variant="secondary"
-          className="mt-2"
+          className="btn-accent !py-3 mt-2"
         >
           <Text as="span" className="flex items-center justify-center gap-2">
             Add to Cart

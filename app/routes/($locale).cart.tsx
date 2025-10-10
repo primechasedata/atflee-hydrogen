@@ -86,8 +86,8 @@ export default function CartRoute() {
   const cart = useLoaderData<typeof loader>();
 
   return (
-    <div className="cart">
-      <h1>Cart</h1>
+    <div className="cart max-w-7xl mx-auto px-6 lg:px-8 py-12">
+      <h1 className="text-4xl md:text-5xl font-bold text-primary mb-8">Your Cart</h1>
       <Cart layout="page" cart={cart} />
       <Analytics.CartView />
     </div>

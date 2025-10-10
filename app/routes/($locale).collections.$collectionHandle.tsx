@@ -178,7 +178,7 @@ export default function Collection() {
             }) => (
               <>
                 <div className="flex items-center justify-center mb-6">
-                  <Button as={PreviousLink} variant="secondary" width="full">
+                  <Button as={PreviousLink} variant="secondary" width="full" className="glass rounded-md border border-white/10 hover-lift">
                     {isLoading ? 'Loading...' : 'Load previous'}
                   </Button>
                 </div>
@@ -195,6 +195,7 @@ export default function Collection() {
                     as={NextLink}
                     variant="secondary"
                     width="full"
+                    className="glass rounded-md border border-white/10 hover-lift"
                   >
                     {isLoading ? 'Loading...' : 'Load more products'}
                   </Button>

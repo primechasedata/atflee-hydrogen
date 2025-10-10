@@ -156,21 +156,22 @@ function MenuMobileNav({
   ];
 
   return (
-    <nav className="grid gap-4 p-6 sm:gap-6 sm:px-12 sm:py-8">
+    <nav className="grid gap-2 p-6 sm:gap-3 sm:px-12 sm:py-8">
       {navItems.map((item) => (
-        <span key={item.to} className="block">
-          <Link
-            to={item.to}
-            onClick={onClose}
-            className={({isActive}) =>
-              isActive ? 'pb-1 border-b-2 border-blue-600 font-semibold text-lg' : 'pb-1 text-lg hover:text-blue-600 transition-colors'
-            }
-          >
-            <Text as="span" size="copy">
-              {item.title}
-            </Text>
-          </Link>
-        </span>
+        <Link
+          key={item.to}
+          to={item.to}
+          onClick={onClose}
+          className={({isActive}) =>
+            isActive
+              ? 'glass rounded-lg px-4 py-3 border-l-4 border-[rgb(var(--color-accent))] font-semibold text-lg bg-[rgb(var(--color-accent))]/10'
+              : 'px-4 py-3 text-lg hover:text-[rgb(var(--color-accent))] hover:bg-white/5 rounded-lg transition-all'
+          }
+        >
+          <Text as="span" size="copy">
+            {item.title}
+          </Text>
+        </Link>
       ))}
     </nav>
   );
@@ -193,13 +194,14 @@ function MobileHeader({
     <header
       role="banner"
       className={`${
-        y > 80 ? 'glass-strong bg-[#0B121C]/70 border-b border-white/10' : 'bg-[#0B121C]'
+        y > 80 ? 'glass-strong bg-black/80 border-b border-white/10 shadow-lg' : 'bg-black/95'
       } flex lg:hidden items-center h-nav sticky z-50 top-0 justify-between w-full leading-none gap-4 px-4 md:px-8 text-white transition-all duration-300`}
     >
       <div className="flex items-center justify-start gap-4">
         <button
           onClick={openMenu}
-          className="relative flex items-center justify-center w-8 h-8 hover:text-blue-400 transition-colors"
+          className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white/5 hover:text-[rgb(var(--color-accent))] transition-all"
+          aria-label="Open menu"
         >
           <IconMenu />
         </button>
@@ -210,15 +212,15 @@ function MobileHeader({
         to="/"
       >
         <Heading
-          className="font-bold text-center leading-none"
+          className="font-bold text-center leading-none text-xl tracking-tight"
           as={isHome ? 'h1' : 'h2'}
         >
           {title}
         </Heading>
       </Link>
 
-      <div className="flex items-center justify-end gap-4">
-        <AccountLink className="relative flex items-center justify-center w-8 h-8 hover:text-blue-400 transition-colors" />
+      <div className="flex items-center justify-end gap-2">
+        <AccountLink className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white/5 hover:text-[rgb(var(--color-accent))] transition-all" />
         <CartCount isHome={isHome} openCart={openCart} />
       </div>
     </header>
@@ -251,14 +253,14 @@ function DesktopHeader({
     <header
       role="banner"
       className={`${
-        y > 80 ? 'glass-strong bg-[#0B121C]/70 border-b border-white/10' : 'bg-[#0B121C]'
-      } hidden h-nav lg:flex items-center fixed transition-all duration-300 z-50 top-0 justify-between w-full leading-none gap-8 px-12 py-4 text-white`}
+        y > 80 ? 'glass-strong bg-black/80 border-b border-white/10 shadow-lg' : 'bg-black/95 border-b border-white/5'
+      } hidden h-nav lg:flex items-center fixed transition-all duration-300 z-50 top-0 justify-between w-full leading-none gap-8 px-8 xl:px-12 py-4 text-white`}
     >
-      <div className="flex gap-12 items-center">
-        <Link className="font-bold text-xl" to="/" prefetch="intent">
+      <div className="flex gap-8 xl:gap-12 items-center">
+        <Link className="font-bold text-xl tracking-tight hover:text-[rgb(var(--color-accent))] transition-colors" to="/" prefetch="intent">
           {title}
         </Link>
-        <nav className="flex gap-6">
+        <nav className="flex gap-8">
           {navItems.map((item) => (
             <Link
               key={item.to}
@@ -266,8 +268,8 @@ function DesktopHeader({
               prefetch="intent"
               className={({isActive}) =>
                 isActive
-                  ? 'pb-1 border-b-2 border-blue-600 font-semibold'
-                  : 'pb-1 hover:text-blue-400 transition-colors'
+                  ? 'relative pb-1.5 font-semibold after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[rgb(var(--color-accent))] after:rounded-full'
+                  : 'relative pb-1.5 hover:text-[rgb(var(--color-accent))] transition-all duration-200 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[rgb(var(--color-accent))] after:rounded-full after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200'
               }
             >
               {item.title}
@@ -275,8 +277,8 @@ function DesktopHeader({
           ))}
         </nav>
       </div>
-      <div className="flex items-center gap-4">
-        <AccountLink className="relative flex items-center justify-center w-8 h-8 focus:ring-blue-600/50 hover:text-blue-400 transition-colors" />
+      <div className="flex items-center gap-3">
+        <AccountLink className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white/5 focus:ring-2 focus:ring-[rgb(var(--color-accent))]/50 hover:text-[rgb(var(--color-accent))] transition-all" />
         <CartCount isHome={isHome} openCart={openCart} />
       </div>
     </header>
@@ -339,7 +341,7 @@ function Badge({
       <>
         <IconBag />
         <div
-          className="absolute bottom-1 right-1 text-[0.625rem] font-medium subpixel-antialiased h-3 min-w-[0.75rem] flex items-center justify-center leading-none text-center rounded-full w-auto px-[0.125rem] pb-px bg-blue-600 text-white"
+          className="absolute bottom-1 right-1 text-[0.625rem] font-medium subpixel-antialiased h-3 min-w-[0.75rem] flex items-center justify-center leading-none text-center rounded-full w-auto px-[0.125rem] pb-px bg-[rgb(var(--color-accent))] text-white"
         >
           <span>{count || 0}</span>
         </div>
@@ -351,14 +353,16 @@ function Badge({
   return isHydrated ? (
     <button
       onClick={openCart}
-      className="relative flex items-center justify-center w-8 h-8 focus:ring-blue-600/50 hover:text-blue-400 transition-colors"
+      className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white/5 focus:ring-2 focus:ring-[rgb(var(--color-accent))]/50 hover:text-[rgb(var(--color-accent))] transition-all"
+      aria-label="Open cart"
     >
       {BadgeCounter}
     </button>
   ) : (
     <Link
       to="/cart"
-      className="relative flex items-center justify-center w-8 h-8 focus:ring-blue-600/50 hover:text-blue-400 transition-colors"
+      className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white/5 focus:ring-2 focus:ring-[rgb(var(--color-accent))]/50 hover:text-[rgb(var(--color-accent))] transition-all"
+      aria-label="View cart"
     >
       {BadgeCounter}
     </Link>
@@ -451,11 +455,11 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
                 name="email"
                 placeholder="Your email"
                 required
-                className="w-full rounded-md bg-gray-800 border border-gray-700 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+                className="w-full rounded-md bg-gray-800 border border-gray-700 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent"
               />
               <button
                 type="submit"
-                className="w-full rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+                className="w-full rounded-md btn-accent !py-2 !px-3 text-sm font-semibold"
               >
                 Subscribe
               </button>

@@ -412,6 +412,7 @@ export function ProductForm({
                   },
                 ]}
                 variant="primary"
+                className="btn-accent !py-3.5"
                 data-test="add-to-cart"
               >
                 <Text

@@ -67,7 +67,7 @@ export default function CustomerCare() {
               </p>
               <a
                 href="#setup-video"
-                className="inline-block w-full rounded-md bg-blue-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+                className="inline-block w-full btn-accent !py-2 !px-4 text-center text-sm font-semibold"
               >
                 Watch Video
               </a>
@@ -90,7 +90,7 @@ export default function CustomerCare() {
               </p>
               <a
                 href="#returns"
-                className="inline-block w-full rounded-md bg-blue-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+                className="inline-block w-full btn-accent !py-2 !px-4 text-center text-sm font-semibold"
               >
                 Start Return
               </a>
@@ -107,7 +107,7 @@ export default function CustomerCare() {
               </p>
               <a
                 href="mailto:support@trahere.com"
-                className="inline-block w-full rounded-md bg-blue-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+                className="inline-block w-full btn-accent !py-2 !px-4 text-center text-sm font-semibold"
               >
                 Email Us
               </a>
@@ -148,18 +148,18 @@ function OrderTrackingForm() {
         placeholder="Order number"
         value={orderNumber}
         onChange={(e) => setOrderNumber(e.target.value)}
-        className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600"
+        className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-[rgb(var(--color-accent))]"
       />
       <input
         type="email"
         placeholder="Email address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-600"
+        className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:ring-2 focus:ring-[rgb(var(--color-accent))]"
       />
       <button
         type="submit"
-        className="w-full rounded-md bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+        className="w-full btn-accent !py-2 !px-4 text-sm font-semibold"
       >
         Track Order
       </button>
@@ -325,7 +325,7 @@ function ContactForm() {
             name="name"
             required
             disabled={isSubmitting}
-            className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600 disabled:opacity-50"
+            className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-[rgb(var(--color-accent))] disabled:opacity-50"
           />
         </div>
 
@@ -339,7 +339,7 @@ function ContactForm() {
             name="email"
             required
             disabled={isSubmitting}
-            className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600 disabled:opacity-50"
+            className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-[rgb(var(--color-accent))] disabled:opacity-50"
           />
         </div>
 
@@ -352,7 +352,7 @@ function ContactForm() {
             id="order"
             name="order"
             disabled={isSubmitting}
-            className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600 disabled:opacity-50"
+            className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-[rgb(var(--color-accent))] disabled:opacity-50"
           />
         </div>
 
@@ -366,14 +366,14 @@ function ContactForm() {
             rows={6}
             required
             disabled={isSubmitting}
-            className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-blue-600 disabled:opacity-50"
+            className="w-full rounded-md border border-gray-300 px-4 py-2 text-gray-900 focus:ring-2 focus:ring-[rgb(var(--color-accent))] disabled:opacity-50"
           />
         </div>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-md bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full btn-accent !py-3 !px-6 text-base font-semibold shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isSubmitting ? 'Sending...' : 'Send Message'}
         </button>

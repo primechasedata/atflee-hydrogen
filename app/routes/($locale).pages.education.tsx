@@ -95,16 +95,16 @@ export default function EducationHub() {
               <Link
                 key={category.id}
                 to={category.link}
-                className="group relative rounded-2xl bg-white p-8 shadow-sm border border-gray-200 hover:shadow-md hover:border-blue-200 transition-all"
+                className="group relative rounded-2xl bg-white p-8 shadow-sm border border-gray-200 hover:shadow-md hover:border-[rgb(var(--color-accent))]/20 transition-all hover-lift"
               >
                 <div className="text-5xl mb-4">{category.icon}</div>
-                <h3 className="text-2xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                <h3 className="text-2xl font-bold text-gray-900 group-hover:text-[rgb(var(--color-accent))] transition-colors">
                   {category.title}
                 </h3>
                 <p className="mt-4 text-gray-600 leading-relaxed">
                   {category.description}
                 </p>
-                <div className="mt-6 flex items-center text-blue-600 font-semibold">
+                <div className="mt-6 flex items-center text-[rgb(var(--color-accent))] font-semibold">
                   Explore <span className="ml-2 group-hover:ml-3 transition-all">→</span>
                 </div>
               </Link>
@@ -120,11 +120,11 @@ export default function EducationHub() {
             <input
               type="search"
               placeholder="Search articles, workouts, guides..."
-              className="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+              className="flex-1 rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent"
             />
             <button
               type="button"
-              className="w-full md:w-auto rounded-lg bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-700 transition-colors"
+              className="w-full md:w-auto btn-accent !py-3 !px-6 text-base font-semibold shadow-sm"
             >
               Search
             </button>
@@ -176,7 +176,7 @@ export default function EducationHub() {
                 </div>
                 <div className="p-6">
                   <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-                    <span className="text-blue-600 font-semibold">{article.category}</span>
+                    <span className="text-[rgb(var(--color-accent))] font-semibold">{article.category}</span>
                     <span>•</span>
                     <span>{article.readTime}</span>
                   </div>
@@ -185,7 +185,7 @@ export default function EducationHub() {
                   </h3>
                   <Link
                     to="#"
-                    className="inline-flex items-center text-blue-600 font-semibold hover:text-blue-700"
+                    className="inline-flex items-center text-[rgb(var(--color-accent))] font-semibold hover:text-[rgb(var(--color-accent-hover))]"
                   >
                     Read article <span className="ml-2">→</span>
                   </Link>

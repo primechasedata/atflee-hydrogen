@@ -71,8 +71,7 @@ export function StickyBuyBar({
                   quantity: 1,
                 },
               ]}
-              variant="primary"
-              className="px-6 py-3 bg-blue-600 text-white rounded-md font-semibold text-sm hover:bg-blue-700 transition-colors shadow-sm"
+              className="btn-accent !py-3 !px-6 rounded-md font-semibold text-sm shadow-sm"
             >
               Add to Cart
             </AddToCartButton>

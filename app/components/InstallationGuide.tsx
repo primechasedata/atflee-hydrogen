@@ -88,8 +88,8 @@ export function InstallationGuide({variant = 'default'}: InstallationGuideProps)
                 {step.description}
               </p>
               {step.tip && (
-                <div className="bg-blue-50 border-l-4 border-blue-400 px-3 py-2 mt-4">
-                  <p className="text-sm text-blue-900">
+                <div className="bg-[rgb(var(--color-accent))]/10 border-l-4 border-[rgb(var(--color-accent))] px-3 py-2 mt-4">
+                  <p className="text-sm text-primary">
                     <span className="font-semibold">Tip:</span> {step.tip}
                   </p>
                 </div>

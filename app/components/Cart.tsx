@@ -121,7 +121,7 @@ function CartDiscounts({
             name="discountCode"
             placeholder="Discount code"
           />
-          <button className="flex justify-end font-medium whitespace-nowrap">
+          <button className="flex justify-end font-medium whitespace-nowrap hover:text-[rgb(var(--color-accent))] transition-colors">
             Apply Discount
           </button>
         </div>
@@ -189,9 +189,9 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
   return (
     <div className="flex flex-col mt-2">
       <a href={checkoutUrl} target="_self">
-        <Button as="span" width="full">
+        <span className="btn-accent !py-3 block text-center w-full">
           Continue to Checkout
-        </Button>
+        </span>
       </a>
       {/* @todo: <CartShopPayButton cart={cart} /> */}
     </div>
@@ -315,7 +315,7 @@ function ItemRemoveButton({lineId}: {lineId: CartLine['id']}) {
       }}
     >
       <button
-        className="flex items-center justify-center w-10 h-10 border rounded"
+        className="flex items-center justify-center w-10 h-10 border border-white/10 rounded hover:border-[rgb(var(--color-accent))] hover:text-[rgb(var(--color-accent))] transition-colors"
         type="submit"
       >
         <span className="sr-only">Remove</span>
@@ -343,12 +343,12 @@ function CartLineQuantityAdjust({line}: {line: CartLine}) {
       <label htmlFor={`quantity-${lineId}`} className="sr-only">
         Quantity, {optimisticQuantity}
       </label>
-      <div className="flex items-center border rounded">
+      <div className="flex items-center border border-white/10 rounded">
         <UpdateCartButton lines={[{id: lineId, quantity: prevQuantity}]}>
           <button
             name="decrease-quantity"
             aria-label="Decrease quantity"
-            className="w-10 h-10 transition text-primary/50 hover:text-primary disabled:text-primary/10"
+            className="w-10 h-10 transition text-primary/50 hover:text-[rgb(var(--color-accent))] disabled:text-primary/10"
             value={prevQuantity}
             disabled={optimisticQuantity <= 1}
           >
@@ -366,7 +366,7 @@ function CartLineQuantityAdjust({line}: {line: CartLine}) {
 
         <UpdateCartButton lines={[{id: lineId, quantity: nextQuantity}]}>
           <button
-            className="w-10 h-10 transition text-primary/50 hover:text-primary"
+            className="w-10 h-10 transition text-primary/50 hover:text-[rgb(var(--color-accent))]"
             name="increase-quantity"
             value={nextQuantity}
             aria-label="Increase quantity"
