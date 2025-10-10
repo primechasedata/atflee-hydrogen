@@ -19,6 +19,14 @@ interface UGCSectionProps {
 
 const DEFAULT_VIDEOS: UGCVideo[] = [
   {
+    id: 'youtube-demo',
+    videoUrl: 'https://www.youtube.com/embed/RGsUplxPrT0',
+    posterUrl: 'https://img.youtube.com/vi/RGsUplxPrT0/maxresdefault.jpg',
+    caption: 'Installation & Demo',
+    doorwayWidth: 32,
+    location: 'Product Demo',
+  },
+  {
     id: 'narrow-apartment',
     videoUrl: 'https://cdn.shopify.com/videos/c/o/v/e2b39c77326a4873a2bd50b3329742d9.mp4',
     posterUrl: 'https://cdn.shopify.com/s/files/1/0632/1383/0231/files/ugc-thumb-1.jpg',
@@ -211,8 +219,15 @@ function UGCVideoCard({video}: {video: UGCVideo}) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [showPlayButton, setShowPlayButton] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const isYouTube = video.videoUrl.includes('youtube.com') || video.videoUrl.includes('youtu.be');
 
   const handleVideoClick = () => {
+    if (isYouTube) {
+      setIsPlaying(true);
+      setShowPlayButton(false);
+      return;
+    }
+
     if (!videoRef.current) return;
 
     if (isPlaying) {
@@ -233,52 +248,95 @@ function UGCVideoCard({video}: {video: UGCVideo}) {
 
   return (
     <div className="flex-shrink-0 w-[280px] md:w-[320px] snap-start">
-      <button
-        onClick={handleVideoClick}
+      <div
         className="relative w-full aspect-[9/16] rounded-xl overflow-hidden bg-black/20 group"
-        aria-label={`Customer video: ${video.caption}`}
       >
-        <video
-          ref={videoRef}
-          className="w-full h-full object-cover"
-          muted
-          loop
-          playsInline
-          preload="auto"
-          onEnded={handleVideoEnd}
-          onLoadedData={(e) => {
-            // Ensure first frame is displayed as poster
-            if (!isPlaying) {
-              e.currentTarget.currentTime = 0;
-            }
-          }}
-        >
-          <source src={video.videoUrl} type="video/mp4" />
-        </video>
-
-        {/* Play Button Overlay */}
-        {showPlayButton && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity group-hover:bg-black/40">
-            <div className="w-16 h-16 rounded-full bg-white/90 flex items-center justify-center">
-              <svg
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-8 h-8 text-black ml-1"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
+        {isYouTube && isPlaying ? (
+          <iframe
+            src={`${video.videoUrl}?autoplay=1&mute=1&controls=1&rel=0`}
+            className="w-full h-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title={video.caption}
+          />
+        ) : isYouTube ? (
+          <button
+            onClick={handleVideoClick}
+            className="relative w-full h-full"
+            aria-label={`Play video: ${video.caption}`}
+          >
+            <img
+              src={video.posterUrl}
+              alt={video.caption}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity group-hover:bg-black/40">
+              <div className="w-16 h-16 rounded-full bg-white/90 group-hover:bg-white transition-all flex items-center justify-center">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-8 h-8 text-black ml-1"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
             </div>
-          </div>
-        )}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+              <p className="text-white text-sm font-medium">{video.caption}</p>
+              {video.location && (
+                <p className="text-white/70 text-xs mt-1">{video.location}</p>
+              )}
+            </div>
+          </button>
+        ) : (
+          <button
+            onClick={handleVideoClick}
+            className="relative w-full h-full"
+            aria-label={`Customer video: ${video.caption}`}
+          >
+            <video
+              ref={videoRef}
+              className="w-full h-full object-cover"
+              muted
+              loop
+              playsInline
+              preload="auto"
+              onEnded={handleVideoEnd}
+              onLoadedData={(e) => {
+                // Ensure first frame is displayed as poster
+                if (!isPlaying) {
+                  e.currentTarget.currentTime = 0;
+                }
+              }}
+            >
+              <source src={video.videoUrl} type="video/mp4" />
+            </video>
 
-        {/* Caption */}
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-          <p className="text-white text-sm font-medium">{video.caption}</p>
-          {video.location && (
-            <p className="text-white/70 text-xs mt-1">{video.location}</p>
-          )}
-        </div>
-      </button>
+            {/* Play Button Overlay */}
+            {showPlayButton && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity group-hover:bg-black/40">
+                <div className="w-16 h-16 rounded-full bg-white/90 group-hover:bg-white transition-all flex items-center justify-center">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-8 h-8 text-black ml-1"
+                  >
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </div>
+            )}
+
+            {/* Caption */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+              <p className="text-white text-sm font-medium">{video.caption}</p>
+              {video.location && (
+                <p className="text-white/70 text-xs mt-1">{video.location}</p>
+              )}
+            </div>
+          </button>
+        )}
+      </div>
     </div>
   );
 }
