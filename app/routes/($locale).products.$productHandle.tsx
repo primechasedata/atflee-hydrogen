@@ -155,7 +155,7 @@ export default function Product() {
 
           {/* Right: Product Summary + CTA */}
           <div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll">
-            <section id="product-form" className="flex flex-col w-full gap-4 p-6 md:p-8">
+            <section id="product-form" className="flex flex-col w-full max-w-xl gap-3.5 p-6 md:p-8">
               {/* Product Title */}
               <div className="space-y-1">
                 <Heading as="h1" className="text-2xl md:text-3xl font-bold text-primary leading-tight">
@@ -189,23 +189,23 @@ export default function Product() {
               </div>
 
               {/* Price Section */}
-              <div className="py-3 border-y border-white/10">
+              <div className="py-2.5 border-y border-white/10">
                 <div className="flex items-baseline gap-3">
                   {selectedVariant?.price && (
                     <Money
                       data={selectedVariant.price}
-                      className="text-3xl font-bold text-[rgb(var(--color-accent))]"
+                      className="text-2xl md:text-3xl font-bold text-[rgb(var(--color-accent))]"
                     />
                   )}
                   {isOnSale && selectedVariant?.compareAtPrice && (
                     <Money
                       data={selectedVariant.compareAtPrice}
-                      className="text-lg text-primary/40 line-through"
+                      className="text-base text-primary/40 line-through"
                     />
                   )}
                 </div>
-                <div className="flex items-center gap-2 text-xs text-primary/70 mt-2">
-                  <IconCheck className="w-3.5 h-3.5 text-green-400" />
+                <div className="flex items-center gap-1.5 text-xs text-primary/70 mt-1.5">
+                  <IconCheck className="w-3 h-3 text-green-400" />
                   <span>Free Shipping in the U.S.</span>
                 </div>
                 <div className="text-xs text-primary/60 mt-1">
@@ -231,9 +231,9 @@ export default function Product() {
 
               {/* CTA Buttons */}
               {selectedVariant && (
-                <div className="space-y-3 pt-2">
+                <div className="space-y-2.5 pt-2">
                   {!selectedVariant?.availableForSale ? (
-                    <Button variant="secondary" disabled className="w-full !py-3">
+                    <Button variant="secondary" disabled className="w-full !py-2.5">
                       <Text>Sold out</Text>
                     </Button>
                   ) : (
@@ -246,7 +246,7 @@ export default function Product() {
                           },
                         ]}
                         variant="primary"
-                        className="w-full btn-accent !py-3 !text-base font-semibold"
+                        className="w-full btn-accent !py-2.5 !px-4 !text-sm font-semibold"
                         data-test="add-to-cart"
                       >
                         <Text as="span" className="flex items-center justify-center gap-2">
