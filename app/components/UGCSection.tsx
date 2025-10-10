@@ -19,28 +19,12 @@ interface UGCSectionProps {
 
 const DEFAULT_VIDEOS: UGCVideo[] = [
   {
-    id: 'youtube-demo',
-    videoUrl: 'https://www.youtube.com/embed/RGsUplxPrT0',
-    posterUrl: 'https://img.youtube.com/vi/RGsUplxPrT0/maxresdefault.jpg',
-    caption: 'Installation & Demo',
-    doorwayWidth: 32,
-    location: 'Product Demo',
-  },
-  {
     id: 'narrow-apartment',
     videoUrl: 'https://cdn.shopify.com/videos/c/o/v/e2b39c77326a4873a2bd50b3329742d9.mp4',
     posterUrl: 'https://cdn.shopify.com/s/files/1/0632/1383/0231/files/ugc-thumb-1.jpg',
     caption: '28 in doorway, no screws',
     doorwayWidth: 28,
     location: 'Austin, TX apartment',
-  },
-  {
-    id: 'install-demo',
-    videoUrl: 'https://cdn.shopify.com/videos/c/o/v/8342a7b8fb804f9b9154fa8907b119fd.mp4',
-    posterUrl: 'https://cdn.shopify.com/s/files/1/0632/1383/0231/files/ugc-thumb-2.jpg',
-    caption: 'Install in under a minute',
-    doorwayWidth: 30,
-    location: 'Portland, OR',
   },
   {
     id: 'protective-pads',

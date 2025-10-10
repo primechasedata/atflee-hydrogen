@@ -1,4 +1,4 @@
-import {Suspense} from 'react';
+import {Suspense, useState} from 'react';
 import {
   defer,
   type MetaArgs,
@@ -26,8 +26,8 @@ import {Skeleton} from '~/components/Skeleton';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {ProductGallery} from '~/components/ProductGallery';
 import {FAQ} from '~/components/FAQ';
-import {VideoSection} from '~/components/VideoSection';
 import {UGCSection} from '~/components/UGCSection';
+import {InstallationVideoModal} from '~/components/InstallationVideoModal';
 import {IconCheck} from '~/components/Icon';
 import {seoPayload} from '~/lib/seo.server';
 import type {Storefront} from '~/lib/type';
@@ -120,6 +120,7 @@ export default function Product() {
     useLoaderData<typeof loader>();
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   // Optimistically selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
@@ -270,6 +271,32 @@ export default function Product() {
                 </div>
               )}
 
+              {/* How to Install Button */}
+              <button
+                onClick={() => setIsVideoModalOpen(true)}
+                className="w-full py-2.5 px-4 text-sm font-medium text-primary border border-white/20 rounded-lg hover:bg-white/5 transition-colors flex items-center justify-center gap-2"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                How to Install
+              </button>
+
               {/* Trust Badges */}
               <div className="grid grid-cols-3 gap-3 pt-4 border-t border-white/10">
                 <div className="text-center">
@@ -344,10 +371,7 @@ export default function Product() {
       {/* 4. Visual Comparison Section */}
       <VisualComparisonSection />
 
-      {/* 5. Video Demo Section */}
-      <VideoSection variant="inline" />
-
-      {/* 5.5. UGC Section - Customer Videos */}
+      {/* 5. UGC Section - Customer Videos */}
       <UGCSection />
 
       {/* 6. FAQ Section */}
@@ -400,6 +424,12 @@ export default function Product() {
             },
           ],
         }}
+      />
+
+      {/* Installation Video Modal */}
+      <InstallationVideoModal
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
       />
     </>
   );
