@@ -114,14 +114,14 @@ export function FAQ({
         {faqs.map((faq) => (
           <Disclosure key={faq.id} as="div">
             {({open}) => (
-              <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden hover:bg-white/10 transition-all">
-                <Disclosure.Button className="w-full text-left px-6 py-5 flex justify-between items-center transition-colors">
-                  <span className="font-semibold text-lg pr-8 text-primary">
+              <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden hover:bg-white/10 transition-colors">
+                <Disclosure.Button className="w-full text-left px-6 py-5 flex justify-between items-start gap-4 transition-colors">
+                  <span className="font-semibold text-lg text-primary flex-1 min-w-0">
                     {faq.question}
                   </span>
                   <IconClose
                     className={clsx(
-                      'flex-shrink-0 transition-transform duration-200 text-primary',
+                      'flex-shrink-0 transition-transform duration-200 text-primary mt-0.5',
                       !open && 'rotate-[45deg]',
                     )}
                   />
@@ -161,11 +161,11 @@ function FAQCompact({faqs}: {faqs: FAQItem[]}) {
         <Disclosure key={faq.id} as="div">
           {({open}) => (
             <div className="border-b border-neutral-200">
-              <Disclosure.Button className="w-full text-left py-3 flex justify-between items-center">
-                <span className="font-medium pr-4">{faq.question}</span>
+              <Disclosure.Button className="w-full text-left py-3 flex justify-between items-start gap-4">
+                <span className="font-medium flex-1 min-w-0">{faq.question}</span>
                 <IconClose
                   className={clsx(
-                    'flex-shrink-0 transition-transform duration-200 w-5 h-5',
+                    'flex-shrink-0 transition-transform duration-200 w-5 h-5 mt-0.5',
                     !open && 'rotate-[45deg]',
                   )}
                 />
