@@ -122,7 +122,10 @@ export default function Homepage() {
 function HeroSection({product}: {product: any}) {
   const productHandle = product?.handle || 'tb7-widest-grip-doorway-pull-up-bar';
   const parallaxRef = useRef<HTMLDivElement | null>(null);
+  const [rotatingWordIndex, setRotatingWordIndex] = useState(0);
+  const rotatingWords = ['strength', 'consistency', 'good habits', 'muscle', 'confidence'];
 
+  // Parallax effect
   useEffect(() => {
     const el = parallaxRef.current;
     if (!el) return;
@@ -141,6 +144,14 @@ function HeroSection({product}: {product: any}) {
       cancelAnimationFrame(raf);
     };
   }, []);
+
+  // Rotating text effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotatingWordIndex((prev) => (prev + 1) % rotatingWords.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [rotatingWords.length]);
 
   return (
     <section className="relative bg-hero min-h-[85vh] flex items-center overflow-hidden">
@@ -175,11 +186,30 @@ function HeroSection({product}: {product: any}) {
                 <AddToCartButton
                   width="auto"
                   variant="primary"
-                  className="!py-3.5 !px-10 btn-accent text-lg"
+                  className="!py-3.5 !px-10 btn-accent text-lg relative overflow-hidden group"
                   lines={[{merchandiseId: product.selectedOrFirstAvailableVariant.id, quantity: 1}]}
-                  aria-label="Start training - Add TB7 to cart"
+                  aria-label="Start building - Add TB7 to cart"
                 >
-                  Start Your Transformation — {product?.selectedOrFirstAvailableVariant?.price && <Money data={product.selectedOrFirstAvailableVariant.price} />}
+                  <span className="relative z-10 flex items-center gap-2">
+                    Start building{' '}
+                    <span className="inline-block min-w-[140px] text-left relative h-[1.2em] overflow-hidden">
+                      {rotatingWords.map((word, idx) => (
+                        <span
+                          key={word}
+                          className={`absolute left-0 transition-all duration-500 ${
+                            idx === rotatingWordIndex
+                              ? 'opacity-100 translate-y-0'
+                              : idx === (rotatingWordIndex - 1 + rotatingWords.length) % rotatingWords.length
+                              ? 'opacity-0 -translate-y-full'
+                              : 'opacity-0 translate-y-full'
+                          }`}
+                          aria-hidden={idx !== rotatingWordIndex}
+                        >
+                          {word}
+                        </span>
+                      ))}
+                    </span>
+                  </span>
                 </AddToCartButton>
               )}
               <Link to={`/products/${productHandle}`} className="text-lg font-semibold text-primary/80 hover:text-[rgb(var(--color-accent))] transition-colors inline-flex items-center gap-2 group">
