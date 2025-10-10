@@ -173,9 +173,9 @@ function HeroSection({product}: {product: any}) {
                   variant="primary"
                   className="!py-3.5 !px-10 btn-accent text-lg"
                   lines={[{merchandiseId: product.selectedOrFirstAvailableVariant.id, quantity: 1}]}
-                  aria-label="Get TB7 - Add to cart"
+                  aria-label="Start training - Add TB7 to cart"
                 >
-                  Get Yours Today — {product?.selectedOrFirstAvailableVariant?.price && <Money data={product.selectedOrFirstAvailableVariant.price} />}
+                  Start Your Transformation — {product?.selectedOrFirstAvailableVariant?.price && <Money data={product.selectedOrFirstAvailableVariant.price} />}
                 </AddToCartButton>
               )}
               <Link to={`/products/${productHandle}`} className="text-lg font-semibold text-primary/80 hover:text-[rgb(var(--color-accent))] transition-colors inline-flex items-center gap-2 group">
