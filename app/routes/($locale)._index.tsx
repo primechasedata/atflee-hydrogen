@@ -192,11 +192,11 @@ function HeroSection({product}: {product: any}) {
                 >
                   <span className="relative z-10 inline-flex items-center gap-1.5">
                     <span>Start building</span>
-                    <span className="inline-block min-w-[120px] text-left relative h-[1.3em] align-middle">
+                    <span className="inline-flex items-center min-w-[120px] h-[1.2em] relative overflow-hidden">
                       {rotatingWords.map((word, idx) => (
                         <span
                           key={word}
-                          className={`absolute left-0 top-0 w-full whitespace-nowrap transition-all duration-500 ${
+                          className={`absolute inset-0 flex items-center whitespace-nowrap transition-all duration-500 ${
                             idx === rotatingWordIndex
                               ? 'opacity-100 translate-y-0'
                               : idx === (rotatingWordIndex - 1 + rotatingWords.length) % rotatingWords.length
