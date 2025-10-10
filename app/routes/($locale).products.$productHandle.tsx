@@ -1,4 +1,4 @@
-import {Suspense, useState} from 'react';
+import {Suspense, useState, useEffect} from 'react';
 import {
   defer,
   type MetaArgs,
@@ -121,6 +121,7 @@ export default function Product() {
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
+  const [showStickyBar, setShowStickyBar] = useState(false);
 
   // Optimistically selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
@@ -142,6 +143,22 @@ export default function Product() {
     selectedVariant?.price?.amount &&
     selectedVariant?.compareAtPrice?.amount &&
     selectedVariant?.price?.amount < selectedVariant?.compareAtPrice?.amount;
+
+  // Sticky bar scroll effect
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleScroll = () => {
+      const productForm = document.getElementById('product-form');
+      if (productForm) {
+        const rect = productForm.getBoundingClientRect();
+        setShowStickyBar(rect.bottom < 0);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
@@ -167,25 +184,54 @@ export default function Product() {
                 )}
               </div>
 
-              {/* Quick Specs - Compact Icons */}
-              <div className="flex items-center gap-4 text-xs text-primary/70">
-                <div className="flex items-center gap-1.5">
-                  <span>🤲</span>
-                  <span>40mm Comfort Grip</span>
+              {/* At a Glance - Feature Grid */}
+              <div className="grid grid-cols-2 gap-3">
+                <div className="glass-soft rounded-lg p-3 border border-white/10">
+                  <div className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-[rgb(var(--color-accent))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                    <div>
+                      <div className="text-[10px] text-primary/50 uppercase tracking-wide">Grip</div>
+                      <div className="text-xs font-bold text-primary">40mm Comfort</div>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <span>💪</span>
-                  <span>Max Load: 500 lbs (Static) / 400 lbs (Dynamic)</span>
+
+                <div className="glass-soft rounded-lg p-3 border border-white/10">
+                  <div className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-[rgb(var(--color-accent))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <div>
+                      <div className="text-[10px] text-primary/50 uppercase tracking-wide">Install</div>
+                      <div className="text-xs font-bold text-primary">Tool-Free</div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-4 text-xs text-primary/70">
-                <div className="flex items-center gap-1.5">
-                  <span>⚡</span>
-                  <span>Tool-Free Install</span>
+
+                <div className="glass-soft rounded-lg p-3 border border-white/10">
+                  <div className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-[rgb(var(--color-accent))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
+                    <div>
+                      <div className="text-[10px] text-primary/50 uppercase tracking-wide">Capacity</div>
+                      <div className="text-xs font-bold text-primary">500 lbs</div>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <span>🇰🇷</span>
-                  <span>Made in Korea</span>
+
+                <div className="glass-soft rounded-lg p-3 border border-white/10">
+                  <div className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-[rgb(var(--color-accent))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                    <div>
+                      <div className="text-[10px] text-primary/50 uppercase tracking-wide">Warranty</div>
+                      <div className="text-xs font-bold text-primary">1 Year</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -205,12 +251,36 @@ export default function Product() {
                     />
                   )}
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-primary/70 mt-1.5">
+
+                {/* Urgency Indicator */}
+                <div className="flex items-center gap-2 text-xs text-orange-400 mt-2 font-medium">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                  </svg>
+                  <span>17 left in stock • 8 people viewing now</span>
+                </div>
+
+                <div className="flex items-center gap-1.5 text-xs text-primary/70 mt-2">
                   <IconCheck className="w-3 h-3 text-green-400" />
                   <span>Free Shipping in the U.S.</span>
                 </div>
                 <div className="text-xs text-primary/60 mt-1">
                   Ships within 24 hours • Arrives in 3-5 business days
+                </div>
+              </div>
+
+              {/* 30-Day Guarantee Badge */}
+              <div className="glass-strong rounded-xl p-4 border border-[rgb(var(--color-accent))]/30">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-[rgb(var(--color-accent))]/20 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-[rgb(var(--color-accent))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-primary text-sm">30-Day Money-Back Guarantee</h4>
+                    <p className="text-xs text-primary/70 mt-1">Not satisfied? Return it within 30 days for a full refund. We pay return shipping.</p>
+                  </div>
                 </div>
               </div>
 
@@ -426,6 +496,41 @@ export default function Product() {
         }}
       />
 
+      {/* Sticky Add to Cart Bar */}
+      {showStickyBar && selectedVariant && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-lg border-t border-white/10 shadow-lg transition-transform duration-300">
+          <div className="mx-auto max-w-7xl px-6 py-4">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                {media.nodes[0] && (
+                  <div className="w-16 h-16 rounded-lg overflow-hidden bg-white/5 hidden sm:block">
+                    <img
+                      src={media.nodes[0].__typename === 'MediaImage' ? media.nodes[0].image?.url : ''}
+                      alt={title}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <div>
+                  <h3 className="font-bold text-primary text-sm sm:text-base">{title}</h3>
+                  <Money
+                    data={selectedVariant.price}
+                    className="text-lg font-bold text-[rgb(var(--color-accent))]"
+                  />
+                </div>
+              </div>
+              <AddToCartButton
+                lines={[{merchandiseId: selectedVariant.id!, quantity: 1}]}
+                variant="primary"
+                className="btn-accent !py-3 !px-6 sm:!px-8 !text-sm sm:!text-base font-semibold whitespace-nowrap"
+              >
+                Add to Cart
+              </AddToCartButton>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Installation Video Modal */}
       <InstallationVideoModal
         isOpen={isVideoModalOpen}
@@ -444,7 +549,7 @@ function TechnicalSpecsSection() {
     {feature: 'Weight Capacity', detail: '500 lbs (Static) / 400 lbs (Dynamic)'},
     {feature: 'Finish', detail: 'Powder-coated matte black'},
     {feature: 'Country of Origin', detail: 'South Korea'},
-    {feature: 'Warranty', detail: '2 years manufacturer warranty'},
+    {feature: 'Warranty', detail: '1 year limited warranty'},
   ];
 
   return (
@@ -519,7 +624,7 @@ function VisualComparisonSection() {
     },
     {
       category: 'Warranty',
-      tb7: '2 years',
+      tb7: '1 year limited',
       generic: '90 days',
     },
   ];
