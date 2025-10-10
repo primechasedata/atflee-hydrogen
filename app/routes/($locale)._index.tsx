@@ -609,34 +609,45 @@ function NewsletterSection() {
   return (
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-4xl px-6 lg:px-8">
-        <div className="glass-strong rounded-2xl p-8 md:p-12 border border-[rgb(var(--color-accent))]/40 text-center relative overflow-hidden">
+        <div className="glass-strong rounded-2xl p-8 md:p-12 border border-[rgb(var(--color-accent))]/40 text-center relative overflow-hidden hover-lift shimmer-on-hover">
           {/* Glow effect */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent))]/5 to-transparent pointer-events-none"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent))]/10 to-transparent pointer-events-none"></div>
 
           <div className="relative z-10">
             <Heading as="h2" size="heading" className="text-primary text-3xl md:text-4xl font-bold">
               Join 10,000+ who train anywhere
             </Heading>
-            <Text as="p" size="lead" className="mt-4 text-primary/70 text-lg">
-              Get simple routines, setup guides, and exclusive offers delivered to your inbox.
+            <Text as="p" size="lead" className="mt-6 text-primary/70 text-lg">
+              Get workout routines, training tips, and exclusive deals delivered to your inbox.
             </Text>
 
-            <div className="mt-8">
-              <Newsletter
-                title=""
-                description=""
-              />
+            <div className="mt-8 max-w-md mx-auto">
+              <form method="post" action="/api/newsletter" className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  className="flex-1 rounded-md bg-white/5 border border-white/10 px-4 py-3 text-primary placeholder:text-primary/50 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent transition-all"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="btn-accent px-8 whitespace-nowrap"
+                >
+                  Subscribe
+                </button>
+              </form>
             </div>
 
-            <div className="mt-8 flex items-center justify-center gap-8 text-sm text-primary/60">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-primary/60">
               <span className="flex items-center gap-2">
-                <IconCheck className="w-4 h-4 text-[rgb(var(--color-accent))]" /> Weekly workout tips
+                <IconCheck className="w-4 h-4 text-[rgb(var(--color-accent))]" /> Weekly tips
               </span>
               <span className="flex items-center gap-2">
-                <IconCheck className="w-4 h-4 text-[rgb(var(--color-accent))]" /> Early access deals
+                <IconCheck className="w-4 h-4 text-[rgb(var(--color-accent))]" /> Exclusive deals
               </span>
               <span className="flex items-center gap-2">
-                <IconCheck className="w-4 h-4 text-[rgb(var(--color-accent))]" /> No spam, ever
+                <IconCheck className="w-4 h-4 text-[rgb(var(--color-accent))]" /> No spam
               </span>
             </div>
           </div>
