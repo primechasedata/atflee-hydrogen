@@ -150,7 +150,7 @@ function MenuMobileNav({
   // Blueprint navigation items
   const navItems = [
     {title: 'Home', to: '/'},
-    {title: 'Shop', to: '/collections/all'},
+    {title: 'Pull Up Bar', to: '/products/tb7-widest-grip-doorway-pull-up-bar'},
     {title: 'Education', to: '/pages/education'},
     {title: 'Customer Care', to: '/pages/customer-care'},
   ];
@@ -244,7 +244,7 @@ function DesktopHeader({
   // Blueprint navigation items
   const navItems = [
     {title: 'Home', to: '/'},
-    {title: 'Shop', to: '/collections/all'},
+    {title: 'Pull Up Bar', to: '/products/tb7-widest-grip-doorway-pull-up-bar'},
     {title: 'Education', to: '/pages/education'},
     {title: 'Customer Care', to: '/pages/customer-care'},
   ];

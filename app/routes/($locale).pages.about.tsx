@@ -153,7 +153,7 @@ export default function AboutPage() {
               <p className="text-neutral-300">
                 Our success is measured by your pull-up progress, not our sales
                 numbers. That's why we offer 30-day returns, lifetime support,
-                and a 5-year warranty.
+                and a 2-year warranty.
               </p>
             </div>
             <div className="border-l-4 border-white pl-6">

@@ -28,8 +28,8 @@ const COMPARISON_DATA: ComparisonFeature[] = [
   },
   {
     feature: 'Weight capacity',
-    trahere: '300 lbs',
-    cheapBars: '200 lbs',
+    trahere: '260 lbs (573 lbs tested)',
+    cheapBars: '150-200 lbs',
     gymBars: '400+ lbs',
   },
   {
@@ -46,7 +46,7 @@ const COMPARISON_DATA: ComparisonFeature[] = [
   },
   {
     feature: 'Warranty',
-    trahere: '5 years',
+    trahere: '2 years',
     cheapBars: '90 days',
     gymBars: '1 year',
   },

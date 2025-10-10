@@ -28,14 +28,14 @@ const DEFAULT_FAQS: FAQItem[] = [
     id: '2',
     question: 'What door frames does it fit?',
     answer:
-      'The TB7 fits standard door frames 24-36 inches wide and up to 6 inches deep. It works on wood, metal, and composite frames. If you have an unusual doorway, contact us and we\'ll help you measure.',
+      'The TB7 fits standard door frames 31.9-36.6 inches wide and up to 6 inches deep. It works on wood, metal, and composite frames. If you have an unusual doorway, contact us and we\'ll help you measure.',
     category: 'Installation',
   },
   {
     id: '3',
     question: 'How much weight can it hold?',
     answer:
-      'The TB7 is rated for 300 lbs and tested to 500 lbs. We\'ve had NFL linebackers, powerlifters, and weighted vest users with zero failures. If you\'re over 300 lbs, reach out and we\'ll discuss options.',
+      'The TB7 has a recommended user weight of 260 lbs and has been tested to 573 lbs under laboratory conditions. We\'ve had powerlifters and weighted vest users with zero failures. If you\'re over 260 lbs, reach out and we\'ll discuss options.',
     category: 'Safety',
   },
   {
@@ -70,7 +70,7 @@ const DEFAULT_FAQS: FAQItem[] = [
     id: '8',
     question: 'How is this different from a $30 Amazon bar?',
     answer:
-      'Cheap bars use narrow grips that hurt your shoulders, thin foam that tears, and weak mounting that fails. The TB7 is engineered for daily use: medical-grade foam, aircraft aluminum, and a patented grip system. Plus our 5-year warranty vs their 90 days.',
+      'Cheap bars use narrow grips that hurt your shoulders, thin foam that tears, and weak mounting that fails. The TB7 is engineered for daily use: medical-grade foam, high-grade steel, and a patented grip system. Plus our 2-year warranty vs their 90 days.',
     category: 'Product',
   },
   {
@@ -84,7 +84,7 @@ const DEFAULT_FAQS: FAQItem[] = [
     id: '10',
     question: 'Do you offer a warranty?',
     answer:
-      '5-year warranty on all parts. If anything breaks from normal use, we\'ll replace it free. We also offer lifetime customer support - just email us anytime.',
+      '2-year manufacturer warranty on all parts. If anything breaks from normal use, we\'ll replace it free. We also offer lifetime customer support - just email us anytime.',
     category: 'Warranty',
   },
 ];

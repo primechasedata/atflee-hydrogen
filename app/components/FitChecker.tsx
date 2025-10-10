@@ -9,8 +9,8 @@ export function FitChecker() {
   const [result, setResult] = useState<'fit' | 'no-fit' | null>(null);
 
   const cfg = (content as any)?.product?.fit || {fitMin: 31.9, fitMax: 36.6, tightMin: 30.0, tightMax: 31.8};
-  const MIN_WIDTH = 26;
-  const MAX_WIDTH = 36;
+  const MIN_WIDTH = cfg.fitMin;
+  const MAX_WIDTH = cfg.fitMax;
 
   const checkFit = (e: React.FormEvent) => {
     e.preventDefault();
