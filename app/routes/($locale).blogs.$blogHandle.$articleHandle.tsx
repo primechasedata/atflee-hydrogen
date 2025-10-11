@@ -65,10 +65,10 @@ export default function Article() {
       {/* Hero Header */}
       <section className="bg-gradient-to-b from-black to-gray-900 py-16 md:py-24 border-b border-white/10">
         <div className="mx-auto max-w-4xl px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 drop-shadow-lg">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 !text-white drop-shadow-[0_4px_6px_rgba(0,0,0,0.5)]">
             {title}
           </h1>
-          <div className="flex items-center gap-4 text-white/80">
+          <div className="flex items-center gap-4 text-white/90">
             {author?.name && (
               <span className="text-[rgb(var(--color-accent))] font-semibold">
                 By {author.name}
