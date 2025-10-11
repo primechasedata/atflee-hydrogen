@@ -93,7 +93,7 @@ export default function Article() {
           )}
           <div
             dangerouslySetInnerHTML={{__html: contentHtml}}
-            className="article prose prose-invert prose-lg max-w-none mt-12"
+            className="article prose prose-invert prose-lg max-w-none mt-12 [&>h1]:!text-white [&>h2]:!text-white [&>h3]:!text-white"
           />
         </div>
       </Section>
