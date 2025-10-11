@@ -63,12 +63,12 @@ export default function Article() {
   return (
     <div className="bg-black min-h-screen">
       {/* Hero Header */}
-      <section className="bg-gradient-to-b from-black to-gray-900 text-primary py-16 md:py-24 border-b border-white/10">
+      <section className="bg-gradient-to-b from-black to-gray-900 py-16 md:py-24 border-b border-white/10">
         <div className="mx-auto max-w-4xl px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 drop-shadow-lg">
             {title}
           </h1>
-          <div className="flex items-center gap-4 text-primary/70">
+          <div className="flex items-center gap-4 text-white/80">
             {author?.name && (
               <span className="text-[rgb(var(--color-accent))] font-semibold">
                 By {author.name}
