@@ -11,17 +11,36 @@ import {useState} from 'react';
 export async function loader({context}: LoaderFunctionArgs) {
   const {storefront} = context;
 
-  // Fetch blog articles from Shopify
-  const {blog} = await storefront.query(EDUCATION_BLOGS_QUERY, {
-    variables: {
-      blogHandle: 'education',
-      pageBy: 12,
-    },
-  });
+  // Fetch articles from all blogs
+  const blogHandles = ['news', 'workouts', 'product-reviews', 'fitness-tests', 'habit-builder', 'technique', 'nutrition', 'recovery'];
 
-  const articles = blog?.articles
-    ? flattenConnection(blog.articles)
-    : [];
+  const allArticles = await Promise.all(
+    blogHandles.map(async (handle) => {
+      try {
+        const {blog} = await storefront.query(EDUCATION_BLOGS_QUERY, {
+          variables: {
+            blogHandle: handle,
+            pageBy: 50,
+          },
+        });
+
+        if (blog?.articles) {
+          const articles = flattenConnection(blog.articles);
+          // Add blog handle to each article for filtering
+          return articles.map((article: any) => ({
+            ...article,
+            blogHandle: handle,
+          }));
+        }
+        return [];
+      } catch (error) {
+        console.error(`Error fetching blog: ${handle}`, error);
+        return [];
+      }
+    })
+  );
+
+  const articles = allArticles.flat();
 
   return json({
     articles,
@@ -44,60 +63,72 @@ export default function EducationHub() {
 
   const categories = [
     {
+      id: 'news',
+      title: 'News',
+      description: 'Latest updates, announcements, and insights from Trahere.',
+      icon: '📰',
+      blogHandle: 'news'
+    },
+    {
       id: 'workouts',
       title: 'Workouts',
       description: 'Structured training programs for all levels, from beginner to advanced.',
       icon: '💪',
-      tags: ['Workouts', 'Training', 'Programs']
+      blogHandle: 'workouts'
+    },
+    {
+      id: 'product-reviews',
+      title: 'Product Reviews',
+      description: 'Honest reviews and comparisons of pull-up bars and training equipment.',
+      icon: '⭐',
+      blogHandle: 'product-reviews'
     },
     {
       id: 'fitness-tests',
       title: 'Fitness Tests',
       description: 'Benchmark your progress with standardized pull-up and strength assessments.',
       icon: '📊',
-      tags: ['Fitness Tests', 'Assessment', 'Testing']
+      blogHandle: 'fitness-tests'
+    },
+    {
+      id: 'habit-builder',
+      title: 'Habit Builder',
+      description: 'Build consistent training habits and develop long-term discipline.',
+      icon: '🎯',
+      blogHandle: 'habit-builder'
     },
     {
       id: 'technique',
       title: 'Technique',
       description: 'Master proper form and biomechanics for injury-free training.',
-      icon: '🎯',
-      tags: ['Technique', 'Form', 'Biomechanics']
+      icon: '🔧',
+      blogHandle: 'technique'
     },
     {
       id: 'nutrition',
       title: 'Nutrition',
       description: 'Fuel your training with evidence-based nutrition strategies.',
       icon: '🥗',
-      tags: ['Nutrition', 'Diet', 'Recovery']
+      blogHandle: 'nutrition'
     },
     {
       id: 'recovery',
       title: 'Recovery',
       description: 'Optimize rest, sleep, and recovery protocols for peak performance.',
       icon: '😴',
-      tags: ['Recovery', 'Sleep', 'Mobility']
-    },
-    {
-      id: 'equipment',
-      title: 'Equipment',
-      description: 'In-depth reviews and guides for training equipment.',
-      icon: '🔧',
-      tags: ['Equipment', 'Gear', 'Reviews']
+      blogHandle: 'recovery'
     }
   ];
 
   // Filter articles based on search and category
-  const filteredArticles = articles.filter((article: ArticleFragment) => {
+  const filteredArticles = articles.filter((article: any) => {
     const matchesSearch = searchQuery
       ? article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         article.contentHtml?.toLowerCase().includes(searchQuery.toLowerCase())
       : true;
 
     const matchesCategory = selectedCategory
-      ? categories
-          .find(cat => cat.id === selectedCategory)
-          ?.tags.some(tag => article.tags?.some((t: any) => t.value === tag))
+      ? article.blogHandle === categories.find(cat => cat.id === selectedCategory)?.blogHandle
       : true;
 
     return matchesSearch && matchesCategory;
@@ -235,10 +266,10 @@ export default function EducationHub() {
   );
 }
 
-function ArticleCard({article}: {article: ArticleFragment}) {
+function ArticleCard({article}: {article: any}) {
   return (
     <Link
-      to={`/journal/${article.handle}`}
+      to={`/blogs/${article.blogHandle}/${article.handle}`}
       className="group rounded-xl overflow-hidden bg-white/5 border border-white/10 hover:border-[rgb(var(--color-accent))]/50 transition-all hover:bg-white/10"
     >
       {article.image ? (
