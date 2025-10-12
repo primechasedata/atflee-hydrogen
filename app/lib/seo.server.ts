@@ -22,6 +22,9 @@ import type {
 
 import type {ShopFragment} from 'storefrontapi.generated';
 
+// Default OG image for social sharing when page doesn't have a specific image
+const DEFAULT_OG_IMAGE = 'https://cdn.shopify.com/s/files/1/0632/1383/0231/files/trahere-og-image.jpg';
+
 function root({
   shop,
   url,
@@ -38,6 +41,13 @@ function root({
     robots: {
       noIndex: false,
       noFollow: false,
+    },
+    media: {
+      type: 'image',
+      url: DEFAULT_OG_IMAGE,
+      height: 1200,
+      width: 1200,
+      altText: 'Trahere - Premium Doorway Pull-Up Bars',
     },
     jsonLd: {
       '@context': 'https://schema.org',
@@ -66,6 +76,13 @@ function home({url}: {url: Request['url']}): SeoConfig {
     robots: {
       noIndex: false,
       noFollow: false,
+    },
+    media: {
+      type: 'image',
+      url: DEFAULT_OG_IMAGE,
+      height: 1200,
+      width: 1200,
+      altText: 'Trahere TB7 Pull-Up Bar - Premium Home Fitness Equipment',
     },
     jsonLd: {
       '@context': 'https://schema.org',
@@ -174,7 +191,13 @@ function product({
     title: product?.seo?.title ?? product?.title,
     description,
     url,
-    media: selectedVariant?.image,
+    media: selectedVariant?.image || {
+      type: 'image',
+      url: DEFAULT_OG_IMAGE,
+      height: 1200,
+      width: 1200,
+      altText: product.title,
+    },
     jsonLd: productJsonLd({product, selectedVariant, url}),
   };
 }
@@ -258,10 +281,10 @@ function collection({
     url,
     media: {
       type: 'image',
-      url: collection?.image?.url,
-      height: collection?.image?.height,
-      width: collection?.image?.width,
-      altText: collection?.image?.altText,
+      url: collection?.image?.url || DEFAULT_OG_IMAGE,
+      height: collection?.image?.height || 1200,
+      width: collection?.image?.width || 1200,
+      altText: collection?.image?.altText || collection.title,
     },
     jsonLd: collectionJsonLd({collection, url}),
   };
@@ -313,6 +336,13 @@ function listCollections({
     titleTemplate: '%s | Trahere',
     description: 'Browse our collection of premium doorway pull-up bars. Professional-grade equipment for home training.',
     url,
+    media: {
+      type: 'image',
+      url: DEFAULT_OG_IMAGE,
+      height: 1200,
+      width: 1200,
+      altText: 'Trahere Pull-Up Bar Collection',
+    },
     jsonLd: collectionsJsonLd({collections, url}),
   };
 }
@@ -339,10 +369,10 @@ function article({
     url,
     media: {
       type: 'image',
-      url: article?.image?.url,
-      height: article?.image?.height,
-      width: article?.image?.width,
-      altText: article?.image?.altText,
+      url: article?.image?.url || DEFAULT_OG_IMAGE,
+      height: article?.image?.height || 1200,
+      width: article?.image?.width || 1200,
+      altText: article?.image?.altText || article.title,
     },
     jsonLd: {
       '@context': 'https://schema.org',
@@ -354,7 +384,7 @@ function article({
         article?.seo?.description || article?.excerpt || '',
       ),
       headline: article?.seo?.title || '',
-      image: article?.image?.url,
+      image: article?.image?.url || DEFAULT_OG_IMAGE,
       url,
     },
   };
@@ -372,6 +402,13 @@ function blog({
     description: truncate(blog?.seo?.description || ''),
     titleTemplate: '%s | Trahere',
     url,
+    media: {
+      type: 'image',
+      url: DEFAULT_OG_IMAGE,
+      height: 1200,
+      width: 1200,
+      altText: 'Trahere Blog - Training Tips and Product Guides',
+    },
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Blog',
@@ -394,6 +431,13 @@ function page({
     title: page?.seo?.title ?? page?.title,
     titleTemplate: '%s | Trahere',
     url,
+    media: {
+      type: 'image',
+      url: DEFAULT_OG_IMAGE,
+      height: 1200,
+      width: 1200,
+      altText: `Trahere - ${page.title}`,
+    },
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
@@ -414,6 +458,13 @@ function policy({
     title: policy?.title,
     titleTemplate: '%s | Trahere',
     url,
+    media: {
+      type: 'image',
+      url: DEFAULT_OG_IMAGE,
+      height: 1200,
+      width: 1200,
+      altText: `Trahere - ${policy.title}`,
+    },
   };
 }
 
@@ -439,6 +490,13 @@ function policies({
     title: 'Store Policies',
     titleTemplate: '%s | Trahere',
     description: 'Trahere store policies including shipping, returns, refunds, privacy, and terms of service.',
+    media: {
+      type: 'image',
+      url: DEFAULT_OG_IMAGE,
+      height: 1200,
+      width: 1200,
+      altText: 'Trahere Store Policies',
+    },
     jsonLd: [
       {
         '@context': 'https://schema.org',
