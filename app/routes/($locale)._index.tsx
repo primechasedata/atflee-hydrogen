@@ -163,36 +163,53 @@ function HeroSection({product}: {product: any}) {
 
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-16 md:py-20 w-full relative z-10">
         <div className="text-center max-w-5xl mx-auto">
-          {/* Main headline */}
+          {/* Main headline - Fluid typography for mobile */}
           <Reveal>
-            <Heading as="h1" size="display" className="text-primary text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-              Setup in 10 seconds.<br/>
-              Train anywhere.<br/>
+            <Heading
+              as="h1"
+              size="display"
+              className="text-primary font-bold leading-tight"
+              style={{
+                fontSize: 'clamp(2rem, 4vw + 1rem, 4.5rem)',
+                lineHeight: 'var(--line-height-tight)',
+                maxWidth: '20ch'
+              }}
+            >
+              Setup in 10 seconds. Train anywhere.{' '}
               <span className="text-[rgb(var(--color-accent))]">No screws, no excuses.</span>
             </Heading>
           </Reveal>
 
-          {/* Subtext */}
-          <Reveal className="mt-8">
-            <Text as="p" size="lead" className="text-primary/80 text-xl md:text-2xl max-w-3xl mx-auto">
+          {/* Subtext - Optimal line length */}
+          <Reveal className="mt-6 sm:mt-8">
+            <Text
+              as="p"
+              size="lead"
+              className="text-primary/80 mx-auto prose-mobile"
+              style={{
+                fontSize: 'clamp(1.125rem, 1rem + 0.5vw, 1.5rem)',
+                lineHeight: 'var(--line-height-base)',
+                maxWidth: '60ch'
+              }}
+            >
               The TB7 pull-up bar transforms any doorframe into your personal gym. Wide 24" grip for shoulder safety. No damage, no installation, no compromises.
             </Text>
           </Reveal>
 
-          {/* CTA */}
-          <Reveal className="mt-10">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          {/* CTA - Mobile optimized */}
+          <Reveal className="mt-8 sm:mt-10">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 max-w-lg mx-auto">
               {product?.selectedOrFirstAvailableVariant?.id && (
                 <AddToCartButton
                   width="auto"
                   variant="primary"
-                  className="!py-3.5 !px-10 btn-accent text-lg relative overflow-hidden group"
+                  className="btn-accent text-base sm:text-lg relative overflow-hidden group min-h-[48px] px-8 sm:px-10 py-3 sm:py-3.5 w-full sm:w-auto"
                   lines={[{merchandiseId: product.selectedOrFirstAvailableVariant.id, quantity: 1}]}
                   aria-label="Start building - Add TB7 to cart"
                 >
-                  <span className="relative z-10 inline-flex items-center gap-1.5">
+                  <span className="relative z-10 inline-flex items-center gap-1.5 justify-center">
                     <span>Start building</span>
-                    <span className="inline-flex items-center min-w-[120px] h-[1.2em] relative overflow-hidden">
+                    <span className="hidden sm:inline-flex items-center min-w-[120px] h-[1.2em] relative overflow-hidden">
                       {rotatingWords.map((word, idx) => (
                         <span
                           key={word}
@@ -212,7 +229,10 @@ function HeroSection({product}: {product: any}) {
                   </span>
                 </AddToCartButton>
               )}
-              <Link to={`/products/${productHandle}`} className="text-lg font-semibold text-primary/80 hover:text-[rgb(var(--color-accent))] transition-colors inline-flex items-center gap-2 group">
+              <Link
+                to={`/products/${productHandle}`}
+                className="text-base sm:text-lg font-semibold text-primary/80 hover:text-[rgb(var(--color-accent))] transition-colors inline-flex items-center justify-center gap-2 group min-h-[48px] px-6"
+              >
                 Learn more
                 <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
               </Link>
@@ -367,9 +387,9 @@ function BuildHabitsSection() {
           </Text>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {features.map((feature) => (
-            <div key={feature.title} className="glass rounded-2xl p-8 text-center hover-lift card-glare">
+            <div key={feature.title} className="glass rounded-2xl p-6 sm:p-8 text-center hover-lift card-glare">
               <div className="flex items-center justify-center mb-6">
                 <div className="w-16 h-16 rounded-full bg-[rgb(var(--color-accent))]/20 flex items-center justify-center border border-[rgb(var(--color-accent))]/30 pulse-glow">
                   <feature.Icon className="w-8 h-8 text-[rgb(var(--color-accent))]" />
@@ -411,39 +431,65 @@ function ComparisonSection() {
           </Text>
         </div>
 
-        <div className="overflow-hidden rounded-2xl border border-white/10">
+        {/* Desktop: Table view, Mobile: Stacked cards */}
+        <div className="hidden sm:block overflow-hidden rounded-2xl border border-white/10">
           <table className="min-w-full">
             <thead>
               <tr className="border-b border-white/10">
-                <th className="px-6 py-5 text-left text-sm font-semibold text-primary/70 bg-black/40">Feature</th>
-                <th className="px-6 py-5 text-center text-base font-bold text-[rgb(var(--color-accent))] bg-[rgb(var(--color-accent))]/10 border-l border-r border-[rgb(var(--color-accent))]/30">
+                <th className="px-4 sm:px-6 py-4 sm:py-5 text-left text-sm font-semibold text-primary/70 bg-black/40">Feature</th>
+                <th className="px-4 sm:px-6 py-4 sm:py-5 text-center text-base font-bold text-[rgb(var(--color-accent))] bg-[rgb(var(--color-accent))]/10 border-l border-r border-[rgb(var(--color-accent))]/30">
                   TB7
                 </th>
-                <th className="px-6 py-5 text-center text-sm font-semibold text-primary/70 bg-black/40">Generic Bars</th>
+                <th className="px-4 sm:px-6 py-4 sm:py-5 text-center text-sm font-semibold text-primary/70 bg-black/40">Generic Bars</th>
               </tr>
             </thead>
             <tbody>
               {features.map((row, idx) => (
                 <tr key={idx} className="border-b border-white/10 last:border-b-0">
-                  <td className="px-6 py-4 text-sm font-medium text-primary bg-black/20">
+                  <td className="px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium text-primary bg-black/20">
                     {row.feature}
                   </td>
-                  <td className="px-6 py-4 text-center bg-[rgb(var(--color-accent))]/5 border-l border-r border-[rgb(var(--color-accent))]/20">
+                  <td className="px-4 sm:px-6 py-3 sm:py-4 text-center bg-[rgb(var(--color-accent))]/5 border-l border-r border-[rgb(var(--color-accent))]/20">
                     <div className="flex items-center justify-center gap-2">
-                      <IconCheck className="w-5 h-5 text-[rgb(var(--color-accent))]" />
-                      <span className="text-sm font-semibold text-primary">{row.tb7}</span>
+                      <IconCheck className="w-4 sm:w-5 h-4 sm:h-5 text-[rgb(var(--color-accent))]" />
+                      <span className="text-xs sm:text-sm font-semibold text-primary">{row.tb7}</span>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-center bg-black/20">
+                  <td className="px-4 sm:px-6 py-3 sm:py-4 text-center bg-black/20">
                     <div className="flex items-center justify-center gap-2">
-                      <span className="text-primary/50 text-lg">✗</span>
-                      <span className="text-sm text-primary/60">{row.generic}</span>
+                      <span className="text-primary/50 text-base sm:text-lg">✗</span>
+                      <span className="text-xs sm:text-sm text-primary/60">{row.generic}</span>
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile: Card-based comparison */}
+        <div className="sm:hidden space-y-4">
+          {features.map((row, idx) => (
+            <div key={idx} className="glass rounded-xl p-4 border border-white/10">
+              <div className="text-sm font-semibold text-primary/70 mb-3">{row.feature}</div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-[rgb(var(--color-accent))]/10 rounded-lg p-3 border border-[rgb(var(--color-accent))]/30">
+                  <div className="text-xs font-semibold text-[rgb(var(--color-accent))] mb-1.5">TB7</div>
+                  <div className="flex items-center gap-1.5">
+                    <IconCheck className="w-4 h-4 text-[rgb(var(--color-accent))] flex-shrink-0" />
+                    <span className="text-sm font-semibold text-primary">{row.tb7}</span>
+                  </div>
+                </div>
+                <div className="bg-black/20 rounded-lg p-3 border border-white/5">
+                  <div className="text-xs font-semibold text-primary/50 mb-1.5">Generic</div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-primary/50 text-base flex-shrink-0">✗</span>
+                    <span className="text-sm text-primary/60">{row.generic}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -468,9 +514,9 @@ function FeatureDetails() {
         </div>
 
         {/* Specs Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl mx-auto mb-12">
           {specs.map((spec) => (
-            <div key={spec.label} className="glass rounded-2xl p-6 text-center border border-white/10 hover-lift card-glare">
+            <div key={spec.label} className="glass rounded-2xl p-4 sm:p-6 text-center border border-white/10 hover-lift card-glare">
               <div className="flex items-center justify-center mb-4">
                 <div className="w-12 h-12 rounded-full bg-[rgb(var(--color-accent))]/20 flex items-center justify-center border border-[rgb(var(--color-accent))]/30">
                   <spec.Icon className="w-6 h-6 text-[rgb(var(--color-accent))]" />
@@ -567,9 +613,9 @@ function SocialProofSection() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {testimonials.map((testimonial, idx) => (
-            <div key={idx} className="glass rounded-2xl p-6 border border-white/10 hover-lift shimmer-on-hover">
+            <div key={idx} className="glass rounded-2xl p-5 sm:p-6 border border-white/10 hover-lift shimmer-on-hover">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex text-yellow-400 text-lg">
                   {Array.from({length: testimonial.rating}).map((_, i) => (
@@ -621,11 +667,11 @@ function TrustElementsSection() {
     {icon: <IconLock className="w-6 h-6 text-[rgb(var(--color-accent))]" />, title: 'Secure Checkout', description: 'SSL encrypted'},
   ];
   return (
-    <section className="py-8">
+    <section className="py-6 sm:py-8">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {items.map((it) => (
-            <div key={it.title} className="flex items-center gap-3">
+            <div key={it.title} className="flex items-center gap-3 min-h-[44px]">
               {it.icon}
               <div>
                 <div className="text-sm font-semibold text-primary leading-tight">{it.title}</div>
@@ -661,12 +707,12 @@ function NewsletterSection() {
                   type="email"
                   name="email"
                   placeholder="Enter your email"
-                  className="flex-1 rounded-md bg-white/5 border border-white/10 px-4 py-3 text-primary placeholder:text-primary/50 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent transition-all"
+                  className="flex-1 rounded-md bg-white/5 border border-white/10 px-4 py-3 text-primary placeholder:text-primary/50 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent transition-all min-h-[48px]"
                   required
                 />
                 <button
                   type="submit"
-                  className="btn-accent px-8 whitespace-nowrap"
+                  className="btn-accent px-8 whitespace-nowrap min-h-[48px]"
                 >
                   Subscribe
                 </button>
@@ -735,18 +781,21 @@ function StickyBuyBar({product}: {product: any}) {
   }, []);
   if (!selectedOrFirstAvailableVariant || !show) return null;
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 backdrop-blur supports-[backdrop-filter]:glass-strong bg-[#0B121C]/70 md:rounded-t-xl border-t border-white/10 p-3 block">
-      <div className="mx-auto max-w-5xl flex items-center justify-between gap-4">
-        <div className="flex items-baseline gap-3 text-primary">
-          <span className="text-sm">TB7</span>
-          <span className="text-xl font-bold">
+    <div
+      className="fixed bottom-0 left-0 right-0 z-40 backdrop-blur supports-[backdrop-filter]:glass-strong bg-[#0B121C]/90 md:rounded-t-xl border-t border-white/10 block safe-area-bottom"
+      style={{paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))'}}
+    >
+      <div className="mx-auto max-w-5xl flex items-center justify-between gap-3 sm:gap-4 px-4 pt-3">
+        <div className="flex items-baseline gap-2 sm:gap-3 text-primary">
+          <span className="text-xs sm:text-sm">TB7</span>
+          <span className="text-lg sm:text-xl font-bold">
             {product?.selectedOrFirstAvailableVariant?.price && (<Money data={selectedOrFirstAvailableVariant.price} />)}
           </span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <AddToCartButton
             variant="primary"
-            className="btn-accent px-8"
+            className="btn-accent px-6 sm:px-8 text-sm sm:text-base min-h-[44px]"
             lines={[{merchandiseId: selectedOrFirstAvailableVariant.id, quantity: 1}]}
           >
             Add to Cart

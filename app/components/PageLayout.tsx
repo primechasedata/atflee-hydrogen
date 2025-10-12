@@ -200,10 +200,10 @@ function MobileHeader({
       <div className="flex items-center justify-start gap-4">
         <button
           onClick={openMenu}
-          className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white/5 hover:text-[rgb(var(--color-accent))] transition-all"
+          className="tap-target-lg rounded-lg hover:bg-white/5 hover:text-[rgb(var(--color-accent))] transition-all"
           aria-label="Open menu"
         >
-          <IconMenu />
+          <IconMenu className="w-6 h-6" />
         </button>
       </div>
 
@@ -219,8 +219,8 @@ function MobileHeader({
         </Heading>
       </Link>
 
-      <div className="flex items-center justify-end gap-2">
-        <AccountLink className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white/5 hover:text-[rgb(var(--color-accent))] transition-all" />
+      <div className="flex items-center justify-end gap-1">
+        <AccountLink className="tap-target-lg rounded-lg hover:bg-white/5 hover:text-[rgb(var(--color-accent))] transition-all" />
         <CartCount isHome={isHome} openCart={openCart} />
       </div>
     </header>
@@ -277,8 +277,8 @@ function DesktopHeader({
           ))}
         </nav>
       </div>
-      <div className="flex items-center gap-3">
-        <AccountLink className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white/5 focus:ring-2 focus:ring-[rgb(var(--color-accent))]/50 hover:text-[rgb(var(--color-accent))] transition-all" />
+      <div className="flex items-center gap-2">
+        <AccountLink className="tap-target-lg rounded-lg hover:bg-white/5 focus:ring-2 focus:ring-[rgb(var(--color-accent))]/50 hover:text-[rgb(var(--color-accent))] transition-all" />
         <CartCount isHome={isHome} openCart={openCart} />
       </div>
     </header>
@@ -353,7 +353,7 @@ function Badge({
   return isHydrated ? (
     <button
       onClick={openCart}
-      className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white/5 focus:ring-2 focus:ring-[rgb(var(--color-accent))]/50 hover:text-[rgb(var(--color-accent))] transition-all"
+      className="tap-target-lg rounded-lg hover:bg-white/5 focus:ring-2 focus:ring-[rgb(var(--color-accent))]/50 hover:text-[rgb(var(--color-accent))] transition-all relative"
       aria-label="Open cart"
     >
       {BadgeCounter}
@@ -361,7 +361,7 @@ function Badge({
   ) : (
     <Link
       to="/cart"
-      className="relative flex items-center justify-center w-10 h-10 rounded-lg hover:bg-white/5 focus:ring-2 focus:ring-[rgb(var(--color-accent))]/50 hover:text-[rgb(var(--color-accent))] transition-all"
+      className="tap-target-lg rounded-lg hover:bg-white/5 focus:ring-2 focus:ring-[rgb(var(--color-accent))]/50 hover:text-[rgb(var(--color-accent))] transition-all relative"
       aria-label="View cart"
     >
       {BadgeCounter}
@@ -380,7 +380,7 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
       className="bg-[#171717] text-white"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-6 lg:gap-8">
           {/* Quick Links */}
           <div>
             <Heading size="lead" as="h3" className="text-white mb-4">
@@ -446,17 +446,17 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
             <p className="text-gray-400 text-sm mb-4">
               Get fitness tips & exclusive deals
             </p>
-            <Form method="post" action="/api/newsletter" className="space-y-2">
+            <Form method="post" action="/api/newsletter" className="space-y-3">
               <input
                 type="email"
                 name="email"
                 placeholder="Your email"
                 required
-                className="w-full rounded-md bg-gray-800 border border-gray-700 px-3 py-2 text-sm text-white placeholder:text-gray-500 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent"
+                className="w-full rounded-md bg-gray-800 border border-gray-700 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent min-h-[44px]"
               />
               <button
                 type="submit"
-                className="w-full rounded-md btn-accent !py-2 !px-3 text-sm font-semibold"
+                className="w-full rounded-md btn-accent !py-3 !px-4 text-sm font-semibold min-h-[44px]"
               >
                 Subscribe
               </button>

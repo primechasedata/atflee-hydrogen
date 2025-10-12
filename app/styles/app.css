@@ -25,12 +25,18 @@
                     linear-gradient(180deg, rgb(10 10 10) 0%, rgb(0 0 0) 100%);
   --gradient-section: linear-gradient(180deg, rgb(0 0 0) 0%, rgb(15 15 15) 100%);
 
-  /* Typography */
-  --font-size-fine: 0.75rem; /* text-xs */
-  --font-size-copy: 1rem; /* text-base */
-  --font-size-lead: 1.125rem; /* text-lg */
-  --font-size-heading: 2rem; /* text-2xl */
-  --font-size-display: 3rem; /* text-4xl */
+  /* Typography - Fluid scaling with clamp() for responsive design */
+  /* Base: 16px mobile → 18px desktop */
+  --font-size-fine: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem); /* 12px → 14px */
+  --font-size-copy: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); /* 16px → 18px */
+  --font-size-lead: clamp(1.125rem, 1rem + 0.5vw, 1.375rem); /* 18px → 22px */
+  --font-size-heading: clamp(1.75rem, 1.5rem + 1vw, 2.5rem); /* 28px → 40px */
+  --font-size-display: clamp(2.25rem, 1.75rem + 2vw, 4rem); /* 36px → 64px */
+
+  /* Line heights for readability - 1.5x font size */
+  --line-height-tight: 1.25;
+  --line-height-base: 1.5;
+  --line-height-relaxed: 1.75;
 
   /* Shopify */
   --color-shop-pay: #5a31f4;
@@ -249,6 +255,29 @@ shop-pay-button {
 }
 
 @layer utilities {
+  /* Mobile touch targets - WCAG 2.5.5 compliant (44x44px minimum) */
+  .tap-target {
+    min-width: 44px;
+    min-height: 44px;
+    @apply flex items-center justify-center;
+  }
+
+  .tap-target-lg {
+    min-width: 48px;
+    min-height: 48px;
+    @apply flex items-center justify-center;
+  }
+
+  /* Responsive text containers - optimal line length 50-75 characters */
+  .prose-mobile {
+    @apply max-w-prose mx-auto;
+    line-height: var(--line-height-base);
+  }
+
+  .prose-mobile p {
+    max-width: 65ch; /* Optimal reading width */
+  }
+
   /* Soft float for decorative orbs */
   @keyframes floatOrb { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
   .float-slow { animation: floatOrb 8s ease-in-out infinite; }
@@ -405,6 +434,45 @@ shop-pay-button {
     }
     img {
       @apply aspect-[inherit] w-full object-cover;
+    }
+  }
+
+  /* Responsive table pattern for mobile - University of Oregon pattern */
+  @media (max-width: 640px) {
+    .table-responsive {
+      @apply block;
+    }
+
+    .table-responsive thead {
+      @apply hidden;
+    }
+
+    .table-responsive tbody,
+    .table-responsive tr,
+    .table-responsive td {
+      @apply block w-full;
+    }
+
+    .table-responsive tr {
+      @apply mb-6 rounded-lg border border-white/10 overflow-hidden;
+      background: rgba(var(--color-surface), 0.02);
+    }
+
+    .table-responsive td {
+      @apply text-left py-3 px-4 border-b border-white/5 last:border-b-0;
+      position: relative;
+      padding-left: 40%;
+    }
+
+    .table-responsive td:before {
+      content: attr(data-label);
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.875rem;
     }
   }
 }
