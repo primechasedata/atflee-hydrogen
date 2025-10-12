@@ -23,7 +23,7 @@ import type {
 import type {ShopFragment} from 'storefrontapi.generated';
 
 // Default OG image for social sharing when page doesn't have a specific image
-const DEFAULT_OG_IMAGE = 'https://cdn.shopify.com/s/files/1/0632/1383/0231/files/trahere-og-image.jpg';
+const DEFAULT_OG_IMAGE = 'https://cdn.shopify.com/s/files/1/0632/1383/0231/files/trahere-og-image.png?v=1760283677';
 
 function root({
   shop,
