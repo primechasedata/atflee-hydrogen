@@ -56,7 +56,8 @@ export function VideoSection({
           >
             <img
               src={thumbnailUrl}
-              alt="Video thumbnail"
+              alt="TB7 pull-up bar installation demonstration video"
+              title="Watch TB7 installation video"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center">
@@ -137,7 +138,8 @@ function VideoHero({
             >
               <img
                 src={thumbnailUrl}
-                alt="Video thumbnail"
+                alt="TB7 pull-up bar installation demonstration video"
+                title="Watch TB7 installation video"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors flex items-center justify-center">
@@ -187,7 +189,8 @@ function VideoInline({
         >
           <img
             src={thumbnailUrl}
-            alt="Video thumbnail"
+            alt="TB7 pull-up bar installation demonstration video"
+            title="Watch TB7 installation video"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors flex items-center justify-center">

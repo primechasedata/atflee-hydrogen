@@ -171,7 +171,8 @@ function TestimonialCard({testimonial}: {testimonial: Testimonial}) {
         {testimonial.image ? (
           <img
             src={testimonial.image}
-            alt={testimonial.name}
+            alt={`${testimonial.name} profile photo`}
+            title={testimonial.name}
             className="w-12 h-12 rounded-full object-cover"
           />
         ) : (

@@ -6,13 +6,13 @@ export function LifestyleTiles() {
   return (
     <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
       {items.map((it: any) => (
-        <ParallaxTile key={it.title} title={it.title} image={it.image} />
+        <ParallaxTile key={it.title} title={it.title} image={it.image} alt={it.alt} />
       ))}
     </div>
   );
 }
 
-function ParallaxTile({title, image}: {title: string; image?: string}) {
+function ParallaxTile({title, image, alt}: {title: string; image?: string; alt?: string}) {
   const ref = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     const el = ref.current; if (!el) return;
@@ -32,7 +32,7 @@ function ParallaxTile({title, image}: {title: string; image?: string}) {
     <div ref={ref} className="relative overflow-hidden rounded-[16px] glass-soft ring-1 ring-white/10 hover-lift">
       <div className="aspect-[4/3] w-full bg-white/5">
         {image ? (
-          <img src={image} alt={title} loading="lazy" className="w-full h-full object-cover" />
+          <img src={image} alt={alt || title} title={title} loading="lazy" className="w-full h-full object-cover" />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-primary/50">{title}</div>
         )}
