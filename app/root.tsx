@@ -28,7 +28,6 @@ import invariant from 'tiny-invariant';
 import {PageLayout} from '~/components/PageLayout';
 import {GenericError} from '~/components/GenericError';
 import {NotFound} from '~/components/NotFound';
-import favicon from '~/assets/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
 import styles from '~/styles/app.css?url';
 
@@ -74,7 +73,15 @@ export const links: LinksFunction = () => {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
-    {rel: 'icon', type: 'image/svg+xml', href: favicon},
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: 'https://cdn.shopify.com/s/files/1/0632/1383/0231/files/trahere-favicon4.png?v=1757624859',
+    },
+    {
+      rel: 'apple-touch-icon',
+      href: 'https://cdn.shopify.com/s/files/1/0632/1383/0231/files/trahere-favicon4.png?v=1757624859',
+    },
   ];
 };
 
@@ -151,6 +158,17 @@ function Layout({children}: {children?: React.ReactNode}) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="msvalidate.01" content="A352E6A0AF9A652267361BBB572B8468" />
+
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Trahere" />
+        <meta property="og:locale" content="en_US" />
+
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@trahere_us" />
+        <meta name="twitter:creator" content="@trahere_us" />
+
         <link rel="stylesheet" href={styles}></link>
         <Meta />
         <Links />

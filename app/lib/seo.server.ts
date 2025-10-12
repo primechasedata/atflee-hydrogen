@@ -30,10 +30,10 @@ function root({
   url: Request['url'];
 }): SeoConfig {
   return {
-    title: shop?.name,
-    titleTemplate: '%s | Hydrogen Demo Store',
-    description: truncate(shop?.description ?? ''),
-    handle: '@shopify',
+    title: 'Trahere',
+    titleTemplate: '%s | Trahere',
+    description: 'Premium doorway pull-up bars engineered for serious training. Tool-free installation, 500 lb capacity, 1-year warranty. Transform any doorway into your training space.',
+    handle: '@trahere_us',
     url,
     robots: {
       noIndex: false,
@@ -42,14 +42,10 @@ function root({
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: shop.name,
+      name: 'Trahere',
       logo: shop.brand?.logo?.image?.url,
       sameAs: [
-        'https://twitter.com/shopify',
-        'https://facebook.com/shopify',
-        'https://instagram.com/shopify',
-        'https://youtube.com/shopify',
-        'https://tiktok.com/@shopify',
+        'https://instagram.com/trahere_us',
       ],
       url,
       potentialAction: {
@@ -63,9 +59,9 @@ function root({
 
 function home({url}: {url: Request['url']}): SeoConfig {
   return {
-    title: 'Home',
-    titleTemplate: '%s | Hydrogen Demo Store',
-    description: 'The best place to buy snowboarding products',
+    title: 'Premium Doorway Pull-Up Bars | TB7 Widest Grip Bar',
+    titleTemplate: '%s | Trahere',
+    description: 'Transform any doorway into your training space with the TB7 pull-up bar. 40mm comfort grip, tool-free installation, 500 lb capacity. 30-day money-back guarantee.',
     url,
     robots: {
       noIndex: false,
@@ -74,7 +70,7 @@ function home({url}: {url: Request['url']}): SeoConfig {
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
-      name: 'Home page',
+      name: 'Home',
     },
   };
 }
@@ -313,9 +309,9 @@ function listCollections({
   url: Request['url'];
 }): SeoConfig {
   return {
-    title: 'Collections',
-    titleTemplate: '%s | Collections',
-    description: 'All hydrogen collections',
+    title: 'Shop Pull-Up Bars',
+    titleTemplate: '%s | Trahere',
+    description: 'Browse our collection of premium doorway pull-up bars. Professional-grade equipment for home training.',
     url,
     jsonLd: collectionsJsonLd({collections, url}),
   };
@@ -338,8 +334,8 @@ function article({
 }): SeoConfig {
   return {
     title: article?.seo?.title ?? article?.title,
-    description: truncate(article?.seo?.description ?? ''),
-    titleTemplate: '%s | Journal',
+    description: truncate(article?.seo?.description ?? article?.excerpt ?? ''),
+    titleTemplate: '%s | Trahere',
     url,
     media: {
       type: 'image',
@@ -374,7 +370,7 @@ function blog({
   return {
     title: blog?.seo?.title,
     description: truncate(blog?.seo?.description || ''),
-    titleTemplate: '%s | Blog',
+    titleTemplate: '%s | Trahere',
     url,
     jsonLd: {
       '@context': 'https://schema.org',
@@ -396,7 +392,7 @@ function page({
   return {
     description: truncate(page?.seo?.description || ''),
     title: page?.seo?.title ?? page?.title,
-    titleTemplate: '%s | Page',
+    titleTemplate: '%s | Trahere',
     url,
     jsonLd: {
       '@context': 'https://schema.org',
@@ -416,7 +412,7 @@ function policy({
   return {
     description: truncate(policy?.body ?? ''),
     title: policy?.title,
-    titleTemplate: '%s | Policy',
+    titleTemplate: '%s | Trahere',
     url,
   };
 }
@@ -440,9 +436,9 @@ function policies({
       };
     });
   return {
-    title: 'Policies',
-    titleTemplate: '%s | Policies',
-    description: 'Hydroge store policies',
+    title: 'Store Policies',
+    titleTemplate: '%s | Trahere',
+    description: 'Trahere store policies including shipping, returns, refunds, privacy, and terms of service.',
     jsonLd: [
       {
         '@context': 'https://schema.org',
@@ -452,7 +448,7 @@ function policies({
       {
         '@context': 'https://schema.org',
         '@type': 'WebPage',
-        description: 'Hydrogen store policies',
+        description: 'Trahere store policies',
         name: 'Policies',
         url,
       },
