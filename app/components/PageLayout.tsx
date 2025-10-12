@@ -429,14 +429,11 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
               <Link to="/pages/education" className="text-gray-400 hover:text-white transition-colors text-sm">
                 Education Hub
               </Link>
-              <Link to="/pages/education/workouts" className="text-gray-400 hover:text-white transition-colors text-sm">
-                Workouts
+              <Link to="/pages/about" className="text-gray-400 hover:text-white transition-colors text-sm">
+                About Us
               </Link>
-              <Link to="/pages/education/habit-builder" className="text-gray-400 hover:text-white transition-colors text-sm">
-                Habit Builder
-              </Link>
-              <Link to="/pages/education/product-reviews" className="text-gray-400 hover:text-white transition-colors text-sm">
-                Reviews
+              <Link to="/products/tb7-widest-grip-doorway-pull-up-bar" className="text-gray-400 hover:text-white transition-colors text-sm">
+                Our Product
               </Link>
             </nav>
           </div>
