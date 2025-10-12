@@ -154,18 +154,19 @@ export default function EducationHub() {
       {/* Search and Filter */}
       <section className="py-12 bg-gray-900 border-b border-white/10">
         <div className="mx-auto max-w-5xl px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row gap-4 items-center">
+          <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
             <input
               type="search"
               placeholder="Search articles, guides, and workouts..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 rounded-lg border border-white/20 bg-black/40 px-4 py-3 text-primary placeholder:text-primary/40 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent"
+              className="flex-1 rounded-lg border border-white/20 bg-black/40 px-4 py-3 text-primary placeholder:text-primary/40 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent min-h-[48px]"
+              aria-label="Search education content"
             />
             <button
               type="button"
               onClick={() => setSearchQuery('')}
-              className="w-full md:w-auto btn-accent !py-3 !px-6 text-base font-semibold"
+              className="sm:w-auto btn-accent text-base font-semibold min-h-[48px] px-6"
             >
               {searchQuery ? 'Clear' : 'Search'}
             </button>
@@ -179,16 +180,17 @@ export default function EducationHub() {
           <Heading as="h2" className="text-3xl md:text-4xl font-bold text-primary mb-12 text-center">
             Browse by Category
           </Heading>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(selectedCategory === category.id ? null : category.id)}
-                className={`group relative rounded-2xl p-8 border transition-all text-left ${
+                className={`group relative rounded-2xl p-6 sm:p-8 border transition-all text-left min-h-[44px] ${
                   selectedCategory === category.id
                     ? 'bg-[rgb(var(--color-accent))]/10 border-[rgb(var(--color-accent))] shadow-lg'
                     : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20'
                 }`}
+                aria-pressed={selectedCategory === category.id}
               >
                 <div className="text-5xl mb-4">{category.icon}</div>
                 <h3 className={`text-2xl font-bold mb-3 transition-colors ${

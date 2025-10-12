@@ -117,11 +117,11 @@ export function UGCSection({
 
         {/* Video Reel Container */}
         <div className="relative">
-          {/* Navigation Buttons */}
+          {/* Navigation Buttons - Hidden on mobile, visible on desktop */}
           {canScrollLeft && (
             <button
               onClick={() => scroll('left')}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-black/80 hover:bg-black text-white flex items-center justify-center transition-all backdrop-blur-sm shadow-lg"
+              className="hidden md:flex tap-target-lg absolute left-0 top-1/2 -translate-y-1/2 z-10 rounded-full bg-black/80 hover:bg-black text-white items-center justify-center transition-all backdrop-blur-sm shadow-lg"
               aria-label="Previous videos"
             >
               <svg
@@ -139,7 +139,7 @@ export function UGCSection({
           {canScrollRight && (
             <button
               onClick={() => scroll('right')}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-black/80 hover:bg-black text-white flex items-center justify-center transition-all backdrop-blur-sm shadow-lg"
+              className="hidden md:flex tap-target-lg absolute right-0 top-1/2 -translate-y-1/2 z-10 rounded-full bg-black/80 hover:bg-black text-white items-center justify-center transition-all backdrop-blur-sm shadow-lg"
               aria-label="Next videos"
             >
               <svg
@@ -231,9 +231,9 @@ function UGCVideoCard({video}: {video: UGCVideo}) {
   };
 
   return (
-    <div className="flex-shrink-0 w-[280px] md:w-[320px] snap-start">
+    <div className="flex-shrink-0 w-[260px] sm:w-[280px] md:w-[320px] snap-start">
       <div
-        className="relative w-full aspect-[9/16] rounded-xl overflow-hidden bg-black/20 group"
+        className="relative w-full aspect-[9/16] rounded-xl overflow-hidden bg-black/20 group cursor-pointer"
       >
         {isYouTube && isPlaying ? (
           <iframe

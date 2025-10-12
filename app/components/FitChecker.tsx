@@ -40,7 +40,7 @@ export function FitChecker() {
           <form onSubmit={checkFit} className="glass-strong stroke-gradient rounded-2xl p-6 md:p-8 text-primary/90 space-y-6" aria-live="polite">
             <div className="grid gap-4">
               <label htmlFor="doorway-width" className="block text-sm font-medium">Enter your doorway width (inches)</label>
-              <div className="flex gap-3 items-center">
+              <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
                 <input
                   type="number"
                   id="doorway-width"
@@ -50,12 +50,12 @@ export function FitChecker() {
                   min={MIN_WIDTH}
                   max={MAX_WIDTH}
                   placeholder="e.g., 34.5"
-                  className="flex-1 rounded-md bg-white/5 border border-white/10 px-4 py-3 text-primary placeholder:text-primary/50 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent"
+                  className="flex-1 rounded-md bg-white/5 border border-white/10 px-4 py-3 text-primary placeholder:text-primary/50 focus:ring-2 focus:ring-[rgb(var(--color-accent))] focus:border-transparent min-h-[48px]"
                   required
                 />
-                <button type="submit" className="btn-accent">Check Fit</button>
+                <button type="submit" className="btn-accent whitespace-nowrap min-h-[48px] px-6">Check Fit</button>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 sm:gap-4">
                 <input
                   type="range"
                   min={MIN_WIDTH}
@@ -64,9 +64,30 @@ export function FitChecker() {
                   value={doorwayWidth || (MIN_WIDTH as any)}
                   onChange={(e) => setDoorwayWidth(e.target.value)}
                   aria-label="Doorway width slider"
-                  className="w-full accent-[rgb(var(--color-accent))] [&::-webkit-slider-runnable-track]:h-1 [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:bg-white/10 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[rgb(var(--color-accent))]"
+                  className="w-full accent-[rgb(var(--color-accent))] h-2
+                    [&::-webkit-slider-runnable-track]:h-2
+                    [&::-webkit-slider-runnable-track]:rounded-full
+                    [&::-webkit-slider-runnable-track]:bg-white/10
+                    [&::-webkit-slider-thumb]:appearance-none
+                    [&::-webkit-slider-thumb]:h-6
+                    [&::-webkit-slider-thumb]:w-6
+                    [&::-webkit-slider-thumb]:rounded-full
+                    [&::-webkit-slider-thumb]:bg-[rgb(var(--color-accent))]
+                    [&::-webkit-slider-thumb]:cursor-pointer
+                    [&::-webkit-slider-thumb]:shadow-lg
+                    [&::-webkit-slider-thumb]:ring-2
+                    [&::-webkit-slider-thumb]:ring-white/20
+                    [&::-moz-range-track]:h-2
+                    [&::-moz-range-track]:rounded-full
+                    [&::-moz-range-track]:bg-white/10
+                    [&::-moz-range-thumb]:h-6
+                    [&::-moz-range-thumb]:w-6
+                    [&::-moz-range-thumb]:rounded-full
+                    [&::-moz-range-thumb]:bg-[rgb(var(--color-accent))]
+                    [&::-moz-range-thumb]:border-0
+                    [&::-moz-range-thumb]:cursor-pointer"
                 />
-                <span className="text-sm text-primary/70 whitespace-nowrap">{doorwayWidth || MIN_WIDTH}"</span>
+                <span className="text-sm sm:text-base text-primary/70 whitespace-nowrap min-w-[3.5rem] text-right font-semibold">{doorwayWidth || MIN_WIDTH}"</span>
               </div>
             </div>
 

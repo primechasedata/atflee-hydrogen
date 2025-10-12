@@ -62,7 +62,7 @@ export default function CustomerCare() {
               </p>
               <button
                 onClick={() => setIsVideoModalOpen(true)}
-                className="w-full btn-accent !py-2.5 !px-4 text-sm font-semibold"
+                className="w-full btn-accent text-sm font-semibold min-h-[44px]"
               >
                 Watch Video
               </button>
@@ -79,7 +79,7 @@ export default function CustomerCare() {
               </p>
               <a
                 href="mailto:support@trahere.com"
-                className="block w-full btn-accent !py-2.5 !px-4 text-center text-sm font-semibold"
+                className="block w-full btn-accent text-center text-sm font-semibold min-h-[44px] flex items-center justify-center"
               >
                 Email Us
               </a>
@@ -96,7 +96,7 @@ export default function CustomerCare() {
               </p>
               <a
                 href="#returns"
-                className="block w-full border border-white/20 rounded-lg py-2.5 px-4 text-center text-sm font-semibold text-primary hover:bg-white/5 transition-colors"
+                className="block w-full border border-white/20 rounded-lg text-center text-sm font-semibold text-primary hover:bg-white/5 transition-colors min-h-[44px] flex items-center justify-center"
               >
                 View Policy
               </a>
@@ -113,7 +113,7 @@ export default function CustomerCare() {
               </p>
               <a
                 href="#warranty"
-                className="block w-full border border-white/20 rounded-lg py-2.5 px-4 text-center text-sm font-semibold text-primary hover:bg-white/5 transition-colors"
+                className="block w-full border border-white/20 rounded-lg text-center text-sm font-semibold text-primary hover:bg-white/5 transition-colors min-h-[44px] flex items-center justify-center"
               >
                 Learn More
               </a>
@@ -272,13 +272,13 @@ export default function CustomerCare() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="mailto:support@trahere.com"
-              className="btn-accent !py-3 !px-8 text-base font-semibold"
+              className="btn-accent text-base font-semibold min-h-[48px] px-8 flex items-center justify-center"
             >
               Email Support
             </a>
             <button
               onClick={() => setIsVideoModalOpen(true)}
-              className="border border-white/20 rounded-lg py-3 px-8 text-base font-semibold text-primary hover:bg-white/5 transition-colors"
+              className="border border-white/20 rounded-lg text-base font-semibold text-primary hover:bg-white/5 transition-colors min-h-[48px] px-8"
             >
               Watch Setup Video
             </button>
@@ -430,16 +430,18 @@ function FAQSection() {
                   <Disclosure key={idx} as="div">
                     {({open}) => (
                       <div className="rounded-xl border border-white/10 bg-white/5 overflow-hidden hover:bg-white/10 transition-colors">
-                        <Disclosure.Button className="w-full text-left px-6 py-5 flex justify-between items-start gap-4">
-                          <span className="font-semibold text-lg text-primary flex-1 min-w-0">
+                        <Disclosure.Button className="w-full text-left px-5 sm:px-6 py-4 sm:py-5 flex justify-between items-start gap-4 min-h-[48px]">
+                          <span className="font-semibold text-base sm:text-lg text-primary flex-1 min-w-0">
                             {faq.q}
                           </span>
-                          <IconClose
-                            className={clsx(
-                              'flex-shrink-0 transition-transform duration-200 text-primary mt-0.5',
-                              !open && 'rotate-[45deg]',
-                            )}
-                          />
+                          <div className="tap-target flex items-center justify-center">
+                            <IconClose
+                              className={clsx(
+                                'flex-shrink-0 transition-transform duration-200 text-primary',
+                                !open && 'rotate-[45deg]',
+                              )}
+                            />
+                          </div>
                         </Disclosure.Button>
                         <Disclosure.Panel className="px-6 pb-5 pt-2">
                           <p className="text-primary/80 leading-relaxed">{faq.a}</p>
