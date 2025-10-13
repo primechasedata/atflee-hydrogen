@@ -787,8 +787,10 @@ function StickyBuyBar({product}: {product: any}) {
     >
       <div className="mx-auto max-w-5xl flex items-center justify-between gap-3 sm:gap-4 px-4 pt-3">
         <div className="flex items-baseline gap-2 sm:gap-3 text-primary">
-          <span className="text-xs sm:text-sm">TB7</span>
-          <span className="text-lg sm:text-xl font-bold">
+          <span className="text-xs sm:text-sm font-semibold truncate max-w-[120px] sm:max-w-none">
+            {product?.title || 'TB7'}
+          </span>
+          <span className="text-lg sm:text-xl font-bold whitespace-nowrap">
             {product?.selectedOrFirstAvailableVariant?.price && (<Money data={selectedOrFirstAvailableVariant.price} />)}
           </span>
         </div>
