@@ -467,8 +467,18 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
         {/* Payment Icons and Copyright */}
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-sm text-gray-400">
-              &copy; {new Date().getFullYear()} Trahere. All rights reserved.
+            <div className="flex flex-col items-center md:items-start gap-2">
+              <div className="text-sm text-gray-400">
+                &copy; {new Date().getFullYear()} Trahere. All rights reserved.
+              </div>
+              <a
+                href="https://primechasedata.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-gray-500 hover:text-gray-400 transition-colors"
+              >
+                Designed and Maintained by Prime Chase Data
+              </a>
             </div>
             <div className="flex items-center gap-4 text-sm text-gray-400">
               <span>Payment methods:</span>
