@@ -160,7 +160,6 @@ function Layout({children}: {children?: React.ReactNode}) {
         <meta name="theme-color" content="#000000" />
 
         {/* Search Engine Verification */}
-        <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE" />
         <meta name="msvalidate.01" content="A352E6A0AF9A652267361BBB572B8468" />
 
         {/* Open Graph / Facebook */}
