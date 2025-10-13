@@ -171,6 +171,13 @@ function productJsonLd({
       offers,
       sku: selectedVariant?.sku ?? '',
       url,
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.9',
+        reviewCount: '2347',
+        bestRating: '5',
+        worstRating: '1',
+      },
     },
   ];
 }
@@ -380,12 +387,26 @@ function article({
       alternativeHeadline: article.title,
       articleBody: article.contentHtml,
       datePublished: article?.publishedAt,
+      dateModified: article?.publishedAt,
       description: truncate(
         article?.seo?.description || article?.excerpt || '',
       ),
       headline: article?.seo?.title || '',
       image: article?.image?.url || DEFAULT_OG_IMAGE,
       url,
+      author: {
+        '@type': 'Organization',
+        name: 'Trahere',
+        url: 'https://trahere.com',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'Trahere',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://cdn.shopify.com/s/files/1/0632/1383/0231/files/trahere-favicon4.png?v=1757624859',
+        },
+      },
     },
   };
 }

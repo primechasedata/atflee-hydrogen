@@ -168,11 +168,10 @@ function HeroSection({product}: {product: any}) {
             <Heading
               as="h1"
               size="display"
-              className="text-primary font-bold leading-tight"
+              className="text-primary font-bold leading-tight mx-auto"
               style={{
                 fontSize: 'clamp(2rem, 4vw + 1rem, 4.5rem)',
-                lineHeight: 'var(--line-height-tight)',
-                maxWidth: '20ch'
+                lineHeight: 'var(--line-height-tight)'
               }}
             >
               Setup in 10 seconds. Train anywhere.{' '}

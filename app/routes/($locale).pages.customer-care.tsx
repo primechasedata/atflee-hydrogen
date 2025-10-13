@@ -9,12 +9,81 @@ import {InstallationVideoModal} from '~/components/InstallationVideoModal';
 import clsx from 'clsx';
 import {useState} from 'react';
 
-export async function loader({context}: LoaderFunctionArgs) {
+export async function loader({context, request}: LoaderFunctionArgs) {
+  // FAQ data for FAQPage schema
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      // Orders & Shipping
+      {
+        '@type': 'Question',
+        name: 'How long does shipping take?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Orders ship within 24 hours from our Texas warehouse. Standard shipping takes 3-5 business days within the US. Expedited shipping (2-3 days) and overnight options are available at checkout.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Do you ship internationally?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes, we ship to most countries worldwide. International shipping times vary by destination (typically 7-14 business days). Customs duties and taxes may apply based on your country\'s regulations.',
+        },
+      },
+      // Returns & Exchanges
+      {
+        '@type': 'Question',
+        name: 'What is your return policy?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'We offer a 30-day money-back guarantee. If you\'re not satisfied with your purchase, return it within 30 days of delivery for a full refund. No questions asked.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Who pays for return shipping?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'We provide prepaid return shipping labels for all returns within the 30-day window. You don\'t pay anything for return shipping.',
+        },
+      },
+      // Installation & Setup
+      {
+        '@type': 'Question',
+        name: 'What doorway sizes does it fit?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'The TB7 fits standard doorways 31.9-36.6 inches wide and up to 6 inches deep. It works on wood, metal, and composite door frames. Measure your doorway width before ordering.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Will it damage my door frame?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'No. The TB7 uses a friction-grip system with premium foam padding that protects your door frame. Unlike screw-in bars, it leaves zero marks or damage.',
+        },
+      },
+      // Safety & Usage
+      {
+        '@type': 'Question',
+        name: 'What is the weight limit?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'The recommended user weight is 260 lbs. The bar has been tested to 573 lbs under laboratory conditions. If you\'re over 260 lbs, contact us to discuss suitability.',
+        },
+      },
+    ],
+  };
+
   return json({
     seo: {
-      title: 'Customer Care | Trahere',
+      title: 'Customer Care | Get Help with Your TB7',
       description:
-        'Get help with your order. Track packages, view setup guides, manage returns and find answers to common questions.',
+        'Fast answers, real support. Find setup guides, troubleshooting, warranty info, and contact our team. We typically respond within 24 hours.',
+      jsonLd: faqSchema,
     },
   });
 }
