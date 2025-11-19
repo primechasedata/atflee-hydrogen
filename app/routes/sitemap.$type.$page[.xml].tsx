@@ -7,9 +7,11 @@ export async function loader({
   params,
   context: {storefront},
 }: LoaderFunctionArgs) {
-  const locales = storefront.i18n.locales.map(
-    (locale) => `${locale.language.toLowerCase()}-${locale.country.toLowerCase()}`,
-  );
+  const locales =
+    storefront.i18n.locales?.map(
+      (locale) =>
+        `${locale.language.toLowerCase()}-${locale.country.toLowerCase()}`,
+    ) ?? [];
   const response = await getSitemap({
     storefront,
     request,
