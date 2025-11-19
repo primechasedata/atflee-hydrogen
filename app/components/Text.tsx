@@ -161,12 +161,14 @@ export function PageHeader({
   className,
   heading,
   variant = 'default',
+  as: HeadingTag = 'h1',
   ...props
 }: {
   children?: React.ReactNode;
   className?: string;
   heading?: string;
   variant?: 'default' | 'blogPost' | 'allCollections';
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   [key: string]: any;
 }) {
   const variants: Record<string, string> = {
@@ -182,7 +184,7 @@ export function PageHeader({
   return (
     <header {...props} className={styles}>
       {heading && (
-        <Heading as="h1" width="narrow" size="heading" className="inline-block">
+        <Heading as={HeadingTag} width="narrow" size="heading" className="inline-block">
           {heading}
         </Heading>
       )}

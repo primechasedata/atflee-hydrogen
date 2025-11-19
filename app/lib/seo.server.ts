@@ -25,6 +25,12 @@ import type {ShopFragment} from 'storefrontapi.generated';
 // Default OG image for social sharing when page doesn't have a specific image
 const DEFAULT_OG_IMAGE = 'https://cdn.shopify.com/s/files/1/0632/1383/0231/files/trahere-og-image.png?v=1760283677';
 
+const MAX_TITLE_LENGTH = 60;
+
+function truncateTitle(str: string): string {
+  return truncate(str, MAX_TITLE_LENGTH);
+}
+
 function root({
   shop,
   url,
@@ -33,7 +39,7 @@ function root({
   url: Request['url'];
 }): SeoConfig {
   return {
-    title: 'Trahere',
+    title: truncateTitle('Trahere'),
     titleTemplate: '%s | Trahere',
     description: 'Premium doorway pull-up bars engineered for serious training. Tool-free installation, 500 lb capacity, 1-year warranty. Transform any doorway into your training space.',
     handle: '@trahere_us',
@@ -69,7 +75,7 @@ function root({
 
 function home({url}: {url: Request['url']}): SeoConfig {
   return {
-    title: 'Premium Doorway Pull-Up Bars | TB7 Widest Grip Bar',
+    title: truncateTitle('Premium Doorway Pull-Up Bars | TB7 Widest Grip Bar'),
     titleTemplate: '%s | Trahere',
     description: 'Transform any doorway into your training space with the TB7 pull-up bar. 40mm comfort grip, tool-free installation, 500 lb capacity. 30-day money-back guarantee.',
     url,
@@ -195,7 +201,7 @@ function product({
     product?.seo?.description ?? product?.description ?? '',
   );
   return {
-    title: product?.seo?.title ?? product?.title,
+    title: truncateTitle(product?.seo?.title ?? product?.title ?? ''),
     description,
     url,
     media: selectedVariant?.image || {
@@ -280,7 +286,7 @@ function collection({
   url: Request['url'];
 }): SeoConfig {
   return {
-    title: collection?.seo?.title,
+    title: truncateTitle(collection?.seo?.title ?? collection?.title ?? ''),
     description: truncate(
       collection?.seo?.description ?? collection?.description ?? '',
     ),
@@ -339,7 +345,7 @@ function listCollections({
   url: Request['url'];
 }): SeoConfig {
   return {
-    title: 'Shop Pull-Up Bars',
+    title: truncateTitle('Shop Pull-Up Bars'),
     titleTemplate: '%s | Trahere',
     description: 'Browse our collection of premium doorway pull-up bars. Professional-grade equipment for home training.',
     url,
@@ -370,7 +376,7 @@ function article({
   url: Request['url'];
 }): SeoConfig {
   return {
-    title: article?.seo?.title ?? article?.title,
+    title: truncateTitle(article?.seo?.title ?? article?.title ?? ''),
     description: truncate(article?.seo?.description ?? article?.excerpt ?? ''),
     titleTemplate: '%s | Trahere',
     url,
@@ -419,7 +425,7 @@ function blog({
   url: Request['url'];
 }): SeoConfig {
   return {
-    title: blog?.seo?.title,
+    title: truncateTitle(blog?.seo?.title ?? blog?.title ?? ''),
     description: truncate(blog?.seo?.description || ''),
     titleTemplate: '%s | Trahere',
     url,
@@ -449,7 +455,7 @@ function page({
 }): SeoConfig {
   return {
     description: truncate(page?.seo?.description || ''),
-    title: page?.seo?.title ?? page?.title,
+    title: truncateTitle(page?.seo?.title ?? page?.title ?? ''),
     titleTemplate: '%s | Trahere',
     url,
     media: {
@@ -476,7 +482,7 @@ function policy({
 }): SeoConfig {
   return {
     description: truncate(policy?.body ?? ''),
-    title: policy?.title,
+    title: truncateTitle(policy?.title ?? ''),
     titleTemplate: '%s | Trahere',
     url,
     media: {
@@ -508,7 +514,7 @@ function policies({
       };
     });
   return {
-    title: 'Store Policies',
+    title: truncateTitle('Store Policies'),
     titleTemplate: '%s | Trahere',
     description: 'Trahere store policies including shipping, returns, refunds, privacy, and terms of service.',
     media: {
