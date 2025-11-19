@@ -61,24 +61,30 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
     [] as ProductFilter[],
   );
 
-  const {collection, collections} = await context.storefront.query(
-    COLLECTION_QUERY,
-    {
-      variables: {
-        ...paginationVariables,
-        handle: collectionHandle,
-        filters,
-        sortKey,
-        reverse,
-        country: context.storefront.i18n.country,
-        language: context.storefront.i18n.language,
-      },
+  const {collection} = await context.storefront.query(COLLECTION_DETAILS_QUERY, {
+    variables: {
+      ...paginationVariables,
+      handle: collectionHandle,
+      filters,
+      sortKey,
+      reverse,
+      country: context.storefront.i18n.country,
+      language: context.storefront.i18n.language,
     },
-  );
+  });
 
   if (!collection) {
     throw new Response('collection', {status: 404});
   }
+
+  const collectionsPromise = context.storefront
+    .query(COLLECTIONS_QUERY, {
+      variables: {
+        country: context.storefront.i18n.country,
+        language: context.storefront.i18n.language,
+      },
+    })
+    .then((result) => flattenConnection(result.collections));
 
   const seo = seoPayload.collection({
     collection,
@@ -134,10 +140,10 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
     })
     .filter((filter): filter is NonNullable<typeof filter> => filter !== null);
 
-  return json({
+  return defer({
     collection,
     appliedFilters,
-    collections: flattenConnection(collections),
+    collections: collectionsPromise,
     seo,
   });
 }
@@ -147,7 +153,7 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 };
 
 export default function Collection() {
-  const {collection, collections, appliedFilters} =
+  const {collection, appliedFilters, collections} =
     useLoaderData<typeof loader>();
 
   const {ref, inView} = useInView();
@@ -166,49 +172,55 @@ export default function Collection() {
         )}
       </PageHeader>
       <Section>
-        <SortFilter
-          filters={collection.products.filters as Filter[]}
-          appliedFilters={appliedFilters}
-          collections={collections}
-        >
-          <Pagination connection={collection.products}>
-            {({
-              nodes,
-              isLoading,
-              PreviousLink,
-              NextLink,
-              nextPageUrl,
-              hasNextPage,
-              state,
-            }) => (
-              <>
-                <div className="flex items-center justify-center mb-6">
-                  <Button as={PreviousLink} variant="secondary" width="full" className="glass rounded-md border border-white/10 hover-lift">
-                    {isLoading ? 'Loading...' : 'Load previous'}
-                  </Button>
-                </div>
-                <ProductsLoadedOnScroll
-                  nodes={nodes}
-                  inView={inView}
-                  nextPageUrl={nextPageUrl}
-                  hasNextPage={hasNextPage}
-                  state={state}
-                />
-                <div className="flex items-center justify-center mt-6">
-                  <Button
-                    ref={ref}
-                    as={NextLink}
-                    variant="secondary"
-                    width="full"
-                    className="glass rounded-md border border-white/10 hover-lift"
-                  >
-                    {isLoading ? 'Loading...' : 'Load more products'}
-                  </Button>
-                </div>
-              </>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Await resolve={collections}>
+            {(collections) => (
+              <SortFilter
+                filters={collection.products.filters as Filter[]}
+                appliedFilters={appliedFilters}
+                collections={collections}
+              >
+                <Pagination connection={collection.products}>
+                  {({
+                    nodes,
+                    isLoading,
+                    PreviousLink,
+                    NextLink,
+                    nextPageUrl,
+                    hasNextPage,
+                    state,
+                  }) => (
+                    <>
+                      <div className="flex items-center justify-center mb-6">
+                        <Button as={PreviousLink} variant="secondary" width="full" className="glass rounded-md border border-white/10 hover-lift">
+                          {isLoading ? 'Loading...' : 'Load previous'}
+                        </Button>
+                      </div>
+                      <ProductsLoadedOnScroll
+                        nodes={nodes}
+                        inView={inView}
+                        nextPageUrl={nextPageUrl}
+                        hasNextPage={hasNextPage}
+                        state={state}
+                      />
+                      <div className="flex items-center justify-center mt-6">
+                        <Button
+                          ref={ref}
+                          as={NextLink}
+                          variant="secondary"
+                          width="full"
+                          className="glass rounded-md border border-white/10 hover-lift"
+                        >
+                          {isLoading ? 'Loading...' : 'Load more products'}
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </Pagination>
+              </SortFilter>
             )}
-          </Pagination>
-        </SortFilter>
+          </Await>
+        </Suspense>
       </Section>
       <Analytics.CollectionView
         data={{
@@ -260,7 +272,7 @@ function ProductsLoadedOnScroll({
   );
 }
 
-const COLLECTION_QUERY = `#graphql
+const COLLECTION_DETAILS_QUERY = `#graphql
   query CollectionDetails(
     $handle: String!
     $country: CountryCode
@@ -320,6 +332,15 @@ const COLLECTION_QUERY = `#graphql
         }
       }
     }
+  }
+  ${PRODUCT_CARD_FRAGMENT}
+` as const;
+
+const COLLECTIONS_QUERY = `#graphql
+  query Collections(
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
     collections(first: 100) {
       edges {
         node {
@@ -329,7 +350,6 @@ const COLLECTION_QUERY = `#graphql
       }
     }
   }
-  ${PRODUCT_CARD_FRAGMENT}
 ` as const;
 
 function getSortValuesFromParam(sortParam: SortParam | null): {
