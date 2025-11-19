@@ -34,9 +34,13 @@ function truncateTitle(str: string): string {
 function root({
   shop,
   url,
+  availableLocales,
+  currentLocale,
 }: {
   shop: ShopFragment;
   url: Request['url'];
+  availableLocales: {language: string; country: string}[];
+  currentLocale: {language: string; country: string; pathPrefix: string};
 }): SeoConfig {
   return {
     title: truncateTitle('Trahere'),
@@ -55,6 +59,7 @@ function root({
       width: 1200,
       altText: 'Trahere - Premium Doorway Pull-Up Bars',
     },
+    alternateLocales: getAlternateLocales({pageUrl: new URL(url), availableLocales, currentLocale}),
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Organization',
@@ -73,7 +78,15 @@ function root({
   };
 }
 
-function home({url}: {url: Request['url']}): SeoConfig {
+function home({
+  url,
+  availableLocales,
+  currentLocale,
+}: {
+  url: Request['url'];
+  availableLocales: {language: string; country: string}[];
+  currentLocale: {language: string; country: string; pathPrefix: string};
+}): SeoConfig {
   return {
     title: truncateTitle('Premium Doorway Pull-Up Bars | TB7 Widest Grip Bar'),
     titleTemplate: '%s | Trahere',
@@ -90,6 +103,7 @@ function home({url}: {url: Request['url']}): SeoConfig {
       width: 1200,
       altText: 'Trahere TB7 Pull-Up Bar - Premium Home Fitness Equipment',
     },
+    alternateLocales: getAlternateLocales({pageUrl: new URL(url), availableLocales, currentLocale}),
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
@@ -192,10 +206,14 @@ function product({
   product,
   url,
   selectedVariant,
+  availableLocales,
+  currentLocale,
 }: {
   product: ProductRequiredFields;
   selectedVariant: SelectedVariantRequiredFields;
   url: Request['url'];
+  availableLocales: {language: string; country: string}[];
+  currentLocale: {language: string; country: string; pathPrefix: string};
 }): SeoConfig {
   const description = truncate(
     product?.seo?.description ?? product?.description ?? '',
@@ -211,6 +229,7 @@ function product({
       width: 1200,
       altText: product.title,
     },
+    alternateLocales: getAlternateLocales({pageUrl: new URL(url), availableLocales, currentLocale}),
     jsonLd: productJsonLd({product, selectedVariant, url}),
   };
 }
@@ -281,9 +300,13 @@ function collectionJsonLd({
 function collection({
   collection,
   url,
+  availableLocales,
+  currentLocale,
 }: {
   collection: CollectionRequiredFields;
   url: Request['url'];
+  availableLocales: {language: string; country: string}[];
+  currentLocale: {language: string; country: string; pathPrefix: string};
 }): SeoConfig {
   return {
     title: truncateTitle(collection?.seo?.title ?? collection?.title ?? ''),
@@ -299,6 +322,7 @@ function collection({
       width: collection?.image?.width || 1200,
       altText: collection?.image?.altText || collection.title,
     },
+    alternateLocales: getAlternateLocales({pageUrl: new URL(url), availableLocales, currentLocale}),
     jsonLd: collectionJsonLd({collection, url}),
   };
 }
@@ -340,9 +364,13 @@ function collectionsJsonLd({
 function listCollections({
   collections,
   url,
+  availableLocales,
+  currentLocale,
 }: {
   collections: CollectionListRequiredFields;
   url: Request['url'];
+  availableLocales: {language: string; country: string}[];
+  currentLocale: {language: string; country: string; pathPrefix: string};
 }): SeoConfig {
   return {
     title: truncateTitle('Shop Pull-Up Bars'),
@@ -356,6 +384,7 @@ function listCollections({
       width: 1200,
       altText: 'Trahere Pull-Up Bar Collection',
     },
+    alternateLocales: getAlternateLocales({pageUrl: new URL(url), availableLocales, currentLocale}),
     jsonLd: collectionsJsonLd({collections, url}),
   };
 }
@@ -363,6 +392,8 @@ function listCollections({
 function article({
   article,
   url,
+  availableLocales,
+  currentLocale,
 }: {
   article: Pick<
     Article,
@@ -374,6 +405,8 @@ function article({
     >;
   };
   url: Request['url'];
+  availableLocales: {language: string; country: string}[];
+  currentLocale: {language: string; country: string; pathPrefix: string};
 }): SeoConfig {
   return {
     title: truncateTitle(article?.seo?.title ?? article?.title ?? ''),
@@ -387,6 +420,7 @@ function article({
       width: article?.image?.width || 1200,
       altText: article?.image?.altText || article.title,
     },
+    alternateLocales: getAlternateLocales({pageUrl: new URL(url), availableLocales, currentLocale}),
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Article',
@@ -420,9 +454,13 @@ function article({
 function blog({
   blog,
   url,
+  availableLocales,
+  currentLocale,
 }: {
   blog: Pick<Blog, 'seo' | 'title'>;
   url: Request['url'];
+  availableLocales: {language: string; country: string}[];
+  currentLocale: {language: string; country: string; pathPrefix: string};
 }): SeoConfig {
   return {
     title: truncateTitle(blog?.seo?.title ?? blog?.title ?? ''),
@@ -436,6 +474,7 @@ function blog({
       width: 1200,
       altText: 'Trahere Blog - Training Tips and Product Guides',
     },
+    alternateLocales: getAlternateLocales({pageUrl: new URL(url), availableLocales, currentLocale}),
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Blog',
@@ -449,9 +488,13 @@ function blog({
 function page({
   page,
   url,
+  availableLocales,
+  currentLocale,
 }: {
   page: Pick<Page, 'title' | 'seo'>;
   url: Request['url'];
+  availableLocales: {language: string; country: string}[];
+  currentLocale: {language: string; country: string; pathPrefix: string};
 }): SeoConfig {
   return {
     description: truncate(page?.seo?.description || ''),
@@ -465,6 +508,7 @@ function page({
       width: 1200,
       altText: `Trahere - ${page.title}`,
     },
+    alternateLocales: getAlternateLocales({pageUrl: new URL(url), availableLocales, currentLocale}),
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
@@ -476,9 +520,13 @@ function page({
 function policy({
   policy,
   url,
+  availableLocales,
+  currentLocale,
 }: {
   policy: Pick<ShopPolicy, 'title' | 'body'>;
   url: Request['url'];
+  availableLocales: {language: string; country: string}[];
+  currentLocale: {language: string; country: string; pathPrefix: string};
 }): SeoConfig {
   return {
     description: truncate(policy?.body ?? ''),
@@ -492,15 +540,20 @@ function policy({
       width: 1200,
       altText: `Trahere - ${policy.title}`,
     },
+    alternateLocales: getAlternateLocales({pageUrl: new URL(url), availableLocales, currentLocale}),
   };
 }
 
 function policies({
   policies,
   url,
+  availableLocales,
+  currentLocale,
 }: {
   policies: Array<Pick<ShopPolicy, 'title' | 'handle'>>;
   url: Request['url'];
+  availableLocales: {language: string; country: string}[];
+  currentLocale: {language: string; country: string; pathPrefix: string};
 }): SeoConfig {
   const origin = new URL(url).origin;
   const itemListElement: BreadcrumbList['itemListElement'] = policies
@@ -524,6 +577,7 @@ function policies({
       width: 1200,
       altText: 'Trahere Store Policies',
     },
+    alternateLocales: getAlternateLocales({pageUrl: new URL(url), availableLocales, currentLocale}),
     jsonLd: [
       {
         '@context': 'https://schema.org',
@@ -570,4 +624,45 @@ function truncate(str: string, num = 155): string {
     return str;
   }
   return str.slice(0, num - 3) + '...';
+}
+
+function getAlternateLocales({
+  pageUrl,
+  availableLocales,
+  currentLocale,
+}: {
+  pageUrl: URL;
+  availableLocales: {language: string; country: string}[];
+  currentLocale: {language: string; country: string; pathPrefix: string};
+}) {
+  const alternateLocales = availableLocales
+    .filter(
+      (locale) =>
+        `${locale.language}-${locale.country}` !==
+        `${currentLocale.language}-${currentLocale.country}`,
+    )
+    .map((locale) => {
+      const pathPrefix =
+        locale.language.toLowerCase() === currentLocale.language.toLowerCase() &&
+        locale.country.toLowerCase() === currentLocale.country.toLowerCase()
+          ? ''
+          : `/${locale.language.toLowerCase()}-${locale.country.toLowerCase()}`;
+      return {
+        path: `${pageUrl.origin}${pathPrefix}${
+          pageUrl.pathname.replace(currentLocale.pathPrefix, '')
+        }${pageUrl.search}`,
+        locale: `${locale.language.toLowerCase()}-${locale.country.toLowerCase()}`,
+      };
+    });
+
+  // Add x-default
+  alternateLocales.push({
+    path: `${pageUrl.origin}${pageUrl.pathname.replace(
+      currentLocale.pathPrefix,
+      '',
+    )}${pageUrl.search}`,
+    locale: 'x-default',
+  });
+
+  return alternateLocales;
 }

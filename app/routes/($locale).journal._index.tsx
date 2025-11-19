@@ -47,7 +47,12 @@ export const loader = async ({
     };
   });
 
-  const seo = seoPayload.blog({blog, url: request.url});
+  const seo = seoPayload.blog({
+    blog,
+    url: request.url,
+    availableLocales: storefront.i18n.availableLocales,
+    currentLocale: storefront.i18n,
+  });
 
   return json({articles, seo});
 };

@@ -80,7 +80,12 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
     throw new Response('collection', {status: 404});
   }
 
-  const seo = seoPayload.collection({collection, url: request.url});
+  const seo = seoPayload.collection({
+    collection,
+    url: request.url,
+    availableLocales: context.storefront.i18n.availableLocales,
+    currentLocale: context.storefront.i18n,
+  });
 
   const allFilterValues = collection.products.filters.flatMap(
     (filter) => filter.values,

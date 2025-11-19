@@ -30,7 +30,12 @@ export async function loader({
     throw new Response('Not found', {status: 404});
   }
 
-  const seo = seoPayload.policies({policies, url: request.url});
+  const seo = seoPayload.policies({
+    policies,
+    url: request.url,
+    availableLocales: context.storefront.i18n.availableLocales,
+    currentLocale: context.storefront.i18n,
+  });
 
   return json({
     policies,

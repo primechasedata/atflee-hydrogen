@@ -46,7 +46,12 @@ export async function loader({request, params, context}: LoaderFunctionArgs) {
     day: 'numeric',
   }).format(new Date(article?.publishedAt!));
 
-  const seo = seoPayload.article({article, url: request.url});
+  const seo = seoPayload.article({
+    article,
+    url: request.url,
+    availableLocales: context.storefront.i18n.availableLocales,
+    currentLocale: context.storefront.i18n,
+  });
 
   return json({article, formattedDate, seo, blogHandle: params.blogHandle});
 }

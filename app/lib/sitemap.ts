@@ -115,11 +115,23 @@ export async function getSitemap(options: GetSiteMapOptions) {
     throw new Response('Not found', {status: 404});
   }
 
+  // Filter out known 404 articles from the sitemap
+  const filteredItems = data.sitemap.resources.items.filter((item: {handle: string, type?: string}) => {
+    if (type === 'articles') {
+      const known404Articles = [
+        'understanding-army-fitness-test-requirements-aft-are-you-prepared',
+        'beginner-pull-up-workout-routine-how-to-get-your-first-pull-up',
+      ];
+      return !known404Articles.includes(item.handle);
+    }
+    return true;
+  });
+
   const baseUrl = new URL(request.url).origin;
 
   const body =
     SITEMAP_PREFIX +
-    data.sitemap.resources.items
+    filteredItems
       .map((item: {handle: string; updatedAt: string; type?: string}) => {
         return renderUrlTag({
           getChangeFreq: options.getChangeFreq,

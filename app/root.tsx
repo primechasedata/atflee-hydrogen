@@ -108,9 +108,15 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
     // Add other queries here, so that they are loaded in parallel
   ]);
 
-  const seo = seoPayload.root({shop: layout.shop, url: request.url});
-
   const {storefront, env} = context;
+  const selectedLocale = storefront.i18n;
+
+  const seo = seoPayload.root({
+    shop: layout.shop,
+    url: request.url,
+    availableLocales: selectedLocale.availableLocales,
+    currentLocale: selectedLocale,
+  });
 
   return {
     layout,
@@ -124,7 +130,7 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
       storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
       withPrivacyBanner: true,
     },
-    selectedLocale: storefront.i18n,
+    selectedLocale,
   };
 }
 

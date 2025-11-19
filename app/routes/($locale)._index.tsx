@@ -48,8 +48,11 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
     context.env.PUBLIC_FEATURED_PRODUCT_HANDLE ||
     'tb7-widest-grip-doorway-pull-up-bar';
 
+  const {storefront} = context;
+  const selectedLocale = storefront.i18n;
+
   const [featuredProduct] = await Promise.all([
-    context.storefront
+    storefront
       .query(FEATURED_PRODUCT_QUERY, {
         variables: {handle: featuredHandle},
       })
@@ -59,7 +62,11 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
 
   return {
     featuredProduct,
-    seo: seoPayload.home({url: request.url}),
+    seo: seoPayload.home({
+      url: request.url,
+      availableLocales: selectedLocale.availableLocales,
+      currentLocale: selectedLocale,
+    }),
   };
 }
 

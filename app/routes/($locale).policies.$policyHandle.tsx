@@ -40,7 +40,12 @@ export async function loader({request, params, context}: LoaderFunctionArgs) {
     throw new Response(null, {status: 404});
   }
 
-  const seo = seoPayload.policy({policy, url: request.url});
+  const seo = seoPayload.policy({
+    policy,
+    url: request.url,
+    availableLocales: context.storefront.i18n.availableLocales,
+    currentLocale: context.storefront.i18n,
+  });
 
   return json({policy, seo});
 }
