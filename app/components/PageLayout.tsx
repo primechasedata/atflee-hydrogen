@@ -405,16 +405,16 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
               Information
             </Heading>
             <nav className="grid gap-2">
-              <Link to="/policies/shipping-policy" className="text-gray-400 hover:text-white transition-colors text-sm">
+              <Link noLocale to="/policies/shipping-policy" className="text-gray-400 hover:text-white transition-colors text-sm">
                 Shipping Policy
               </Link>
-              <Link to="/policies/terms-of-service" className="text-gray-400 hover:text-white transition-colors text-sm">
+              <Link noLocale to="/policies/terms-of-service" className="text-gray-400 hover:text-white transition-colors text-sm">
                 Terms of Service
               </Link>
-              <Link to="/policies/privacy-policy" className="text-gray-400 hover:text-white transition-colors text-sm">
+              <Link noLocale to="/policies/privacy-policy" className="text-gray-400 hover:text-white transition-colors text-sm">
                 Privacy Policy
               </Link>
-              <Link to="/policies/refund-policy" className="text-gray-400 hover:text-white transition-colors text-sm">
+              <Link noLocale to="/policies/refund-policy" className="text-gray-400 hover:text-white transition-colors text-sm">
                 Refund Policy
               </Link>
             </nav>

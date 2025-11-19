@@ -10,6 +10,7 @@ import type {RootLoader} from '~/root';
 
 type LinkProps = Omit<RemixLinkProps, 'className'> & {
   className?: RemixNavLinkProps['className'] | RemixLinkProps['className'];
+  noLocale?: boolean;
 };
 
 /**
@@ -28,13 +29,17 @@ type LinkProps = Omit<RemixLinkProps, 'className'> & {
  * Ultimately, it is up to you to decide how to implement this behavior.
  */
 export function Link(props: LinkProps) {
-  const {to, className, ...resOfProps} = props;
+  const {to, className, noLocale, ...resOfProps} = props;
   const rootData = useRouteLoaderData<RootLoader>('root');
   const selectedLocale = rootData?.selectedLocale;
 
   let toWithLocale = to;
 
-  if (typeof toWithLocale === 'string' && selectedLocale?.pathPrefix) {
+  if (
+    !noLocale &&
+    typeof toWithLocale === 'string' &&
+    selectedLocale?.pathPrefix
+  ) {
     if (!toWithLocale.toLowerCase().startsWith(selectedLocale.pathPrefix)) {
       toWithLocale = `${selectedLocale.pathPrefix}${to}`;
     }
