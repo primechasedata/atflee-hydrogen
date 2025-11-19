@@ -635,6 +635,10 @@ function getAlternateLocales({
   availableLocales: {language: string; country: string}[];
   currentLocale: {language: string; country: string; pathPrefix: string};
 }) {
+  if (!Array.isArray(availableLocales)) {
+    return [];
+  }
+
   const alternateLocales = availableLocales
     .filter(
       (locale) =>
