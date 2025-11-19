@@ -290,7 +290,7 @@ function AccountLink({className}: {className?: string}) {
   const isLoggedIn = rootData?.isLoggedIn;
 
   return (
-    <Link to="/account" className={className}>
+    <Link to="/account" className={className} noLocale>
       <Suspense fallback={<IconLogin />}>
         <Await resolve={isLoggedIn} errorElement={<IconLogin />}>
           {(isLoggedIn) => (isLoggedIn ? <IconAccount /> : <IconLogin />)}
