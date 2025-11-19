@@ -18,7 +18,7 @@ import {Grid} from '~/components/Grid';
 import {Button} from '~/components/Button';
 import {getImageLoadingPriority, PAGINATION_SIZE} from '~/lib/const';
 import {seoPayload} from '~/lib/seo.server';
-import {routeHeaders} from '~/data/cache';
+import {CACHE_SHORT, routeHeaders} from '~/data/cache';
 import type {ArticleFragment} from 'storefrontapi.generated';
 
 const BLOG_HANDLE = 'Journal';
@@ -64,7 +64,14 @@ export const loader = async ({
     currentLocale: storefront.i18n,
   });
 
-  return json({articles, seo, blog});
+  return json(
+    {articles, seo, blog},
+    {
+      headers: {
+        'Cache-Control': CACHE_SHORT,
+      },
+    },
+  );
 };
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
