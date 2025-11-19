@@ -62,6 +62,7 @@ export async function loader({
       products,
       updatedAt: new Date().toISOString(),
     },
+    storefront,
   });
 
   return defer({
