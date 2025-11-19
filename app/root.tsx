@@ -150,7 +150,21 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 
 export const meta = ({data}: MetaArgs<typeof loader>) => {
   if (!data || !data.seo) return [];
-  return getSeoMeta(data.seo as SeoConfig);
+
+  const seo = getSeoMeta(data.seo as SeoConfig);
+  const ogLocale = `${data.selectedLocale.language.toLowerCase()}_${data.selectedLocale.country.toUpperCase()}`;
+
+  return [
+    ...seo,
+    {
+      property: 'og:site_name',
+      content: 'Trahere',
+    },
+    {
+      property: 'og:locale',
+      content: ogLocale,
+    },
+  ];
 };
 
 function Layout({children}: {children?: React.ReactNode}) {
@@ -167,11 +181,6 @@ function Layout({children}: {children?: React.ReactNode}) {
 
         {/* Search Engine Verification */}
         <meta name="msvalidate.01" content="A352E6A0AF9A652267361BBB572B8468" />
-
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Trahere" />
-        <meta property="og:locale" content="en_US" />
 
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
