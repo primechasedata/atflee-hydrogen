@@ -1,0 +1,12 @@
+Error-500_page-links.csv
+Error-500_page.csv
+Error-5XX_page-links.csv
+Error-5XX_page.csv
+Error-5XX_page_in_sitemap.csv
+Error-Broken_redirect.csv
+Notice-HTTP_to_HTTPS_redirect.csv
+Notice-Indexable_page_became_non-indexable.csv
+Notice-Pages_added_to_sitemaps.csv
+Notice-Pages_to_submit_to_IndexNow.csv
+Notice-Redirect_chain.csv
+Warning-3XX_redirect.csv

@@ -43,8 +43,7 @@ export async function loader({request, params, context}: LoaderFunctionArgs) {
   const seo = seoPayload.policy({
     policy,
     url: request.url,
-    availableLocales: context.storefront.i18n.availableLocales,
-    currentLocale: context.storefront.i18n,
+    storefront: context.storefront,
   });
 
   return json({policy, seo});

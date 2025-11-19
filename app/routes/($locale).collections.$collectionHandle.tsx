@@ -89,8 +89,7 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
   const seo = seoPayload.collection({
     collection,
     url: request.url,
-    availableLocales: context.storefront.i18n.availableLocales,
-    currentLocale: context.storefront.i18n,
+    storefront: context.storefront,
   });
 
   const allFilterValues = collection.products.filters.flatMap(

@@ -60,8 +60,7 @@ export const loader = async ({
   const seo = seoPayload.blog({
     blog,
     url: request.url,
-    availableLocales: storefront.i18n.availableLocales,
-    currentLocale: storefront.i18n,
+    storefront,
   });
 
   return json(

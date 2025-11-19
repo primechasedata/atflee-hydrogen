@@ -33,8 +33,7 @@ export async function loader({
   const seo = seoPayload.policies({
     policies,
     url: request.url,
-    availableLocales: context.storefront.i18n.availableLocales,
-    currentLocale: context.storefront.i18n,
+    storefront,
   });
 
   return json({

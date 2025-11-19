@@ -114,8 +114,7 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
   const seo = seoPayload.root({
     shop: layout.shop,
     url: request.url,
-    availableLocales: selectedLocale.availableLocales,
-    currentLocale: selectedLocale,
+    storefront,
   });
 
   return {

@@ -87,8 +87,7 @@ async function loadCriticalData({
     product: {...product, variants},
     selectedVariant,
     url: request.url,
-    availableLocales: context.storefront.i18n.availableLocales,
-    currentLocale: context.storefront.i18n,
+    storefront: context.storefront,
   });
 
   return {

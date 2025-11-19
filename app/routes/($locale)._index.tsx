@@ -49,7 +49,6 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
     'tb7-widest-grip-doorway-pull-up-bar';
 
   const {storefront} = context;
-  const selectedLocale = storefront.i18n;
 
   const [featuredProduct] = await Promise.all([
     storefront
@@ -64,8 +63,7 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
     featuredProduct,
     seo: seoPayload.home({
       url: request.url,
-      availableLocales: selectedLocale.availableLocales,
-      currentLocale: selectedLocale,
+      storefront,
     }),
   };
 }

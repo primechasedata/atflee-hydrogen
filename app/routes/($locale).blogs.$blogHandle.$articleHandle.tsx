@@ -49,8 +49,7 @@ export async function loader({request, params, context}: LoaderFunctionArgs) {
   const seo = seoPayload.article({
     article,
     url: request.url,
-    availableLocales: context.storefront.i18n.availableLocales,
-    currentLocale: context.storefront.i18n,
+    storefront: context.storefront,
   });
 
   return json({article, formattedDate, seo, blogHandle: params.blogHandle});
