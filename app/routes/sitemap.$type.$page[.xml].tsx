@@ -1,16 +1,15 @@
 import type {LoaderFunctionArgs} from '@shopify/remix-oxygen';
 
 import {getSitemap} from 'app/lib/sitemap';
-import {countries} from '~/data/countries';
-
-const locales = Object.keys(countries).filter((k) => k !== 'default');
-locales.unshift('en-us');
 
 export async function loader({
   request,
   params,
   context: {storefront},
 }: LoaderFunctionArgs) {
+  const locales = storefront.i18n.locales.map(
+    (locale) => `${locale.language.toLowerCase()}-${locale.country.toLowerCase()}`,
+  );
   const response = await getSitemap({
     storefront,
     request,
@@ -21,7 +20,7 @@ export async function loader({
       const typeUrl = type === 'articles' ? 'journal' : type;
 
       if (!locale) return `${baseUrl}/${typeUrl}/${handle}`;
-      return `${baseUrl}${locale}/${typeUrl}/${handle}`;
+      return `/${locale}/${typeUrl}/${handle}`;
     },
   });
 
