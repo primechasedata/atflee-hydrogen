@@ -380,7 +380,7 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
       className="bg-[#171717] text-white"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 lg:px-12 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-6 lg:gap-8">
           {/* Quick Links */}
           <div>
             <Heading size="lead" as="h3" className="text-white mb-4">
@@ -461,6 +461,10 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
                 Subscribe
               </button>
             </Form>
+          </div>
+          {/* Country Selector */}
+          <div className="lg:col-span-1">
+            <CountrySelector />
           </div>
         </div>
 
