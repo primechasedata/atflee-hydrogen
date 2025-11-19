@@ -4,11 +4,18 @@ import {
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
-import {flattenConnection, getSeoMeta, Image} from '@shopify/hydrogen';
+import {
+  flattenConnection,
+  getSeoMeta,
+  Image,
+  Pagination,
+  getPaginationVariables,
+} from '@shopify/hydrogen';
 
 import {PageHeader, Section} from '~/components/Text';
 import {Link} from '~/components/Link';
 import {Grid} from '~/components/Grid';
+import {Button} from '~/components/Button';
 import {getImageLoadingPriority, PAGINATION_SIZE} from '~/lib/const';
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
@@ -22,11 +29,14 @@ export const loader = async ({
   request,
   context: {storefront},
 }: LoaderFunctionArgs) => {
+  const paginationVariables = getPaginationVariables(request, {
+    pageBy: PAGINATION_SIZE,
+  });
   const {language, country} = storefront.i18n;
   const {blog} = await storefront.query(BLOGS_QUERY, {
     variables: {
+      ...paginationVariables,
       blogHandle: BLOG_HANDLE,
-      pageBy: PAGINATION_SIZE,
       language,
     },
   });
@@ -54,7 +64,7 @@ export const loader = async ({
     currentLocale: storefront.i18n,
   });
 
-  return json({articles, seo});
+  return json({articles, seo, blog});
 };
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
@@ -62,22 +72,38 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 };
 
 export default function Journals() {
-  const {articles} = useLoaderData<typeof loader>();
+  const {articles, blog} = useLoaderData<typeof loader>();
 
   return (
     <>
       <PageHeader heading={BLOG_HANDLE} />
       <Section>
-        <Grid as="ol" layout="blog">
-          {articles.map((article, i) => (
-            <ArticleCard
-              blogHandle={BLOG_HANDLE.toLowerCase()}
-              article={article}
-              key={article.id}
-              loading={getImageLoadingPriority(i, 2)}
-            />
-          ))}
-        </Grid>
+        <Pagination connection={blog.articles}>
+          {({nodes, isLoading, PreviousLink, NextLink}) => (
+            <>
+              <div className="flex items-center justify-center mb-6">
+                <Button as={PreviousLink} variant="secondary" width="full">
+                  {isLoading ? 'Loading...' : 'Load previous articles'}
+                </Button>
+              </div>
+              <Grid as="ol" layout="blog">
+                {nodes.map((article, i) => (
+                  <ArticleCard
+                    blogHandle={BLOG_HANDLE.toLowerCase()}
+                    article={article as ArticleFragment}
+                    key={article.id}
+                    loading={getImageLoadingPriority(i, 2)}
+                  />
+                ))}
+              </Grid>
+              <div className="flex items-center justify-center mt-6">
+                <Button as={NextLink} variant="secondary" width="full">
+                  {isLoading ? 'Loading...' : 'Load more articles'}
+                </Button>
+              </div>
+            </>
+          )}
+        </Pagination>
       </Section>
     </>
   );
