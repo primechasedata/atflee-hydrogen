@@ -92,9 +92,9 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
     storefront: context.storefront,
   });
 
-  const allFilterValues = collection.products.filters.flatMap(
+  const allFilterValues = collection.products.filters?.flatMap(
     (filter) => filter.values,
-  );
+  ) ?? [];
 
   const appliedFilters = filters
     .map((filter) => {
