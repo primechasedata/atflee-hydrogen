@@ -11,6 +11,7 @@ import {
   Pagination,
   getPaginationVariables,
 } from '@shopify/hydrogen';
+import invariant from 'tiny-invariant';
 
 import {PageHeader, Section} from '~/components/Text';
 import {Link} from '~/components/Link';
@@ -21,22 +22,24 @@ import {seoPayload} from '~/lib/seo.server';
 import {CACHE_SHORT, routeHeaders} from '~/data/cache';
 import type {ArticleFragment} from 'storefrontapi.generated';
 
-const BLOG_HANDLE = 'Journal';
-
 export const headers = routeHeaders;
 
 export const loader = async ({
   request,
+  params,
   context: {storefront},
 }: LoaderFunctionArgs) => {
   const paginationVariables = getPaginationVariables(request, {
     pageBy: PAGINATION_SIZE,
   });
+  const {blogHandle} = params;
+  invariant(blogHandle, 'Missing blogHandle param');
+  
   const {language, country} = storefront.i18n;
   const {blog} = await storefront.query(BLOGS_QUERY, {
     variables: {
       ...paginationVariables,
-      blogHandle: BLOG_HANDLE,
+      blogHandle,
       language,
     },
   });
@@ -82,7 +85,7 @@ export default function Journals() {
 
   return (
     <>
-      <PageHeader heading={BLOG_HANDLE} />
+      <PageHeader heading={blog.title} />
       <Section>
         <Pagination connection={blog.articles}>
           {({nodes, isLoading, PreviousLink, NextLink}) => (
@@ -95,7 +98,7 @@ export default function Journals() {
               <Grid as="ol" layout="blog">
                 {nodes.map((article, i) => (
                   <ArticleCard
-                    blogHandle={BLOG_HANDLE.toLowerCase()}
+                    blogHandle={blog.handle}
                     article={article as ArticleFragment}
                     key={article.id}
                     loading={getImageLoadingPriority(i, 2)}
@@ -126,7 +129,7 @@ function ArticleCard({
 }) {
   return (
     <li key={article.id}>
-      <Link to={`/${blogHandle}/${article.handle}`}>
+      <Link to={`/blogs/${blogHandle}/${article.handle}`}>
         {article.image && (
           <div className="card-image aspect-[3/2]">
             <Image
@@ -155,6 +158,7 @@ query Blog(
 ) @inContext(language: $language) {
   blog(handle: $blogHandle) {
     title
+    handle
     seo {
       title
       description
@@ -164,6 +168,12 @@ query Blog(
         node {
           ...Article
         }
+      }
+      pageInfo {
+        hasPreviousPage
+        hasNextPage
+        startCursor
+        endCursor
       }
     }
   }
