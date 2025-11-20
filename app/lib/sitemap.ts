@@ -128,12 +128,16 @@ export async function getSitemap(options: GetSiteMapOptions) {
     return true;
   });
 
+  if (filteredItems.length === 0) {
+    throw new Response('Not found', {status: 404});
+  }
+
   const baseUrl = new URL(request.url).origin;
 
   const body =
     SITEMAP_PREFIX +
     filteredItems
-      .map((item: {handle: string; updatedAt: string; type?: string, blog?: {handle: string}}) => {
+      .map((item: {handle: string; updatedAt: string; type?: string; blog?: {handle: string}}) => {
         return renderUrlTag({
           getChangeFreq: options.getChangeFreq,
           url: getLink({
