@@ -417,9 +417,6 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
               <Link noLocale to="/policies/refund-policy" className="text-gray-400 hover:text-white transition-colors text-sm">
                 Refund Policy
               </Link>
-              <Link to="/pages/data-sharing-opt-out" className="text-gray-400 hover:text-white transition-colors text-sm">
-                Data Sharing Opt-Out
-              </Link>
             </nav>
           </div>
 
@@ -431,9 +428,6 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
             <nav className="grid gap-2">
               <Link to="/pages/education" className="text-gray-400 hover:text-white transition-colors text-sm">
                 Education Hub
-              </Link>
-              <Link to="/pages/study" className="text-gray-400 hover:text-white transition-colors text-sm">
-                Study
               </Link>
               <Link to="/pages/about" className="text-gray-400 hover:text-white transition-colors text-sm">
                 About Us
