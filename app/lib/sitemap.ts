@@ -79,6 +79,7 @@ interface GetSiteMapOptions {
     baseUrl: string;
     handle?: string;
     locale?: string;
+    blogHandle?: string;
   }) => string;
   /** An array of locales to generate alternate tags */
   locales: string[];
@@ -132,13 +133,14 @@ export async function getSitemap(options: GetSiteMapOptions) {
   const body =
     SITEMAP_PREFIX +
     filteredItems
-      .map((item: {handle: string; updatedAt: string; type?: string}) => {
+      .map((item: {handle: string; updatedAt: string; type?: string, blog?: {handle: string}}) => {
         return renderUrlTag({
           getChangeFreq: options.getChangeFreq,
           url: getLink({
-            type: item.type ?? type,
             baseUrl,
             handle: item.handle,
+            type: item.type ?? type,
+            blogHandle: item.blog?.handle,
           }),
           type,
           getLink,
@@ -147,6 +149,7 @@ export async function getSitemap(options: GetSiteMapOptions) {
           metaobjectType: item.type,
           locales,
           baseUrl,
+          blogHandle: item.blog?.handle,
         });
       })
       .join('\n') +
@@ -179,16 +182,19 @@ function renderUrlTag({
   handle,
   getChangeFreq,
   metaobjectType,
+  blogHandle,
 }: {
   type: SITEMAP_INDEX_TYPE;
   baseUrl: string;
   handle: string;
   metaobjectType?: string;
+  blogHandle?: string;
   getLink: (options: {
     type: string;
     baseUrl: string;
     handle?: string;
     locale?: string;
+    blogHandle?: string;
   }) => string;
   url: string;
   updatedAt: string;
@@ -206,7 +212,13 @@ function renderUrlTag({
 ${locales
   .map((locale) =>
     renderAlternateTag(
-      getLink({type: metaobjectType ?? type, baseUrl, handle, locale}),
+      getLink({
+        type: metaobjectType ?? type,
+        baseUrl,
+        handle,
+        locale,
+        blogHandle,
+      }),
       locale,
     ),
   )
@@ -252,6 +264,9 @@ const ARTICLE_SITEMAP_QUERY = `#graphql
           items {
             handle
             updatedAt
+            blog {
+              handle
+            }
           }
         }
       }

@@ -8,8 +8,7 @@ Error-500_page.csv
 Error-5XX_page-links.csv
 Error-5XX_page.csv
 Error-5XX_page_in_sitemap.csv
-Error-indexable-Page_has_links_to_broken_page-links.csv
-Error-indexable-Page_has_links_to_broken_page.csv
+Error-indexable-Orphan_page_(has_no_incoming_internal_links).csv
 Notice-HTTP_to_HTTPS_redirect.csv
 Notice-Indexable_page_not_in_sitemap.csv
 Notice-Pages_to_submit_to_IndexNow.csv
