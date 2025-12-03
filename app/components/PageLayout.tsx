@@ -197,7 +197,7 @@ function MobileHeader({
         y > 80 ? 'glass-strong bg-black/80 border-b border-white/10 shadow-lg' : 'bg-black/95'
       } flex lg:hidden items-center h-nav sticky z-50 top-0 justify-between w-full leading-none gap-4 px-4 md:px-8 text-white transition-all duration-300`}
     >
-      <div className="flex items-center justify-start gap-4">
+      <div className="flex items-center justify-start w-20">
         <button
           onClick={openMenu}
           className="tap-target-lg rounded-lg hover:bg-white/5 hover:text-[rgb(var(--color-accent))] transition-all"
@@ -208,7 +208,7 @@ function MobileHeader({
       </div>
 
       <Link
-        className="flex items-center self-stretch leading-[3rem] md:leading-[4rem] justify-center"
+        className="flex items-center self-stretch leading-[3rem] md:leading-[4rem] justify-center flex-1"
         to="/"
       >
         <Heading
@@ -219,7 +219,7 @@ function MobileHeader({
         </Heading>
       </Link>
 
-      <div className="flex items-center justify-end gap-1">
+      <div className="flex items-center justify-end w-20 gap-1">
         <AccountLink className="tap-target-lg rounded-lg hover:bg-white/5 hover:text-[rgb(var(--color-accent))] transition-all" />
         <CartCount isHome={isHome} openCart={openCart} />
       </div>
